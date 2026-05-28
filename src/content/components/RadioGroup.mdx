@@ -13,7 +13,9 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/RadioGroup.mdx">
 
-## Usage
+## Basic Usage
+
+`RadioGroup` is a layout container that arranges `RadioButtonWithLabel` items. Both components are generic — `value` and `selectedValue` can be any type `T`, including `String`, `enum`, or a data class.
 
 <TabPreview>
 
@@ -24,6 +26,21 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.shadcn.ui.components.LayoutOrientation
 import com.shadcn.ui.components.RadioButtonWithLabel
 import com.shadcn.ui.components.RadioGroup
 
@@ -37,8 +54,7 @@ fun Example() {
             .padding(top = 24.dp, start = 16.dp, end = 16.dp),
     ) {
         Text(
-            text = "Select an option (Vertical):",
-            color = MaterialTheme.colors.foreground,
+            text = "Select an option:",
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -55,7 +71,6 @@ fun Example() {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Selected: $selectedOption",
-            color = MaterialTheme.colors.foreground,
             style = MaterialTheme.typography.bodySmall
         )
     }
@@ -68,6 +83,8 @@ fun Example() {
 
 ## Horizontal
 
+Set `orientation = LayoutOrientation.Horizontal` to arrange the radio buttons in a row with 16 dp spacing.
+
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
@@ -77,6 +94,21 @@ fun Example() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.shadcn.ui.components.LayoutOrientation
 import com.shadcn.ui.components.RadioButtonWithLabel
 import com.shadcn.ui.components.RadioGroup
 
@@ -90,8 +122,7 @@ fun Example() {
             .padding(top = 24.dp, start = 16.dp, end = 16.dp),
     ) {
         Text(
-            text = "Select a category (Horizontal):",
-            color = MaterialTheme.colors.foreground,
+            text = "Select a category:",
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -107,7 +138,6 @@ fun Example() {
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Selected: $selectedOption",
-            color = MaterialTheme.colors.foreground,
             style = MaterialTheme.typography.bodySmall
         )
     }
@@ -117,5 +147,42 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## API Reference
+
+### `RadioGroup<T>`
+
+| Parameter        | Type                        | Default                       | Description                                                                      |
+| ---------------- | --------------------------- | ----------------------------- | -------------------------------------------------------------------------------- |
+| `selectedValue`  | `T`                         | —                             | The currently selected value in the group.                                       |
+| `onValueChange`  | `(T) -> Unit`               | —                             | Callback invoked when the selection changes.                                     |
+| `modifier`       | `Modifier`                  | `Modifier`                    | Modifier applied to the layout container.                                        |
+| `orientation`    | `LayoutOrientation`         | `LayoutOrientation.Vertical`  | Arranges children vertically (`Column`) or horizontally (`Row`).                 |
+| `content`        | `@Composable () -> Unit`    | —                             | The radio button items — typically `RadioButtonWithLabel` composables.           |
+
+### `RadioButtonWithLabel<T>`
+
+| Parameter        | Type                        | Default    | Description                                                                                     |
+| ---------------- | --------------------------- | ---------- | ----------------------------------------------------------------------------------------------- |
+| `value`          | `T`                         | —          | The value this radio button represents.                                                         |
+| `label`          | `String`                    | —          | Text label displayed next to the radio button.                                                  |
+| `selectedValue`  | `T`                         | —          | The currently selected value from the parent group. Used to derive the checked state.           |
+| `onValueChange`  | `(T) -> Unit`               | —          | Callback invoked when this radio button is selected.                                            |
+| `modifier`       | `Modifier`                  | `Modifier` | Modifier applied to the row container.                                                          |
+| `enabled`        | `Boolean`                   | `true`     | When false, the button and label are non-interactive and rendered in muted colors.              |
+| `colors`         | `RadioButtonColors?`        | `null`     | Custom Material3 `RadioButtonColors`. When `null`, KomoUI theme tokens are used automatically. |
+
+### `LayoutOrientation`
+
+| Value        | Description                                              |
+| ------------ | -------------------------------------------------------- |
+| `Vertical`   | Items stacked in a `Column` with 16 dp vertical spacing. |
+| `Horizontal` | Items placed in a `Row` with 16 dp horizontal spacing.   |
+
+### Behaviour notes
+
+- The entire row (radio button + label) is selectable via `Modifier.selectable` with `Role.RadioButton` for correct accessibility semantics.
+- `RadioButton` inside the row has `onClick = null` — the click is handled by the row's selectable modifier, preventing double-tap regions.
+- The label text color switches to `mutedForeground` automatically when `enabled = false`.
 
 </DocsPage>

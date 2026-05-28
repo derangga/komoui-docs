@@ -1,6 +1,6 @@
 ---
 title: Date Picker
-description: A date picker component with range and presets.
+description: A date picker component that combines a clickable input field with a popup calendar. Supports single date and date range selection, date restriction modes, and custom formatting.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -12,6 +12,8 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/DatePicker.mdx">
+
+`DatePicker` and `DateRangePicker` combine a clickable input field with a popup calendar built on the `Calendar` component. Tapping the input opens a `Popup`-anchored calendar; selecting a date (or completing a range) closes the popup and fires the callback.
 
 ## Usage
 
@@ -25,36 +27,26 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 ```kotlin
 import com.shadcn.ui.components.DatePicker
+import kotlinx.datetime.LocalDate
 
 @Composable
 fun Example() {
     var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(top = 24.dp, start = 16.dp, end = 16.dp)
-            .verticalScroll(rememberScrollState()),
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         DatePicker(
             selectedDate = selectedDate,
             onDateSelected = { selectedDate = it },
-            modifier = Modifier.width(280.dp),
-            placeholder = "Booking date",
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.DateRange,
-                    contentDescription = "Pick date",
-                    tint = MaterialTheme.colors.mutedForeground,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
+            modifier = Modifier.width(280.dp)
         )
-
         Text(
-            text = "Selected Date: ${selectedDate?.format(DateTimeFormatter.ofPattern("MMM dd, yyyy")) ?: "None"}",
-            color = MaterialTheme.colors.foreground,
-            style = MaterialTheme.typography.bodyLarge
+            text = "Selected: ${selectedDate ?: "None"}",
+            color = MaterialTheme.styles.foreground
         )
     }
 }
@@ -63,5 +55,258 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## With Leading Icon
+
+Pass a composable to `leadingIcon` to render an icon at the start of the input field. Use `trailingIcon` for the end.
+
+<TabPreview>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import com.shadcn.ui.components.DatePicker
+import kotlinx.datetime.LocalDate
+
+@Composable
+fun Example() {
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+
+    DatePicker(
+        selectedDate = selectedDate,
+        onDateSelected = { selectedDate = it },
+        modifier = Modifier.width(280.dp),
+        placeholder = "Booking date",
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Default.DateRange,
+                contentDescription = "Pick date",
+                tint = MaterialTheme.styles.mutedForeground,
+                modifier = Modifier.size(20.dp)
+            )
+        }
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Date Range Picker
+
+Use `DateRangePicker` to let the user select a start and end date. The first tap sets the start; the second tap completes the range and fires `onRangeSelected`. If the second tap is before the first, the dates are automatically swapped.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="datepicker" variant="range" assetExtension=".gif" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import com.shadcn.ui.components.DateRange
+import com.shadcn.ui.components.DateRangePicker
+import kotlinx.datetime.LocalDate
+
+@Composable
+fun Example() {
+    var selectedRange by remember { mutableStateOf<DateRange?>(null) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        DateRangePicker(
+            selectedRange = selectedRange,
+            onRangeSelected = { selectedRange = it },
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = "Select date range"
+        )
+        Text(
+            text = "From: ${selectedRange?.start ?: "-"}  To: ${selectedRange?.end ?: "-"}",
+            color = MaterialTheme.styles.foreground
+        )
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Date Selection Mode
+
+Use `dateSelectionMode` to restrict which dates the user can tap in the popup calendar. Disabled dates are rendered with a muted style.
+
+### Past or Today
+
+```kotlin
+import com.shadcn.ui.components.DatePicker
+import com.shadcn.ui.components.DateSelectionMode
+import kotlinx.datetime.LocalDate
+
+@Composable
+fun Example() {
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+
+    DatePicker(
+        selectedDate = selectedDate,
+        onDateSelected = { selectedDate = it },
+        modifier = Modifier.width(280.dp),
+        dateSelectionMode = DateSelectionMode.PastOrToday
+    )
+}
+```
+
+### Future or Today
+
+```kotlin
+import com.shadcn.ui.components.DatePicker
+import com.shadcn.ui.components.DateSelectionMode
+import kotlinx.datetime.LocalDate
+
+@Composable
+fun Example() {
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+
+    DatePicker(
+        selectedDate = selectedDate,
+        onDateSelected = { selectedDate = it },
+        modifier = Modifier.width(280.dp),
+        dateSelectionMode = DateSelectionMode.FutureOrToday
+    )
+}
+```
+
+`DateSelectionMode` values:
+
+| Mode | Clickable dates |
+|---|---|
+| `All` (default) | Every date in the grid |
+| `PastOrToday` | Today and any past date |
+| `FutureOrToday` | Today and any future date |
+
+## Custom Date Format
+
+Pass a `DateFormatter` to `dateTimeFormat` to control how the selected date is displayed in the input. When omitted, the default format is `"MMM dd, yyyy"` (e.g. `Jan 05, 2025`).
+
+> `DateFormatter` is a KMP-compatible alternative to `java.time.format.DateTimeFormatter`, which is not available in Kotlin Multiplatform targets.
+
+```kotlin
+import com.shadcn.ui.components.DateFormatter
+import com.shadcn.ui.components.DatePicker
+import kotlinx.datetime.LocalDate
+
+@Composable
+fun Example() {
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+
+    DatePicker(
+        selectedDate = selectedDate,
+        onDateSelected = { selectedDate = it },
+        modifier = Modifier.width(280.dp),
+        dateTimeFormat = DateFormatter.ofPattern("MMM dd, yyyy")
+    )
+}
+```
+
+## Custom Colors
+
+The `colors` parameter is forwarded to the internal `Calendar` popup. Use `CalendarDefaults.colors { copy(...) }` to override specific tokens.
+
+```kotlin
+import com.shadcn.ui.components.CalendarDefaults
+import com.shadcn.ui.components.DatePicker
+import kotlinx.datetime.LocalDate
+
+@Composable
+fun Example() {
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+    val accent = MaterialTheme.shadcnColors.chart3
+
+    DatePicker(
+        selectedDate = selectedDate,
+        onDateSelected = { selectedDate = it },
+        modifier = Modifier.width(280.dp),
+        colors = CalendarDefaults.colors {
+            copy(
+                dateCellBgStyle = dateCellBgStyle.copy(selectedDate = accent),
+                dateCellTextStyle = dateCellTextStyle.copy(todayUnselected = accent)
+            )
+        }
+    )
+}
+```
+
+See [Calendar — CalendarStyle](/docs/components/calendar) for the full token reference.
+
+---
+
+## API Reference
+
+### DatePicker
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the date picker container. |
+| `selectedDate` | `LocalDate?` | `null` | The currently selected date. |
+| `dateTimeFormat` | `DateFormatter?` | `null` | Format for the displayed date. Defaults to `"MMM dd, yyyy"`. |
+| `onDateSelected` | `(LocalDate) -> Unit` | — | Called when the user selects a date. |
+| `placeholder` | `String` | `"Pick a date"` | Text shown when no date is selected. |
+| `dateSelectionMode` | `DateSelectionMode` | `DateSelectionMode.All` | Controls which calendar dates are tappable. |
+| `colors` | `CalendarStyle` | `CalendarDefaults.colors()` | Color tokens forwarded to the popup calendar. |
+| `leadingIcon` | `@Composable (() -> Unit)?` | `null` | Composable rendered at the start of the input field. |
+| `trailingIcon` | `@Composable (() -> Unit)?` | `null` | Composable rendered at the end of the input field. |
+
+### DateRangePicker
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the date range picker container. |
+| `selectedRange` | `DateRange?` | `null` | The currently selected date range. |
+| `dateTimeFormat` | `DateFormatter?` | `null` | Format for the displayed dates. Defaults to `"MMM dd, yyyy"`. |
+| `onRangeSelected` | `(DateRange) -> Unit` | — | Called when the user completes a range selection. |
+| `placeholder` | `String` | `"Pick a date range"` | Text shown when no range is selected. |
+| `dateSelectionMode` | `DateSelectionMode` | `DateSelectionMode.All` | Controls which calendar dates are tappable. |
+| `colors` | `CalendarStyle` | `CalendarDefaults.colors()` | Color tokens forwarded to the popup calendar. |
+| `leadingIcon` | `@Composable (() -> Unit)?` | `null` | Composable rendered at the start of the input field. |
+| `trailingIcon` | `@Composable (() -> Unit)?` | `null` | Composable rendered at the end of the input field. |
+
+### DateFormatter
+
+A KMP-compatible date formatter. Use it instead of `java.time.format.DateTimeFormatter`, which is not available in Kotlin Multiplatform.
+
+| Member | Description |
+|---|---|
+| `DateFormatter.ofPattern(pattern)` | Creates a `DateFormatter` for the given pattern string. |
+| `format(date: LocalDate): String` | Formats a `LocalDate` to a display string. |
+
+Supported patterns:
+
+| Pattern | Example output |
+|---|---|
+| `"MMM dd, yyyy"` | `Jan 05, 2025` |
+
+### DateRange
+
+```kotlin
+data class DateRange(val start: LocalDate, val end: LocalDate)
+```
+
+Holds the start and end dates of a range selection. The `start` date is always less than or equal to `end` — the component swaps them automatically if the user taps end before start.
+
+### DateSelectionMode
+
+Enum that restricts which dates are tappable inside the popup calendar.
+
+| Value | Description |
+|---|---|
+| `All` | All dates are enabled (default). |
+| `PastOrToday` | Only today and past dates are enabled. |
+| `FutureOrToday` | Only today and future dates are enabled. |
 
 </DocsPage>

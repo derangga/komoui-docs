@@ -11,7 +11,9 @@ import { CodeWithFilename } from "@/components/mdx/code-with-filename"
 import { CodeConverter } from "@/components/docs/code-converter"
 
 
-<DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/BottomSheet.mdx">
+<DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Drawer.mdx">
+
+`Drawer` wraps Material3's `ModalBottomSheet` with a themed drag handle, header row, scrollable content slot, and an optional right-aligned footer. Unlike `Dialog`, the `title`, `description`, and `content` slots are required; only `footer` is optional.
 
 ## Usage
 
@@ -31,10 +33,17 @@ import com.shadcn.ui.components.DrawerCancel
 import com.shadcn.ui.components.DrawerDescription
 import com.shadcn.ui.components.DrawerTitle
 
+@Composable
 fun Example() {
-    var showDialog by remember { mutableStateOf(false) }
+    var showDrawer by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
     val scope = rememberCoroutineScope()
+
+    fun hideDrawer() {
+        scope.launch { sheetState.hide() }.invokeOnCompletion {
+            if (!sheetState.isVisible) showDrawer = false
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -42,67 +51,213 @@ fun Example() {
             .padding(start = 16.dp, end = 16.dp, top = 56.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = { showDialog = true }) {
+        Button(onClick = { showDrawer = true }) {
             Text("Open Drawer")
         }
-
-        Drawer(
-            open = showDialog,
-            onDismissRequest = { showDialog = false },
-            sheetState = sheetState,
-            title = { DrawerTitle { Text("Edit Profile") } },
-            description = {
-                DrawerDescription {
-                    Text("Make changes to your profile here. Click save when you're done.")
-                }
-            },
-            content = {
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                ) {
-                    Text(
-                        text = "This is the main content area of the drawer.",
-                        color = MaterialTheme.shadcnColors.foreground,
-                        fontSize = 16.sp
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "You can place any composables here, like input fields, lists, etc.",
-                        color = MaterialTheme.shadcnColors.mutedForeground,
-                        fontSize = 14.sp
-                    )
-                }
-            },
-            footer = {
-                DrawerCancel(onClick = {
-                    scope.launch { sheetState.hide() }.invokeOnCompletion {
-                        if (!sheetState.isVisible) {
-                            showDialog = false
-                        }
-                    }
-                }) {
-                    Text("Cancel")
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                DrawerAction(onClick = {
-                    scope.launch { sheetState.hide() }.invokeOnCompletion {
-                        if (!sheetState.isVisible) {
-                            showDialog = false
-                        }
-                    }
-                }) {
-                    Text("Save changes")
-                }
-            }
-        )
     }
+
+    Drawer(
+        open = showDrawer,
+        onDismissRequest = { showDrawer = false },
+        sheetState = sheetState,
+        title = { DrawerTitle { Text("Edit Profile") } },
+        description = {
+            DrawerDescription {
+                Text("Make changes to your profile here. Click save when you're done.")
+            }
+        },
+        content = {
+            Text(
+                text = "Name",
+                fontWeight = FontWeight.SemiBold,
+            )
+            Input(
+                value = nameTxt,
+                onValueChange = { nameTxt = it },
+                placeholder = "Enter your name",
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = "Username",
+                fontWeight = FontWeight.SemiBold,
+            )
+            Input(
+                value = userTxt,
+                onValueChange = { userTxt = it },
+                placeholder = "Enter your username",
+                singleLine = true
+            )
+        },
+        footer = {
+            DrawerCancel(onClick = ::hideDrawer) {
+                Text("Cancel")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            DrawerAction(onClick = ::hideDrawer) {
+                Text("Save changes")
+            }
+        }
+    )
 }
 ```
 
 </TabPreview.Panel>
 
 </TabPreview>
+
+## With Close Button
+
+Set `showCloseButton = true` to render an `×` icon button in the top-right corner of the header row, in addition to the drag-handle dismiss.
+
+```kotlin
+import com.shadcn.ui.components.Button
+import com.shadcn.ui.components.Drawer
+import com.shadcn.ui.components.DrawerDescription
+import com.shadcn.ui.components.DrawerTitle
+
+@Composable
+fun Example() {
+    var showDrawer by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Button(onClick = { showDrawer = true }) {
+            Text("Open Drawer")
+        }
+    }
+
+    Drawer(
+        open = showDrawer,
+        onDismissRequest = { showDrawer = false },
+        showCloseButton = true,
+        title = { DrawerTitle { Text("Notifications") } },
+        description = { DrawerDescription { Text("Manage your notification preferences.") } },
+        content = {
+            Text(
+                text = "No notifications yet.",
+                color = MaterialTheme.styles.mutedForeground
+            )
+        }
+    )
+}
+```
+
+## Prevent Back-Press Dismiss
+
+Set `shouldDismissOnBackPress = false` to require the user to explicitly tap a footer button to close the sheet.
+
+```kotlin
+import com.shadcn.ui.components.Button
+import com.shadcn.ui.components.Drawer
+import com.shadcn.ui.components.DrawerAction
+import com.shadcn.ui.components.DrawerDescription
+import com.shadcn.ui.components.DrawerTitle
+
+@Composable
+fun Example() {
+    var showDrawer by remember { mutableStateOf(false) }
+    val sheetState = rememberModalBottomSheetState()
+    val scope = rememberCoroutineScope()
+
+    fun hideDrawer() {
+        scope.launch { sheetState.hide() }.invokeOnCompletion {
+            if (!sheetState.isVisible) showDrawer = false
+        }
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Button(onClick = { showDrawer = true }) {
+            Text("Open Drawer")
+        }
+    }
+
+    Drawer(
+        open = showDrawer,
+        onDismissRequest = { showDrawer = false },
+        sheetState = sheetState,
+        shouldDismissOnBackPress = false,
+        title = { DrawerTitle { Text("Terms of Service") } },
+        description = { DrawerDescription { Text("Please read and accept to continue.") } },
+        content = {
+            Text(
+                text = "By using this app you agree to our terms...",
+                color = MaterialTheme.styles.mutedForeground
+            )
+        },
+        footer = {
+            DrawerAction(onClick = ::hideDrawer) {
+                Text("I Accept")
+            }
+        }
+    )
+}
+```
+
+---
+
+## API Reference
+
+### Drawer
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `open` | `Boolean` | — | Controls whether the bottom sheet is visible. |
+| `onDismissRequest` | `() -> Unit` | — | Called when the user swipes down or taps the scrim. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the inner content `Column`. |
+| `sheetState` | `SheetState` | `rememberModalBottomSheetState()` | Controls the sheet's animation state. Use with a coroutine scope to animate hide before clearing `open`. |
+| `title` | `@Composable () -> Unit` | — | Title slot. Wrap content in `DrawerTitle`. |
+| `description` | `@Composable () -> Unit` | — | Description slot. Wrap content in `DrawerDescription`. |
+| `content` | `@Composable ColumnScope.() -> Unit` | — | Main content slot between the header and footer. |
+| `footer` | `(@Composable RowScope.() -> Unit)?` | `null` | Optional footer slot. Rendered in a right-aligned `Row`. Typically contains `DrawerCancel` and `DrawerAction`. |
+| `showCloseButton` | `Boolean` | `false` | When `true`, renders an `×` icon button in the header row. |
+| `shouldDismissOnBackPress` | `Boolean` | `true` | When `false`, the back-press gesture will not dismiss the sheet. |
+
+### DrawerTitle
+
+Slot wrapper rendered inside the `title` parameter. Typography (18 sp, `SemiBold`, `foreground` color) is applied by the parent `Drawer` via `ProvideTextStyle`.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the title container. |
+| `content` | `@Composable () -> Unit` | — | Slot content — typically a `Text`. |
+
+### DrawerDescription
+
+Slot wrapper rendered inside the `description` parameter. Typography (14 sp, `mutedForeground` color) is applied by the parent `Drawer` via `ProvideTextStyle`.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the description container. |
+| `content` | `@Composable () -> Unit` | — | Slot content — typically a `Text`. |
+
+### DrawerAction
+
+A primary action button using `ButtonVariant.Default`. Place inside the `footer` slot.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the button. |
+| `content` | `@Composable () -> Unit` | — | Button label — typically a `Text`. |
+
+### DrawerCancel
+
+A secondary cancel button using `ButtonVariant.Outline`. Place inside the `footer` slot.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the button. |
+| `content` | `@Composable () -> Unit` | — | Button label — typically a `Text`. |
+
+> **Animating the sheet closed** — calling `showDrawer = false` directly snaps the sheet away without animation. For a smooth slide-out, use `scope.launch { sheetState.hide() }.invokeOnCompletion { if (!sheetState.isVisible) showDrawer = false }`.
 
 </DocsPage>

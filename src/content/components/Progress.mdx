@@ -13,7 +13,9 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Progress.mdx">
 
-## Usage
+## Basic Usage
+
+Pass a `Float` in the range `0.0` to `1.0` to `progress`. Values outside this range are clamped automatically, and the indicator animates smoothly to each new value.
 
 <TabPreview>
 
@@ -24,17 +26,31 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.shadcn.ui.components.Progress
+import kotlinx.coroutines.delay
 
 @Composable
 fun Example() {
     var progress by remember { mutableFloatStateOf(0.0f) }
 
-    // Simulate progress change
     LaunchedEffect(Unit) {
         while (true) {
             delay(1000)
-            progress = (progress + 0.1f) % 1.0f
+            progress = (progress + 0.1f) % 1.1f
         }
     }
 
@@ -45,11 +61,7 @@ fun Example() {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(
-            text = "Progress: ${(progress * 100).toInt()}%",
-            color = MaterialTheme.colors.foreground,
-            style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium)
-        )
+        Text("Progress: ${(progress * 100).toInt()}%")
         Progress(progress = progress)
     }
 }
@@ -58,5 +70,23 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## API Reference
+
+### `Progress`
+
+| Parameter        | Type       | Default                      | Description                                                                              |
+| ---------------- | ---------- | ---------------------------- | ---------------------------------------------------------------------------------------- |
+| `progress`       | `Float`    | —                            | Current progress as a fraction from `0.0` (empty) to `1.0` (full). Clamped automatically. |
+| `modifier`       | `Modifier` | `Modifier`                   | Modifier applied to the track container.                                                 |
+| `height`         | `Dp`       | `16.dp`                      | Height of the progress bar.                                                              |
+| `trackColor`     | `Color`    | `MaterialTheme.styles.muted` | Background color of the unfilled track.                                                  |
+| `indicatorColor` | `Color`    | `MaterialTheme.styles.primary` | Color of the filled indicator.                                                         |
+
+### Behaviour notes
+
+- Progress value is clamped to `[0f, 1f]` — passing values outside this range is safe.
+- The indicator animates to each new value using a 500 ms tween, so updates feel smooth without any extra setup.
+- Both the track and indicator use fully rounded corners (`RoundedCornerShape(radius.full)`).
 
 </DocsPage>

@@ -1,6 +1,6 @@
 ---
 title: Popover
-description: Displays rich content in a portal, triggered by a button.
+description: Displays rich content in a floating panel, triggered by a button.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -13,7 +13,9 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Popover.mdx">
 
-## Usage
+## Basic Usage
+
+`Popover` renders its `content` in a floating panel positioned just below the `trigger`. Pass `open` to control visibility and `onDismissRequest` to close the popover when the user taps outside.
 
 <TabPreview>
 
@@ -24,6 +26,19 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.shadcn.ui.components.Button
 import com.shadcn.ui.components.ButtonSize
 import com.shadcn.ui.components.ButtonVariant
@@ -40,6 +55,7 @@ fun Example() {
     ) {
         Popover(
             open = showPopover,
+            onDismissRequest = { showPopover = false },
             trigger = {
                 Button(onClick = { showPopover = !showPopover }) {
                     Text("Open Popover")
@@ -47,7 +63,7 @@ fun Example() {
             },
         ) {
             Column(
-                modifier = Modifier.padding(8.dp), // Inner padding for content
+                modifier = Modifier.padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -69,5 +85,24 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## API Reference
+
+### `Popover`
+
+| Parameter          | Type                        | Default  | Description                                                                                   |
+| ------------------ | --------------------------- | -------- | --------------------------------------------------------------------------------------------- |
+| `open`             | `Boolean`                   | —        | Controls whether the popover panel is visible.                                                |
+| `modifier`         | `Modifier`                  | `Modifier` | Modifier applied to the inner content `Column` inside the floating panel.                   |
+| `onDismissRequest` | `(() -> Unit)?`             | `null`   | Called when the user taps outside the popover. Use this to set `open = false`.                |
+| `trigger`          | `@Composable () -> Unit`    | —        | The composable that anchors the popover. The panel appears just below this content.           |
+| `content`          | `@Composable () -> Unit`    | —        | The content rendered inside the floating panel.                                               |
+
+### Behaviour notes
+
+- The panel is positioned **below the trigger** with a fixed 12 dp gap, horizontally centered relative to it.
+- Content is automatically wrapped in `ProvideTextStyle` with the theme's `popoverForeground` color and 14 sp font size, so plain `Text` calls match the popover style without extra styling.
+- The popover uses Jetpack Compose's `Popup`, so it renders outside the normal layout hierarchy and is not clipped by parent containers.
+- `open` is fully controlled — you own the state. Toggle it in `trigger`'s `onClick` and reset it in `onDismissRequest`.
 
 </DocsPage>

@@ -13,7 +13,9 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Skeleton.mdx">
 
-## Usage
+## Basic Usage
+
+`Skeleton` renders a shimmer animation that sweeps left-to-right indefinitely. Size and shape it with `modifier` and `shape` to match the real content it stands in for.
 
 <TabPreview>
 
@@ -24,6 +26,19 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.shadcn.ui.components.Skeleton
 
 @Composable
@@ -39,23 +54,18 @@ fun Example() {
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Skeleton(
-                modifier = Modifier
-                    .size(64.dp),
+                modifier = Modifier.size(64.dp),
                 shape = CircleShape
             )
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Skeleton(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(20.dp)
                 )
-
                 Skeleton(
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(0.7f)
                         .height(20.dp)
                 )
             }
@@ -67,5 +77,25 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## API Reference
+
+### `Skeleton`
+
+| Parameter                | Type                  | Default                                    | Description                                                                                        |
+| ------------------------ | --------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| `modifier`               | `Modifier`            | `Modifier`                                 | Controls size, padding, and position of the skeleton. Set `width` and `height` here.               |
+| `shape`                  | `RoundedCornerShape`  | `RoundedCornerShape(MaterialTheme.radius.md)` | Shape of the skeleton. Pass `CircleShape` for avatar placeholders.                              |
+| `baseColor`              | `Color`               | `MaterialTheme.styles.muted`               | The base background color of the shimmer track.                                                    |
+| `shimmerColor`           | `Color`               | `MaterialTheme.styles.muted.copy(alpha = 0.5f)` | The highlight color that sweeps across the skeleton.                                          |
+| `animationDurationMillis`| `Int`                 | `1500`                                     | Duration of one full shimmer sweep in milliseconds.                                                |
+| `gradientWidthRatio`     | `Float`               | `0.5f`                                     | Width of the shimmer highlight relative to the skeleton's width. Higher values produce a wider glow. |
+
+### Behaviour notes
+
+- The shimmer is a `Brush.linearGradient` that transitions `baseColor → shimmerColor → baseColor` swept left to right.
+- The animation is `infiniteRepeatable` with `RepeatMode.Restart` and `LinearEasing` for a consistent sweep pace.
+- `gradientWidthRatio` controls how "wide" the highlight band is — `0.3f` gives a narrow streak, `0.8f` a broad wave.
+- There is no "loaded" state — replace the `Skeleton` composable with the real content once data is available.
 
 </DocsPage>
