@@ -19,7 +19,7 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-<Preview name="collapsible" variant="default" />
+<Preview name="collapsible" variant="default" assetExtension=".gif"/>
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
@@ -47,36 +47,35 @@ import com.shadcn.ui.themes.styles
 @Composable
 fun Example() {
     var open by remember { mutableStateOf(false) }
+    val styles = MaterialTheme.styles
+    val radius = MaterialTheme.radius
 
     Collapsible(
-        open = open,
-        onOpenChange = { open = it },
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
+        open = open, onOpenChange = { open = it }, modifier = Modifier.fillMaxWidth()
     ) {
         CollapsibleTrigger(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(radius.md))
+                .background(styles.secondary).padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "@peduarte starred 3 repositories",
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.styles.foreground,
+                text = if (open) "Hide details" else "Show details",
+                color = styles.foreground,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                modifier = Modifier.align(Alignment.CenterVertically)
             )
-            Text(
-                text = if (open) "Hide" else "Show",
-                color = MaterialTheme.styles.mutedForeground,
-            )
+            Icon(Icons.Default.UnfoldMore, contentDescription = "")
         }
-
         CollapsibleContent(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+                .clip(RoundedCornerShape(radius.md))
+                .border(1.dp, styles.border, RoundedCornerShape(radius.md)).padding(16.dp)
         ) {
-            Text("@radix-ui/primitives", color = MaterialTheme.styles.foreground)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text("@radix-ui/colors", color = MaterialTheme.styles.foreground)
-            Spacer(modifier = Modifier.height(4.dp))
-            Text("@stitches/react", color = MaterialTheme.styles.foreground)
+            Text(
+                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+                color = styles.foreground,
+                style = MaterialTheme.typography.bodyMedium
+            )
         }
     }
 }
@@ -86,14 +85,14 @@ fun Example() {
 
 </TabPreview>
 
-## With chevron indicator
+## With icon
 
 Animate an `Icon` rotation with `animateFloatAsState` to give a visual hint of the open direction.
 
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-<Preview name="collapsible" variant="with-chevron" />
+<Preview name="collapsible" variant="with-icon" assetExtension=".gif"/>
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
@@ -124,38 +123,57 @@ import com.shadcn.ui.themes.styles
 @Composable
 fun Example() {
     var open by remember { mutableStateOf(false) }
-    val rotation by animateFloatAsState(targetValue = if (open) 180f else 0f)
+    val styles = MaterialTheme.styles
+    val radius = MaterialTheme.radius
+
+    val rows = listOf(
+        "@radix-ui/primitives",
+        "@radix-ui/colors",
+        "@stitches/react",
+        "@floating-ui/react",
+        "@tanstack/react-query"
+    )
 
     Collapsible(
-        open = open,
-        onOpenChange = { open = it },
-        modifier = Modifier.fillMaxWidth().padding(16.dp),
+        open = open, onOpenChange = { open = it }, modifier = Modifier.fillMaxWidth()
     ) {
-        CollapsibleTrigger(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text(
-                text = "Can I use this in my project?",
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.styles.foreground,
+                text = rows.first(),
+                color = styles.foreground,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(radius.md))
+                    .border(1.dp, styles.border, RoundedCornerShape(radius.md)).padding(12.dp)
             )
-            Icon(
-                imageVector = Icons.Filled.KeyboardArrowDown,
-                contentDescription = if (open) "Collapse" else "Expand",
-                tint = MaterialTheme.styles.mutedForeground,
-                modifier = Modifier.rotate(rotation),
-            )
-        }
 
-        CollapsibleContent(
-            modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-        ) {
-            Text(
-                text = "Yes. Free to use for personal and commercial projects. No attribution required.",
-                color = MaterialTheme.styles.mutedForeground,
-            )
+            CollapsibleContent(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    rows.drop(1).forEach { item ->
+                        Text(
+                            text = item,
+                            color = styles.foreground,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(radius.md))
+                                .border(1.dp, styles.border, RoundedCornerShape(radius.md))
+                                .padding(12.dp)
+                        )
+                    }
+                }
+            }
+
+            CollapsibleTrigger(
+                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(radius.md))
+                    .background(styles.secondary).padding(horizontal = 16.dp, vertical = 10.dp)
+            ) {
+                Text(
+                    text = if (open) "Show less" else "Show ${rows.size - 1} more",
+                    color = styles.foreground,
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+            }
         }
     }
 }

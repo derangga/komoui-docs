@@ -52,7 +52,7 @@ fun Example() {
                     BarPoint("Jan", 186f),
                     BarPoint("Feb", 305f),
                     BarPoint("Mar", 237f),
-                    BarPoint("Apr", 73f),
+                    BarPoint("Apr", 273f),
                     BarPoint("May", 209f),
                     BarPoint("Jun", 214f),
                 ),
@@ -88,7 +88,7 @@ BarChart(
             color = MaterialTheme.styles.chart1,
             points = listOf(
                 BarPoint("Jan", 186f), BarPoint("Feb", 305f), BarPoint("Mar", 237f),
-                BarPoint("Apr", 73f),  BarPoint("May", 209f), BarPoint("Jun", 214f),
+                BarPoint("Apr", 273f), BarPoint("May", 209f), BarPoint("Jun", 214f),
             ),
         ),
         BarSeries(
@@ -126,19 +126,20 @@ Set `showValueLabels = true` to draw the formatted y‑value above each bar afte
 BarChart(
     series = listOf(
         BarSeries(
-            key = "revenue",
-            label = "Revenue",
-            color = MaterialTheme.styles.chart1,
+            key = "visitors",
+            label = "Visitors",
+            color = MaterialTheme.styles.chart3,
             points = listOf(
-                BarPoint("Q1", 12_400f),
-                BarPoint("Q2", 18_900f),
-                BarPoint("Q3", 15_700f),
-                BarPoint("Q4", 22_300f),
+                BarPoint("Jan", 186f),
+                BarPoint("Feb", 305f),
+                BarPoint("Mar", 237f),
+                BarPoint("Apr", 273f),
+                BarPoint("May", 209f),
+                BarPoint("Jun", 214f),
             ),
         ),
     ),
     showValueLabels = true,
-    barCornerRadius = 6.dp,
     chartHeight = 240.dp,
 )
 ```
@@ -154,23 +155,29 @@ Enable `scrollable = true` for dense data sets. The plot scrolls horizontally, t
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-<Preview name="chart" variant="bar-scrollable" />
+<Preview name="chart" variant="bar-scrollable" assetExtension=".gif"/>
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
 
 ```kotlin
+val weeks = (1..24).map { "W$it" }
+val visits = listOf(
+    120f, 145f, 132f, 168f, 192f, 174f, 205f, 188f,
+    221f, 240f, 215f, 198f, 230f, 262f, 248f, 271f,
+    290f, 275f, 302f, 318f, 295f, 311f, 340f, 358f,
+)
+
 BarChart(
     series = listOf(
         BarSeries(
-            key = "visitors",
-            label = "Visitors",
-            color = MaterialTheme.styles.chart1,
-            points = (1..30).map { BarPoint("D$it", (50..400).random().toFloat()) },
+            key = "visits",
+            label = "Visits",
+            color = MaterialTheme.styles.chart2,
+            points = weeks.zip(visits).map { (w, v) -> BarPoint(w, v) },
         ),
     ),
     scrollable = true,
-    minColumnWidth = 48.dp,
     chartHeight = 240.dp,
 )
 ```
@@ -186,50 +193,6 @@ A line chart that connects points with cubic Bézier segments by default (`smoot
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-<Preview name="chart" variant="line-smooth" />
-</TabPreview.Panel>
-
-<TabPreview.Panel name="Code">
-
-```kotlin
-import com.shadcn.ui.components.charts.LineChart
-import com.shadcn.ui.components.charts.LineSeries
-import com.shadcn.ui.components.charts.LinePoint
-
-@Composable
-fun Example() {
-    LineChart(
-        series = listOf(
-            LineSeries(
-                key = "desktop",
-                label = "Desktop",
-                color = MaterialTheme.styles.chart1,
-                points = listOf(
-                    LinePoint("Jan", 186f),
-                    LinePoint("Feb", 305f),
-                    LinePoint("Mar", 237f),
-                    LinePoint("Apr", 73f),
-                    LinePoint("May", 209f),
-                    LinePoint("Jun", 214f),
-                ),
-            ),
-        ),
-        chartHeight = 240.dp,
-    )
-}
-```
-
-</TabPreview.Panel>
-
-</TabPreview>
-
-### Straight segments
-
-Set `smooth = false` to draw straight line segments between points instead of cubic curves.
-
-<TabPreview>
-
-<TabPreview.Panel name="Preview">
 <Preview name="chart" variant="line-straight" />
 </TabPreview.Panel>
 
@@ -237,21 +200,17 @@ Set `smooth = false` to draw straight line segments between points instead of cu
 
 ```kotlin
 LineChart(
+    modifier = Modifier.fillMaxWidth(),
+    chartHeight = 240.dp,
     series = listOf(
         LineSeries(
-            key = "latency",
-            label = "p95 latency (ms)",
-            color = MaterialTheme.styles.chart3,
-            points = listOf(
-                LinePoint("00:00", 120f), LinePoint("04:00", 95f),
-                LinePoint("08:00", 180f), LinePoint("12:00", 240f),
-                LinePoint("16:00", 210f), LinePoint("20:00", 140f),
-            ),
+            key = "visitors",
+            label = "Visitors",
+            color = MaterialTheme.styles.chart1,
+            points = months.zip(listOf(186f, 305f, 237f, 273f, 209f, 214f))
+                .map { (m, v) -> LinePoint(m, v) },
         ),
     ),
-    smooth = false,
-    strokeWidth = 2.5.dp,
-    chartHeight = 240.dp,
 )
 ```
 
@@ -300,6 +259,56 @@ LineChart(
 
 </TabPreview>
 
+### Scrollable, multi-series
+
+Set `scrollable = true` for dense time series. The y‑axis stays pinned, and each x‑category is given at least `minColumnWidth` of room. Drag‑scrub tooltips are disabled in this mode.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="line-scrollable" assetExtension=".gif"/>
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+val weeks = (1..24).map { "W$it" }
+val a = listOf(
+    120f, 145f, 132f, 168f, 192f, 174f, 205f, 188f,
+    221f, 240f, 215f, 198f, 230f, 262f, 248f, 271f,
+    290f, 275f, 302f, 318f, 295f, 311f, 340f, 358f,
+)
+val b = listOf(
+    60f, 78f, 71f, 90f, 105f, 92f, 118f, 110f,
+    132f, 145f, 128f, 119f, 140f, 158f, 149f, 165f,
+    178f, 168f, 188f, 196f, 182f, 190f, 210f, 220f,
+)
+
+LineChart(
+    series = listOf(
+        LineSeries(
+            key = "desktop",
+            label = "Desktop",
+            color = MaterialTheme.styles.chart1,
+            points = weeks.zip(a).map { (w, v) -> LinePoint(w, v) },
+        ),
+        LineSeries(
+            key = "mobile",
+            label = "Mobile",
+            color = MaterialTheme.styles.chart2,
+            points = weeks.zip(b).map { (w, v) -> LinePoint(w, v) },
+        ),
+    ),
+    scrollable = true,
+    showLegend = true,
+    chartHeight = 240.dp,
+)
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
 ## Area Chart
 
 An area chart renders a stroked line over a filled region down to the baseline. By default the fill is a vertical gradient from the series color (40% alpha at top) to transparent at the baseline.
@@ -322,8 +331,8 @@ fun Example() {
     AreaChart(
         series = listOf(
             AreaSeries(
-                key = "desktop",
-                label = "Desktop",
+                key = "visitors",
+                label = "Visitors",
                 color = MaterialTheme.styles.chart1,
                 points = listOf(
                     AreaPoint("Jan", 186f),
