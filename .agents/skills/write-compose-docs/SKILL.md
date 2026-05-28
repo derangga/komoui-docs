@@ -1,6 +1,6 @@
 ---
 name: write-compose-docs
-description: Write comprehensive MDX documentation for shadcn-compose (Kotlin Multiplatform Jetpack Compose) components. Use when the user asks to write, update, or improve docs for a component in this project — especially when given a GitHub source file URL or asked to make docs "comprehensive". Handles fetching Kotlin source via gh CLI, reading existing MDX patterns, and producing complete docs with usage sections, API reference tables, and correct KMP code examples.
+description: Write comprehensive MDX documentation for KomoUI (Kotlin Modern UI) components. Use when the user asks to write, update, or improve docs for a component in this project — especially when given a GitHub source file URL or asked to make docs "comprehensive". Handles fetching Kotlin source via gh CLI, reading existing MDX patterns, and producing complete docs with usage sections, API reference tables, and correct KMP code examples.
 ---
 
 # Write Compose Docs
@@ -8,7 +8,7 @@ description: Write comprehensive MDX documentation for shadcn-compose (Kotlin Mu
 ## Quick start
 
 ```
-User: "write comprehensive docs for Button based on https://github.com/derangga/shadcn-ui-kmp/blob/master/..."
+User: "write comprehensive docs for Button based on https://github.com/derangga/komoui/blob/master/..."
 ```
 
 1. Fetch the Kotlin source with `gh api`
@@ -21,7 +21,7 @@ User: "write comprehensive docs for Button based on https://github.com/derangga/
 
 ```bash
 # Fetch Kotlin source (convert GitHub blob URL → API path)
-gh api repos/derangga/shadcn-ui-kmp/contents/<path-to-file>.kt --jq '.content' | base64 -d
+gh api repos/derangga/komoui/contents/<path-to-file>.kt --jq '.content' | base64 -d
 ```
 
 Read the existing component MDX at `src/content/components/<Component>.mdx`.
