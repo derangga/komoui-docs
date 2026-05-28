@@ -26,7 +26,7 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.DatePicker
+import com.komoui.components.DatePicker
 import kotlinx.datetime.LocalDate
 
 @Composable
@@ -65,7 +65,7 @@ Pass a composable to `leadingIcon` to render an icon at the start of the input f
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.DatePicker
+import com.komoui.components.DatePicker
 import kotlinx.datetime.LocalDate
 
 @Composable
@@ -106,8 +106,8 @@ Use `DateRangePicker` to let the user select a start and end date. The first tap
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.DateRange
-import com.shadcn.ui.components.DateRangePicker
+import com.komoui.components.DateRange
+import com.komoui.components.DateRangePicker
 import kotlinx.datetime.LocalDate
 
 @Composable
@@ -145,8 +145,8 @@ Use `dateSelectionMode` to restrict which dates the user can tap in the popup ca
 ### Past or Today
 
 ```kotlin
-import com.shadcn.ui.components.DatePicker
-import com.shadcn.ui.components.DateSelectionMode
+import com.komoui.components.DatePicker
+import com.komoui.components.DateSelectionMode
 import kotlinx.datetime.LocalDate
 
 @Composable
@@ -165,8 +165,8 @@ fun Example() {
 ### Future or Today
 
 ```kotlin
-import com.shadcn.ui.components.DatePicker
-import com.shadcn.ui.components.DateSelectionMode
+import com.komoui.components.DatePicker
+import com.komoui.components.DateSelectionMode
 import kotlinx.datetime.LocalDate
 
 @Composable
@@ -197,8 +197,8 @@ Pass a `DateFormatter` to `dateTimeFormat` to control how the selected date is d
 > `DateFormatter` is a KMP-compatible alternative to `java.time.format.DateTimeFormatter`, which is not available in Kotlin Multiplatform targets.
 
 ```kotlin
-import com.shadcn.ui.components.DateFormatter
-import com.shadcn.ui.components.DatePicker
+import com.komoui.components.DateFormatter
+import com.komoui.components.DatePicker
 import kotlinx.datetime.LocalDate
 
 @Composable
@@ -219,8 +219,8 @@ fun Example() {
 The `colors` parameter is forwarded to the internal `Calendar` popup. Use `CalendarDefaults.colors { copy(...) }` to override specific tokens.
 
 ```kotlin
-import com.shadcn.ui.components.CalendarDefaults
-import com.shadcn.ui.components.DatePicker
+import com.komoui.components.CalendarDefaults
+import com.komoui.components.DatePicker
 import kotlinx.datetime.LocalDate
 
 @Composable

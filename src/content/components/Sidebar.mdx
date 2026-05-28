@@ -86,16 +86,16 @@ Compose `Sidebar` from `SidebarHeader`, `SidebarContent` (with one or more `Side
 <CodeWithFilename filename="AppSidebar.kt">
 
 ```kotlin
-import com.shadcn.ui.components.sidebar.Sidebar
-import com.shadcn.ui.components.sidebar.SidebarContent
-import com.shadcn.ui.components.sidebar.SidebarFooter
-import com.shadcn.ui.components.sidebar.SidebarGroup
-import com.shadcn.ui.components.sidebar.SidebarGroupContent
-import com.shadcn.ui.components.sidebar.SidebarGroupLabel
-import com.shadcn.ui.components.sidebar.SidebarHeader
-import com.shadcn.ui.components.sidebar.SidebarMenu
-import com.shadcn.ui.components.sidebar.SidebarMenuButton
-import com.shadcn.ui.components.sidebar.SidebarRail
+import com.komoui.components.sidebar.Sidebar
+import com.komoui.components.sidebar.SidebarContent
+import com.komoui.components.sidebar.SidebarFooter
+import com.komoui.components.sidebar.SidebarGroup
+import com.komoui.components.sidebar.SidebarGroupContent
+import com.komoui.components.sidebar.SidebarGroupLabel
+import com.komoui.components.sidebar.SidebarHeader
+import com.komoui.components.sidebar.SidebarMenu
+import com.komoui.components.sidebar.SidebarMenuButton
+import com.komoui.components.sidebar.SidebarRail
 
 @Composable
 fun AppSidebar(
@@ -183,9 +183,9 @@ Place `AppSidebar` and `SidebarInset` as direct children of `SidebarProvider`. T
 <CodeWithFilename filename="Layout.kt">
 
 ```kotlin
-import com.shadcn.ui.components.sidebar.SidebarInset
-import com.shadcn.ui.components.sidebar.SidebarProvider
-import com.shadcn.ui.components.sidebar.SidebarTrigger
+import com.komoui.components.sidebar.SidebarInset
+import com.komoui.components.sidebar.SidebarProvider
+import com.komoui.components.sidebar.SidebarTrigger
 
 @Composable
 fun SidebarLayoutPage() {
