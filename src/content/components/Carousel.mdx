@@ -1,6 +1,6 @@
 ---
 title: Carousel
-description: A carousel with motion and swipe.
+description: A swipeable pager-based carousel with horizontal and vertical orientations, auto-scroll, dot indicators, fixed-size pages, and optional external state control.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -10,10 +10,11 @@ import { Steps } from "@/components/mdx/steps"
 import { CodeWithFilename } from "@/components/mdx/code-with-filename"
 import { CodeConverter } from "@/components/docs/code-converter"
 
-
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Carousel.mdx">
 
-## Basic Usage
+`Carousel` wraps Compose Foundation's `HorizontalPager` / `VerticalPager` with snapping behavior, an animated dot indicator, and optional auto-scroll. Each page receives a zero-based `position` index via the `content` lambda. Pass an external `PagerState` to drive the carousel programmatically.
+
+## Basic usage
 
 <TabPreview>
 
@@ -24,31 +25,36 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Card
-import com.shadcn.ui.components.Carousel
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.komoui.components.Card
+import com.komoui.components.Carousel
 
+private val images = listOf(
+    "https://picsum.photos/seed/a/800/400",
+    "https://picsum.photos/seed/b/800/400",
+    "https://picsum.photos/seed/c/800/400",
+)
+
+@Composable
 fun Example() {
-    val verticalAsset = listOf(R.drawable.store_1, R.drawable.store_2, R.drawable.store_3)
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Carousel(
-            itemCount = verticalAsset.size,
-            modifier = Modifier.fillMaxWidth(),
-            showIndicator = true
-        ) { position ->
-            Card {
-                AsyncImage(
-                    verticalAsset[position],
-                    contentDescription = "asset-${position}",
-                    modifier = Modifier
-                        .height(400.dp)
-                )
-            }
+    Carousel(
+        itemCount = images.size,
+        modifier = Modifier.fillMaxWidth(),
+        showIndicator = true,
+    ) { position ->
+        Card {
+            AsyncImage(
+                model = images[position],
+                contentDescription = null,
+                modifier = Modifier.height(200.dp),
+            )
         }
     }
 }
@@ -58,7 +64,9 @@ fun Example() {
 
 </TabPreview>
 
-## Auto Scroll
+## Auto scroll
+
+Set `autoScroll = true` to advance pages automatically. Use `autoScrollDelayMillis` to control the pause between transitions. Auto-scroll pauses while the user is dragging.
 
 <TabPreview>
 
@@ -69,32 +77,37 @@ fun Example() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Card
-import com.shadcn.ui.components.Carousel
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.komoui.components.Card
+import com.komoui.components.Carousel
 
+private val images = listOf(
+    "https://picsum.photos/seed/a/800/400",
+    "https://picsum.photos/seed/b/800/400",
+    "https://picsum.photos/seed/c/800/400",
+)
+
+@Composable
 fun Example() {
-    val verticalAsset = listOf(R.drawable.store_1, R.drawable.store_2, R.drawable.store_3)
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Carousel(
-            itemCount = verticalAsset.size,
-            autoScroll = true,
-            showIndicator = true,
-            autoScrollDelayMillis = 1000L,
-            modifier = Modifier.fillMaxWidth()
-        ) { position ->
-            Card {
-                AsyncImage(
-                    verticalAsset[position],
-                    contentDescription = "asset-${position}",
-                    modifier = Modifier.height(400.dp)
-                )
-            }
+    Carousel(
+        itemCount = images.size,
+        modifier = Modifier.fillMaxWidth(),
+        showIndicator = true,
+        autoScroll = true,
+        autoScrollDelayMillis = 2000L,
+    ) { position ->
+        Card {
+            AsyncImage(
+                model = images[position],
+                contentDescription = null,
+                modifier = Modifier.height(200.dp),
+            )
         }
     }
 }
@@ -104,7 +117,9 @@ fun Example() {
 
 </TabPreview>
 
-## Customize Width Item
+## Fixed-width pages
+
+Use `pageSize = PageSize.Fixed(...)` to show partial adjacent pages and hint at horizontal scrollability. Pair with `itemSpacing` for the gap between pages.
 
 <TabPreview>
 
@@ -115,32 +130,38 @@ fun Example() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Card
-import com.shadcn.ui.components.Carousel
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.pager.PageSize
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import com.komoui.components.Card
+import com.komoui.components.Carousel
 
+private val images = listOf(
+    "https://picsum.photos/seed/a/600/300",
+    "https://picsum.photos/seed/b/600/300",
+    "https://picsum.photos/seed/c/600/300",
+)
+
+@Composable
 fun Example() {
-    val horizontalAsset = listOf(R.drawable.store_h_1, R.drawable.store_h_2, R.drawable.store_h_3)
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Carousel(
-            itemCount = horizontalAsset.size,
-            showIndicator = true,
-            pageSize = PageSize.Fixed(300.dp),
-            modifier = Modifier.fillMaxWidth(),
-            itemSpacing = 12.dp
-        ) { position ->
-            Card {
-                AsyncImage(
-                    horizontalAsset[position],
-                    contentDescription = "asset-${position}",
-                    modifier = Modifier.height(200.dp)
-                )
-            }
+    Carousel(
+        itemCount = images.size,
+        modifier = Modifier.fillMaxWidth(),
+        showIndicator = true,
+        pageSize = PageSize.Fixed(280.dp),
+        itemSpacing = 12.dp,
+    ) { position ->
+        Card {
+            AsyncImage(
+                model = images[position],
+                contentDescription = null,
+                modifier = Modifier.height(160.dp),
+            )
         }
     }
 }
@@ -149,5 +170,51 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## API reference
+
+### Carousel
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `containerModifier` | `Modifier` | `Modifier` | Applied to the outer `Column` that wraps the pager and indicator. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the pager itself. |
+| `state` | `PagerState?` | `null` | External pager state. An internal state is created when `null`. |
+| `autoScroll` | `Boolean` | `false` | When `true`, advances pages automatically after `autoScrollDelayMillis`. Pauses during drag. |
+| `autoScrollDelayMillis` | `Long` | `3000` | Milliseconds between auto-scroll advances. |
+| `orientation` | `CarouselOrientation` | `CarouselOrientation.Horizontal` | Scroll axis. |
+| `componentSpacing` | `Dp` | `8.dp` | Vertical gap between the pager and the indicator row. |
+| `contentPadding` | `PaddingValues` | `PaddingValues(12.dp, 0.dp)` | Padding applied inside the pager viewport, revealing adjacent pages. |
+| `showIndicator` | `Boolean` | `false` | Whether to render the dot indicator below the pager. |
+| `indicatorStyle` | `IndicatorStyle` | `CarouselDefaults.carouselIndicator()` | Visual style of the dot indicator. |
+| `itemSpacing` | `Dp` | `8.dp` | Gap between individual pages. |
+| `itemCount` | `Int` | — | Total number of pages. |
+| `pageSize` | `PageSize` | `PageSize.Fill` | Size strategy for each page. Use `PageSize.Fixed(dp)` for partial-page peek. |
+| `onItemChanged` | `((Int) -> Unit)?` | `null` | Callback invoked with the new page index whenever the current page changes. |
+| `content` | `@Composable PagerScope.(position: Int) -> Unit` | — | Content for each page, keyed by zero-based `position`. |
+
+### CarouselOrientation
+
+| Value | Description |
+|---|---|
+| `Horizontal` | Pages scroll left and right (default). |
+| `Vertical` | Pages scroll up and down. |
+
+### IndicatorStyle
+
+| Field | Type | Description |
+|---|---|---|
+| `activeColor` | `Color` | Fill color of the active dot. |
+| `inactiveColor` | `Color` | Fill color of inactive dots. |
+| `activeSize` | `Dp` | Diameter of the active dot. |
+| `inactiveSize` | `Dp` | Diameter of inactive dots. |
+| `shape` | `Shape` | Shape of each dot. Defaults to `CircleShape`. |
+| `spacing` | `Dp` | Padding around each dot. |
+
+### CarouselDefaults
+
+| Member | Description |
+|---|---|
+| `carouselIndicator()` | Returns an `IndicatorStyle` using `foreground` (active) and `mutedForeground` (inactive) with 12 dp / 8 dp sizes and `CircleShape`. |
 
 </DocsPage>

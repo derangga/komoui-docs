@@ -15,16 +15,16 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 ## Configuration
 
-To use a Sonner (snackbar) shadcn compose, you need to use `Scaffold` as a root composable component. The Sonner will be registered as global component. This is to prevent a common issue where Snackbars disappear when navigating between screens in Compose because each screen can have its own `Scaffold`. This idea was inspired by [Philipp Lackner](https://youtu.be/KFazs62lIkE?si=k88c6SstKwGdLWC6)
+To use a Sonner (snackbar) komoui, you need to use `Scaffold` as a root composable component. The Sonner will be registered as global component. This is to prevent a common issue where Snackbars disappear when navigating between screens in Compose because each screen can have its own `Scaffold`. This idea was inspired by [Philipp Lackner](https://youtu.be/KFazs62lIkE?si=k88c6SstKwGdLWC6)
 
 ```kotlin
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import com.shadcn.ui.themes.ShadcnTheme
-import com.shadcn.ui.components.sooner.ObserveAsEvent
-import com.shadcn.ui.components.sooner.SonnerHost
-import com.shadcn.ui.components.sooner.SonnerProvider
-import com.shadcn.ui.components.sooner.showSonner
+import com.komoui.themes.ShadcnTheme
+import com.komoui.components.sooner.ObserveAsEvent
+import com.komoui.components.sooner.SonnerHost
+import com.komoui.components.sooner.SonnerProvider
+import com.komoui.components.sooner.showSonner
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +59,22 @@ class MainActivity : ComponentActivity() {
 }
 ```
 
+## ObserveAsEvent
+
+`ObserveAsEvent` is a lifecycle-aware composable utility that collects a `Flow` and treats each emission as a one-time event. It only collects when the composable is in the `STARTED` lifecycle state, preventing duplicate deliveries on recomposition or configuration changes.
+
+```kotlin
+import com.komoui.components.sooner.ObserveAsEvent
+import com.komoui.components.sooner.SonnerProvider
+
+ObserveAsEvent(
+    flow = SonnerProvider.events,
+    onEvent = { event ->
+        // handle event
+    }
+)
+```
+
 ## Basic Usage
 
 <TabPreview>
@@ -70,9 +86,9 @@ class MainActivity : ComponentActivity() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Button
-import com.shadcn.ui.components.sooner.SonnerAction
-import com.shadcn.ui.components.sooner.SonnerProvider
+import com.komoui.components.Button
+import com.komoui.components.sooner.SonnerAction
+import com.komoui.components.sooner.SonnerProvider
 
 @Composable
 fun ExamplePage() {
@@ -118,9 +134,9 @@ fun ExamplePage() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Button
-import com.shadcn.ui.components.sooner.SonnerAction
-import com.shadcn.ui.components.sooner.SonnerProvider
+import com.komoui.components.Button
+import com.komoui.components.sooner.SonnerAction
+import com.komoui.components.sooner.SonnerProvider
 
 @Composable
 fun ExamplePage() {
@@ -167,9 +183,9 @@ fun ExamplePage() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Button
-import com.shadcn.ui.components.sooner.SonnerAction
-import com.shadcn.ui.components.sooner.SonnerProvider
+import com.komoui.components.Button
+import com.komoui.components.sooner.SonnerAction
+import com.komoui.components.sooner.SonnerProvider
 
 @Composable
 fun ExamplePage() {
@@ -206,5 +222,120 @@ fun ExamplePage() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+---
+
+## API Reference
+
+### SonnerProvider
+
+Singleton object for dispatching snackbar events. Call its suspend functions from a coroutine scope.
+
+| Function | Parameters | Description |
+| --- | --- | --- |
+| `showMessage` | See below | Shows a `Default`-variant snackbar |
+| `showError` | See below | Shows a `Destructive`-variant snackbar |
+
+Both `showMessage` and `showError` share the same parameter signature:
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `message` | `String` | — | Primary message text |
+| `subMessage` | `String?` | `null` | Optional secondary message displayed below the primary |
+| `action` | `SonnerAction?` | `null` | Optional action button configuration |
+| `withDismissAction` | `Boolean` | `false` | Whether to show a dismiss (close) button |
+| `duration` | `SnackbarDuration` | `Short` | How long the snackbar stays visible |
+
+### SonnerEvent
+
+Data class representing a snackbar event dispatched through `SonnerProvider`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `message` | `String` | — | Primary message text |
+| `subMessage` | `String?` | `null` | Optional secondary message |
+| `action` | `SonnerAction?` | `null` | Optional action button |
+| `withDismissAction` | `Boolean` | `false` | Whether to show a dismiss button |
+| `variant` | `SonnerVariant` | `Default` | Visual variant of the snackbar |
+| `duration` | `SnackbarDuration` | `Short` | Display duration |
+
+### SonnerAction
+
+Data class defining an action button for the snackbar.
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `actionText` | `String` | Label displayed on the action button |
+| `execute` | `() -> Unit` | Callback invoked when the action button is clicked |
+
+### SonnerVariant
+
+Enum controlling the visual style of the snackbar.
+
+| Value | Description |
+| --- | --- |
+| `Default` | Standard snackbar using theme snackbar/foreground colors |
+| `Destructive` | Error/warning style using theme destructive colors |
+
+### Sonner
+
+The core snackbar composable. Rendered automatically by `SonnerHost` — you typically do not call this directly.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the snackbar |
+| `title` | `String` | — | Primary message text |
+| `subtitle` | `String?` | `null` | Optional secondary message |
+| `actionLabel` | `String?` | `null` | Label for the optional action button |
+| `onActionClick` | `(() -> Unit)?` | `null` | Callback for the action button |
+| `onDismiss` | `(() -> Unit)?` | `null` | Callback for the dismiss button |
+| `variant` | `SonnerVariant` | `Default` | Visual variant |
+
+### SonnerHost
+
+A `SnackbarHost` wrapper that renders `SonnerVisualsImpl` visuals using `Sonner` and falls back to the default Material 3 `Snackbar` for any other visuals.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `hostState` | `SnackbarHostState` | — | The host state controlling snackbar display |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the host |
+
+### ObserveAsEvent
+
+Lifecycle-aware composable that collects a `Flow` and invokes `onEvent` for each emission only while the composable is in the `STARTED` state.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `flow` | `Flow<T>` | — | The flow of events to observe |
+| `key1` | `Any?` | `null` | Optional key — restarts the effect when its value changes |
+| `key2` | `Any?` | `null` | Optional key — restarts the effect when its value changes |
+| `onEvent` | `(T) -> Unit` | — | Callback invoked for each emitted event |
+
+### SonnerVisualsImpl
+
+`SnackbarVisuals` implementation that carries Sonner-specific data. Used internally by `SonnerHost`.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| `message` | `String` | — | Primary message text |
+| `actionLabel` | `String?` | `null` | Optional action button label |
+| `withDismissAction` | `Boolean` | `false` | Whether to show a dismiss button |
+| `duration` | `SnackbarDuration` | — | Display duration |
+| `subMessage` | `String?` | `null` | Optional secondary message |
+| `variant` | `SonnerVariant` | `Default` | Visual variant |
+
+#### `SnackbarHostState.showSonner`
+
+Extension function that converts a `SonnerEvent` into `SonnerVisualsImpl` and shows it via the host state.
+
+```kotlin
+suspend fun SnackbarHostState.showSonner(event: SonnerEvent): SnackbarResult
+```
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `event` | `SonnerEvent` | The event containing message, variant, and action configuration |
+
+Returns `SnackbarResult` — `ActionPerformed` if the action button was tapped, `Dismissed` otherwise.
 
 </DocsPage>

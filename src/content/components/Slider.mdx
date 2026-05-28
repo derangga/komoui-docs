@@ -13,7 +13,9 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Slider.mdx">
 
-## Usage
+## Basic Usage
+
+`Slider` wraps Material3's `Slider` with a custom thumb (20 dp circle with a primary border) and an 8 dp rounded track. It fills its parent width by default.
 
 <TabPreview>
 
@@ -24,7 +26,20 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Slider
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.komoui.components.Slider
 
 @Composable
 fun Example() {
@@ -36,16 +51,13 @@ fun Example() {
             .padding(top = 24.dp, start = 16.dp, end = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Slider(
             value = sliderValue,
             onValueChange = { sliderValue = it },
-            valueRange = 0f..20f,
-            steps = 0
+            valueRange = 0f..100f,
         )
         Text(
             text = "Value: %.0f".format(sliderValue),
-            color = MaterialTheme.colors.foreground,
             fontSize = 14.sp
         )
     }
@@ -55,5 +67,26 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## API Reference
+
+### `Slider`
+
+| Parameter       | Type                                      | Default     | Description                                                                                                     |
+| --------------- | ----------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------- |
+| `value`         | `Float`                                   | —           | The current value of the slider.                                                                                |
+| `onValueChange` | `(Float) -> Unit`                         | —           | Callback invoked continuously as the user drags the thumb.                                                      |
+| `modifier`      | `Modifier`                                | `Modifier`  | Modifier applied to the slider. The component applies `fillMaxWidth()` and `height(20.dp)` internally.          |
+| `valueRange`    | `ClosedFloatingPointRange<Float>`         | `0f..1f`    | The range of selectable values.                                                                                 |
+| `steps`         | `Int`                                     | `0`         | Number of discrete stops between start and end. `0` means continuous. Must be `≥ 0`.                           |
+| `enabled`       | `Boolean`                                 | `true`      | When false, interaction is disabled and the component renders at reduced opacity.                               |
+| `colors`        | `SliderColors?`                           | `null`      | Custom Material3 `SliderColors`. When `null`, KomoUI theme tokens are applied automatically.                    |
+
+### Behaviour notes
+
+- The thumb is a 20 dp circle with a 2 dp `primary`-colored border and a `background`-colored fill.
+- The track is 8 dp tall with fully rounded corners; the active (left) portion uses `primary` and the inactive (right) portion uses `secondary`.
+- When `enabled = false`, both active and inactive track colors are rendered at 50% alpha; the thumb uses `mutedForeground` at 50% alpha.
+- `steps = 0` produces a continuous slider; `steps = N` adds `N` tick marks between the endpoints and snaps to `N + 2` positions total (start + N steps + end).
 
 </DocsPage>

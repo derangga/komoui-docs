@@ -13,6 +13,8 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Tabs.mdx">
 
+`Tabs` combines `TabsList` and a content callback in one composable. Pass a `List<String>` for labels and a `content` lambda that receives the selected tab index. The active tab animates its background and text color over 200 ms.
+
 ## Usage
 
 <TabPreview>
@@ -24,12 +26,10 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Button
-import com.shadcn.ui.components.ButtonSize
-import com.shadcn.ui.components.ButtonVariant
-import com.shadcn.ui.components.Input
-import com.shadcn.ui.components.Tabs
-import com.shadcn.ui.components.TabsContent
+import com.komoui.components.Button
+import com.komoui.components.Input
+import com.komoui.components.Tabs
+import com.komoui.components.TabsContent
 
 @Composable
 fun Example() {
@@ -49,15 +49,9 @@ fun Example() {
         ) { tabIndex ->
             TabsContent {
                 when (tabIndex) {
-                    0 -> {
-                        AccountTab()
-                    }
-                    1 -> {
-                        PasswordTab()
-                    }
-                    2 -> {
-                        SettingsTab()
-                    }
+                    0 -> AccountTab()
+                    1 -> PasswordTab()
+                    2 -> SettingsTab()
                 }
             }
         }
@@ -82,13 +76,10 @@ fun AccountTab() {
         Text(
             text = "Make changes to your account here. Click save when you're done.",
             fontSize = 14.sp,
-            color = MaterialTheme.colors.mutedForeground
+            color = MaterialTheme.styles.mutedForeground
         )
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "Name",
-            fontWeight = FontWeight.SemiBold,
-        )
+        Text(text = "Name", fontWeight = FontWeight.SemiBold)
         Input(
             value = nameTxt,
             onValueChange = { nameTxt = it },
@@ -96,10 +87,7 @@ fun AccountTab() {
             singleLine = true
         )
         Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = "Username",
-            fontWeight = FontWeight.SemiBold,
-        )
+        Text(text = "Username", fontWeight = FontWeight.SemiBold)
         Input(
             value = userNameTxt,
             onValueChange = { userNameTxt = it },
@@ -107,9 +95,7 @@ fun AccountTab() {
             singleLine = true
         )
         Spacer(modifier = Modifier.height(12.dp))
-        Button(onClick = {}) {
-            Text("Save changes")
-        }
+        Button(onClick = {}) { Text("Save changes") }
     }
 }
 
@@ -120,16 +106,12 @@ fun PasswordTab() {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Text(
-            text = "Password",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
-        )
+        Text(text = "Password", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Change your password here. After saving, you'll be logged out.",
             fontSize = 14.sp,
-            color = MaterialTheme.colors.mutedForeground
+            color = MaterialTheme.styles.mutedForeground
         )
     }
 }
@@ -141,16 +123,12 @@ fun SettingsTab() {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Text(
-            text = "Settings",
-            fontSize = 18.sp,
-            fontWeight = FontWeight.SemiBold,
-        )
+        Text(text = "Settings", fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = "Manage your account settings and preferences.",
             fontSize = 14.sp,
-            color = MaterialTheme.colors.mutedForeground
+            color = MaterialTheme.styles.mutedForeground
         )
     }
 }
@@ -159,5 +137,104 @@ fun SettingsTab() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## Standalone TabsList
+
+Use `TabsList` alone when you want to manage the content area yourself — for example when the content lives in a `LazyColumn` or a `Pager`.
+
+```kotlin
+import com.komoui.components.TabsList
+
+@Composable
+fun Example() {
+    var selectedTab by remember { mutableIntStateOf(0) }
+    val tabs = listOf("Overview", "Analytics", "Reports")
+
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        TabsList(
+            selectedTabIndex = selectedTab,
+            onTabSelected = { selectedTab = it },
+            tabs = tabs,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        when (selectedTab) {
+            0 -> Text("Overview content", color = MaterialTheme.styles.foreground)
+            1 -> Text("Analytics content", color = MaterialTheme.styles.foreground)
+            2 -> Text("Reports content", color = MaterialTheme.styles.foreground)
+        }
+    }
+}
+```
+
+## Custom Triggers
+
+Use `TabsTrigger` directly when you need non-uniform tab widths or a fully custom tab bar layout.
+
+```kotlin
+import com.komoui.components.TabsTrigger
+
+@Composable
+fun Example() {
+    var selectedTab by remember { mutableIntStateOf(0) }
+    val tabs = listOf("Short", "A Longer Tab", "X")
+
+    Row(modifier = Modifier.fillMaxWidth()) {
+        tabs.forEachIndexed { index, label ->
+            TabsTrigger(
+                text = label,
+                isSelected = selectedTab == index,
+                onClick = { selectedTab = index },
+                modifier = Modifier.wrapContentWidth()
+            )
+        }
+    }
+}
+```
+
+---
+
+## API Reference
+
+### Tabs
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `selectedTabIndex` | `Int` | — | Index of the currently active tab. |
+| `onTabSelected` | `(Int) -> Unit` | — | Called when the user taps a tab, with the new index. |
+| `tabs` | `List<String>` | — | Ordered list of tab labels rendered in `TabsList`. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the outer `Column` that wraps the list and content. |
+| `content` | `@Composable (tabIndex: Int) -> Unit` | — | Content lambda. Receives the selected tab index on each recomposition. Wrap with `TabsContent` for standard top padding. |
+
+### TabsList
+
+The tab bar without the content area. Use when you need finer control over layout.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `selectedTabIndex` | `Int` | — | Index of the currently active tab. |
+| `onTabSelected` | `(Int) -> Unit` | — | Called when the user taps a tab. |
+| `tabs` | `List<String>` | — | Ordered list of tab labels. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the `Box` container. |
+
+### TabsTrigger
+
+An individual animated tab button. Use directly for non-uniform widths or fully custom tab bars.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `text` | `String` | — | Label displayed in the tab. |
+| `isSelected` | `Boolean` | — | Controls the active background and text color. |
+| `onClick` | `() -> Unit` | — | Called when the tab is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the tab button container. |
+
+### TabsContent
+
+A thin wrapper that applies `fillMaxWidth()` and 8 dp top padding to the content area. Optional — use it for consistent spacing between the tab bar and content.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the `Box` content container. |
+| `content` | `@Composable () -> Unit` | — | The panel content for the active tab. |
 
 </DocsPage>

@@ -13,6 +13,8 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/DropdownMenu.mdx">
 
+`DropdownMenu` wraps the trigger and the popover in a single composable. Pass the anchor element to the `trigger` slot and menu items as `content`. The menu floats below the trigger with a 4 dp gap by default.
+
 ## Usage
 
 <TabPreview>
@@ -24,52 +26,46 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.DropdownMenu
-import com.shadcn.ui.components.DropdownMenuItem
-import com.shadcn.ui.components.DropdownMenuSeparator
+import com.komoui.components.Button
+import com.komoui.components.DropdownMenu
+import com.komoui.components.DropdownMenuItem
+import com.komoui.components.DropdownMenuSeparator
 
 @Composable
 fun Example() {
     var showDropdown by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(top = 24.dp, start = 16.dp, end = 16.dp)
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+    DropdownMenu(
+        expanded = showDropdown,
+        onDismissRequest = { showDropdown = false },
+        trigger = {
+            Button(onClick = { showDropdown = !showDropdown }) {
+                Text("Open Menu")
+            }
+        }
     ) {
-        DropdownMenu(
-            expanded = showDropdown,
-            onDismissRequest = { showDropdown = false },
-            trigger = {
-                Button(onClick = { showDropdown = !showDropdown }) {
-                    Text("Open Menu")
-                }
-            }
-        ) {
-            DropdownMenuItem(onClick = { showDropdown = false /* Handle New Team */ }) {
-                Text("New Team")
-            }
-            DropdownMenuItem(onClick = { showDropdown = false /* Handle Settings */ }) {
-                Text("Settings")
-            }
-            DropdownMenuItem(onClick = { showDropdown = false /* Handle Keyboard shortcuts */ }) {
-                Text("Keyboard shortcuts")
-            }
-            DropdownMenuSeparator()
-            DropdownMenuItem(onClick = { showDropdown = false /* Handle GitHub */ }) {
-                Text("GitHub")
-            }
-            DropdownMenuItem(onClick = { showDropdown = false /* Handle Support */ }) {
-                Text("Support")
-            }
-            DropdownMenuItem(onClick = { }, enabled = false) {
-                Text("API (Disabled)")
-            }
-            DropdownMenuSeparator()
-            DropdownMenuItem(onClick = { showDropdown = false /* Handle Log out */ }) {
-                Text("Log out")
-            }
+        DropdownMenuItem(onClick = { showDropdown = false }) {
+            Text("New Team")
+        }
+        DropdownMenuItem(onClick = { showDropdown = false }) {
+            Text("Settings")
+        }
+        DropdownMenuItem(onClick = { showDropdown = false }) {
+            Text("Keyboard shortcuts")
+        }
+        DropdownMenuSeparator()
+        DropdownMenuItem(onClick = { showDropdown = false }) {
+            Text("GitHub")
+        }
+        DropdownMenuItem(onClick = { showDropdown = false }) {
+            Text("Support")
+        }
+        DropdownMenuItem(onClick = { }, enabled = false) {
+            Text("API (Disabled)")
+        }
+        DropdownMenuSeparator()
+        DropdownMenuItem(onClick = { showDropdown = false }) {
+            Text("Log out")
         }
     }
 }
@@ -78,5 +74,125 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## With Icons
+
+`DropdownMenuItem`'s `content` runs in a `RowScope`, so you can place an icon before or after the label without any extra wrapper.
+
+```kotlin
+import com.komoui.components.Button
+import com.komoui.components.DropdownMenu
+import com.komoui.components.DropdownMenuItem
+import com.komoui.components.DropdownMenuSeparator
+
+@Composable
+fun Example() {
+    var showDropdown by remember { mutableStateOf(false) }
+
+    DropdownMenu(
+        expanded = showDropdown,
+        onDismissRequest = { showDropdown = false },
+        trigger = {
+            Button(onClick = { showDropdown = !showDropdown }) {
+                Text("My Account")
+            }
+        }
+    ) {
+        DropdownMenuItem(onClick = { showDropdown = false }) {
+            Icon(
+                imageVector = Icons.Default.Person,
+                contentDescription = null,
+                modifier = Modifier.size(16.dp),
+                tint = MaterialTheme.styles.foreground
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Profile")
+        }
+        DropdownMenuItem(onClick = { showDropdown = false }) {
+            Icon(
+                imageVector = Icons.Default.Settings,
+                contentDescription = null,
+                modifier = Modifier.size(16.dp),
+                tint = MaterialTheme.styles.foreground
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Settings")
+        }
+        DropdownMenuSeparator()
+        DropdownMenuItem(onClick = { showDropdown = false }) {
+            Icon(
+                imageVector = Icons.AutoMirrored.Filled.Logout,
+                contentDescription = null,
+                modifier = Modifier.size(16.dp),
+                tint = MaterialTheme.styles.foreground
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Log out")
+        }
+    }
+}
+```
+
+## Custom Offset
+
+Use `offset` to shift the menu relative to its anchor. The default is `DpOffset(0.dp, 4.dp)` (4 dp below, flush left).
+
+```kotlin
+import androidx.compose.ui.unit.DpOffset
+import com.komoui.components.Button
+import com.komoui.components.DropdownMenu
+import com.komoui.components.DropdownMenuItem
+
+@Composable
+fun Example() {
+    var showDropdown by remember { mutableStateOf(false) }
+
+    DropdownMenu(
+        expanded = showDropdown,
+        onDismissRequest = { showDropdown = false },
+        offset = DpOffset(x = 8.dp, y = 8.dp),
+        trigger = {
+            Button(onClick = { showDropdown = !showDropdown }) {
+                Text("Open Menu")
+            }
+        }
+    ) {
+        DropdownMenuItem(onClick = { showDropdown = false }) { Text("Option A") }
+        DropdownMenuItem(onClick = { showDropdown = false }) { Text("Option B") }
+    }
+}
+```
+
+---
+
+## API Reference
+
+### DropdownMenu
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `expanded` | `Boolean` | — | Controls whether the menu is visible. |
+| `onDismissRequest` | `() -> Unit` | — | Called when the user taps outside the menu. |
+| `trigger` | `@Composable () -> Unit` | — | The anchor element that opens the menu (e.g., a `Button`). Rendered directly above the popup. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the menu container. |
+| `offset` | `DpOffset` | `DpOffset(0.dp, 4.dp)` | Pixel offset of the popup from the trigger anchor. |
+| `content` | `@Composable ColumnScope.() -> Unit` | — | Menu items slot — typically `DropdownMenuItem` and `DropdownMenuSeparator`. |
+
+### DropdownMenuItem
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onClick` | `() -> Unit` | — | Called when the item is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the item container. |
+| `enabled` | `Boolean` | `true` | When `false`, the item is non-interactive and rendered with `mutedForeground` color. |
+| `content` | `@Composable RowScope.() -> Unit` | — | Item content. Runs in a `RowScope` — place icons and labels side by side without an extra wrapper. |
+
+### DropdownMenuSeparator
+
+A full-width 1 dp horizontal divider using `styles.muted`. Accepts an optional `modifier`.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the separator spacer. |
 
 </DocsPage>

@@ -1,0 +1,266 @@
+---
+title: Input OTP
+description: Accessible one-time password input that renders individual character slots backed by a single hidden text field, with built-in digit filtering, separator groups, error state, and blinking caret.
+---
+
+import { DocsPage } from "@/components/mdx/docs-page"
+import { TabPreview } from "@/components/mdx/tab-preview"
+import { Preview } from "@/components/mdx/preview"
+import { Steps } from "@/components/mdx/steps"
+import { CodeWithFilename } from "@/components/mdx/code-with-filename"
+import { CodeConverter } from "@/components/docs/code-converter"
+
+<DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/InputOTP.mdx">
+
+`InputOTP` renders a row of character-slot boxes driven by a single invisible `BasicTextField`. The component automatically filters input to digits when `keyboardType` is numeric and trims the value to `length`. Each slot animates its border colour on focus, error, and blur transitions, and shows a blinking caret when it is the active slot. Separator groups can be inserted at arbitrary positions using `separatorIndices`.
+
+## Basic usage
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="input-otp" variant="default" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.komoui.components.InputOTP
+
+@Composable
+fun Example() {
+    var otp by remember { mutableStateOf("") }
+
+    InputOTP(
+        value = otp,
+        onValueChange = { otp = it },
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## With separator
+
+Pass a `Set<Int>` of zero-based slot indices to `separatorIndices`. A separator is rendered **after** each listed index. The example below splits a 6-digit code into two groups of three.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="input-otp" variant="with-separator" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.komoui.components.InputOTP
+
+@Composable
+fun Example() {
+    var otp by remember { mutableStateOf("") }
+
+    InputOTP(
+        value = otp,
+        onValueChange = { otp = it },
+        separatorIndices = setOf(2),
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+> The separator is not rendered after the last slot even if its index appears in `separatorIndices`.
+
+## Custom length
+
+Use `length` to control how many slots are displayed. Input beyond that length is silently trimmed by `onValueChange`.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="input-otp" variant="custom-length" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.komoui.components.InputOTP
+
+@Composable
+fun Example() {
+    var otp by remember { mutableStateOf("") }
+
+    InputOTP(
+        value = otp,
+        onValueChange = { otp = it },
+        length = 4,
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Error state
+
+Set `isError = true` to highlight all slot borders with the theme's `destructive` colour. Pair it with an error message below the field for full accessibility.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="input-otp" variant="error" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.komoui.components.InputOTP
+import com.komoui.themes.styles
+
+@Composable
+fun Example() {
+    var otp by remember { mutableStateOf("123") }
+    val isError = otp.length < 6
+
+    Column {
+        InputOTP(
+            value = otp,
+            onValueChange = { otp = it },
+            length = 6,
+            isError = isError,
+        )
+
+        if (isError) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = "Please enter the full 6-digit code.",
+                color = MaterialTheme.styles.destructive,
+                fontSize = 12.sp,
+            )
+        }
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Disabled
+
+Set `enabled = false` to prevent all interaction. The entire row is rendered at 50 % alpha.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="input-otp" variant="disabled" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import com.komoui.components.InputOTP
+
+@Composable
+fun Example() {
+    val otp = remember { mutableStateOf("123") }
+
+    InputOTP(
+        value = otp.value,
+        onValueChange = { otp.value = it },
+        length = 6,
+        enabled = false,
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## API reference
+
+### InputOTP
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `value` | `String` | — | Current OTP string. |
+| `onValueChange` | `(String) -> Unit` | — | Called with the filtered and length-trimmed new value. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the root `BasicTextField`. |
+| `length` | `Int` | `6` | Number of character slots to render. |
+| `enabled` | `Boolean` | `true` | When `false`, disables interaction and renders at 50 % alpha. |
+| `isError` | `Boolean` | `false` | When `true`, slot borders switch to the `destructive` colour. |
+| `keyboardType` | `KeyboardType` | `KeyboardType.NumberPassword` | Soft-keyboard type. Numeric types automatically filter non-digit input. |
+| `keyboardActions` | `KeyboardActions` | `KeyboardActions.Default` | Callbacks for IME actions (e.g. `onDone`). |
+| `separatorIndices` | `Set<Int>` | `emptySet()` | Zero-based slot indices **after** which to render the separator. |
+| `separator` | `@Composable () -> Unit` | `{ InputOTPSeparator() }` | Composable placed between slot groups. |
+| `slotSize` | `Dp` | `InputOTPDefaults.SlotSize` (40 dp) | Width and height of each square slot. |
+| `colors` | `InputOTPStyle` | `InputOTPDefaults.colors()` | Theme colours for the component. |
+
+### InputOTPDefaults
+
+| Member | Description |
+|---|---|
+| `SlotSize: Dp` | Default slot size — `40.dp`. |
+| `SlotGap: Dp` | Gap between adjacent slots — `0.dp` (slots are flush). |
+| `GroupGap: Dp` | Gap added on each side of a separator — `8.dp`. |
+| `colors(): InputOTPStyle` | Returns the default theme-derived colour set. |
+| `colors(overrides)` | Accepts a lambda `InputOTPStyle.() -> InputOTPStyle` for partial overrides via `copy(...)`. |
+
+### InputOTPStyle
+
+| Field | Type | Description |
+|---|---|---|
+| `background` | `Color` | Slot background. Defaults to `Color.Unspecified` (transparent). |
+| `text` | `Color` | Character text colour when enabled. |
+| `disableText` | `Color` | Character text colour when disabled. |
+| `activeRing` | `Color` | Semi-transparent ring drawn around the active slot (ring colour at 50 % alpha). |
+| `caret` | `Color` | Blinking caret colour in the active empty slot. |
+| `border` | `InputOTPBorderStyle` | Border colours for each slot state. |
+
+### InputOTPBorderStyle
+
+| Field | Type | Description |
+|---|---|---|
+| `default` | `Color` | Border colour when the slot is idle. |
+| `focus` | `Color` | Border colour of the active slot. |
+| `error` | `Color` | Border colour when `isError = true`. |
+
+</DocsPage>

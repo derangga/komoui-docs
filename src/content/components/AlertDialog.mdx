@@ -1,6 +1,6 @@
 ---
 title: Alert Dialog
-description: A modal dialog that interrupts the user with important content and expects a response.
+description: A modal dialog that interrupts the user with important content and expects a response, with slots for title, description, and action buttons.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -10,38 +10,50 @@ import { Steps } from "@/components/mdx/steps"
 import { CodeWithFilename } from "@/components/mdx/code-with-filename"
 import { CodeConverter } from "@/components/docs/code-converter"
 
-
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/AlertDialog.mdx">
 
-## Usage
+`AlertDialog` wraps the Compose `Dialog` primitive and renders a card-shaped surface with a title, description, and a right-aligned actions row. Visibility is fully controlled by the caller via the `open` parameter. Use `AlertDialogAction` for the primary button and `AlertDialogCancel` for the secondary button — both are pre-styled `Button` wrappers.
+
+## Basic usage
 
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-
 <Preview name="alert-dialog" variant="default" assetExtension=".gif" />
-
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.AlertDialog
-import com.shadcn.ui.components.AlertDialogAction
-import com.shadcn.ui.components.AlertDialogCancel
-import com.shadcn.ui.components.AlertDialogDescription
-import com.shadcn.ui.components.AlertDialogTitle
-import com.shadcn.ui.components.Button
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.AlertDialog
+import com.komoui.components.AlertDialogAction
+import com.komoui.components.AlertDialogCancel
+import com.komoui.components.AlertDialogDescription
+import com.komoui.components.AlertDialogTitle
+import com.komoui.components.Button
 
 @Composable
-fun ExampleDialog() {
+fun Example() {
     var showDialog by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Button(onClick = { showDialog = true }) {
             Text("Open Alert Dialog")
@@ -51,27 +63,25 @@ fun ExampleDialog() {
     AlertDialog(
         open = showDialog,
         onDismissRequest = { showDialog = false },
-        title = { AlertDialogTitle { Text("Are you absolutely sure?") } },
+        title = {
+            AlertDialogTitle {
+                Text("Are you absolutely sure?")
+            }
+        },
         description = {
             AlertDialogDescription {
                 Text("This action cannot be undone. This will permanently delete your account and remove your data from our servers.")
             }
         },
         actions = {
-            AlertDialogCancel(onClick = {
-                Toast.makeText(context, "Cancel clicked", Toast.LENGTH_SHORT).show()
-                showDialog = false
-            }) {
+            AlertDialogCancel(onClick = { showDialog = false }) {
                 Text("Cancel")
             }
             Spacer(modifier = Modifier.width(8.dp))
-            AlertDialogAction(onClick = {
-                Toast.makeText(context, "Continue clicked", Toast.LENGTH_SHORT).show()
-                showDialog = false
-            }) {
+            AlertDialogAction(onClick = { showDialog = false }) {
                 Text("Continue")
             }
-        }
+        },
     )
 }
 ```
@@ -79,5 +89,56 @@ fun ExampleDialog() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## API reference
+
+### AlertDialog
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onDismissRequest` | `() -> Unit` | — | Called when the user taps outside the dialog or presses back. |
+| `open` | `Boolean` | — | Controls whether the dialog is shown. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the dialog's content card. |
+| `title` | `@Composable () -> Unit` | — | Header slot; conventionally wraps content in `AlertDialogTitle`. |
+| `description` | `@Composable () -> Unit` | — | Body slot; conventionally wraps content in `AlertDialogDescription`. |
+| `actions` | `@Composable () -> Unit` | — | Footer slot rendered in a right-aligned `Row`. Place `AlertDialogCancel` and `AlertDialogAction` here. |
+
+### AlertDialogTitle
+
+Thin `Column` wrapper that provides consistent spacing for the dialog title. Use inside the `title` slot.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the wrapper column. |
+| `content` | `@Composable () -> Unit` | — | Title content. |
+
+### AlertDialogDescription
+
+Thin `Column` wrapper for the dialog body text. Use inside the `description` slot.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the wrapper column. |
+| `content` | `@Composable () -> Unit` | — | Description content. |
+
+### AlertDialogAction
+
+Primary action button backed by `Button` with `ButtonVariant.Default`. Place inside the `actions` slot.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the button. |
+| `content` | `@Composable () -> Unit` | — | Button label content. |
+
+### AlertDialogCancel
+
+Secondary cancel button backed by `Button` with `ButtonVariant.Outline`. Place inside the `actions` slot.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the button. |
+| `content` | `@Composable () -> Unit` | — | Button label content. |
 
 </DocsPage>

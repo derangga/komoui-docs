@@ -1,6 +1,6 @@
 ---
 title: Avatar
-description: An image element with a fallback for representing the user.
+description: A circular image element backed by Coil3 with automatic fallback text, custom loading, and error states.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -10,10 +10,11 @@ import { Steps } from "@/components/mdx/steps"
 import { CodeWithFilename } from "@/components/mdx/code-with-filename"
 import { CodeConverter } from "@/components/docs/code-converter"
 
-
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Avatar.mdx">
 
-## Basic Usage
+`Avatar` renders a circular, border-outlined container that loads a remote image via Coil3's `SubcomposeAsyncImage`. When `model` is `null` or the image fails to load, the component falls back to displaying `fallbackText` (typically initials) on the theme's muted background. Custom composables can be supplied for the loading and error states independently.
+
+## Basic usage
 
 <TabPreview>
 
@@ -24,22 +25,16 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Avatar
+import androidx.compose.runtime.Composable
+import com.komoui.components.Avatar
 
 @Composable
 fun Example() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Avatar(
-            imageUrl = "https://avatars.githubusercontent.com/u/124599?v=4",
-            contentDescription = "Avatar",
-            fallbackText = "CN"
-        )
-    }
+    Avatar(
+        model = "https://avatars.githubusercontent.com/u/124599?v=4",
+        contentDescription = "User avatar",
+        fallbackText = "CN",
+    )
 }
 ```
 
@@ -47,7 +42,9 @@ fun Example() {
 
 </TabPreview>
 
-## With Text Fallback
+## Fallback text
+
+Pass `model = null` to always show the initials placeholder. Useful for users who have not set a profile picture.
 
 <TabPreview>
 
@@ -58,20 +55,15 @@ fun Example() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Avatar
+import androidx.compose.runtime.Composable
+import com.komoui.components.Avatar
 
 @Composable
 fun Example() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Avatar(
-            fallbackText = "CN"
-        )
-    }
+    Avatar(
+        model = null,
+        fallbackText = "CN",
+    )
 }
 ```
 
@@ -79,35 +71,31 @@ fun Example() {
 
 </TabPreview>
 
-## With Custom Fallback
+## Custom size
+
+Use `size` to scale the avatar. The fallback text size scales proportionally at 40 % of the given `size`.
 
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-<Preview name="avatar" variant="with-custom-fallback" />
+<Preview name="avatar" variant="custom-size" />
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Avatar
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Avatar
 
 @Composable
 fun Example() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Avatar(
-            imageUrl = "https://invalid-image-url.com/nonexistent.png",
-            contentDescription = "Invalid Avatar",
-            fallbackText = "ERR",
-            errorContent = {
-                Text("❌")
-            }
-        )
+    Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Avatar(model = null, fallbackText = "SM", size = 32.dp)
+        Avatar(model = null, fallbackText = "MD")
+        Avatar(model = null, fallbackText = "LG", size = 56.dp)
     }
 }
 ```
@@ -116,7 +104,9 @@ fun Example() {
 
 </TabPreview>
 
-## With Loading
+## Custom loading state
+
+Supply `loadingContent` to replace the default fallback-text placeholder shown while the image is being fetched.
 
 <TabPreview>
 
@@ -127,30 +117,78 @@ fun Example() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Avatar
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Avatar
 
 @Composable
 fun Example() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Avatar(
-            imageUrl = "https://picsum.photos/200/300",
-            contentDescription = "Random Image",
-            fallbackText = "RI",
-            loadingContent = {
-                CircularProgressIndicator(modifier = Modifier.size(24.dp), color = MaterialTheme.shadcnColors.primary)
-            }
-        )
-    }
+    Avatar(
+        model = "https://picsum.photos/200/300",
+        contentDescription = "Random image",
+        fallbackText = "RI",
+        loadingContent = {
+            CircularProgressIndicator(modifier = Modifier.size(20.dp))
+        },
+    )
 }
 ```
 
 </TabPreview.Panel>
 
 </TabPreview>
+
+## Custom error fallback
+
+Supply `errorContent` to render a custom composable when the image URL is invalid or the request fails. When omitted, `fallbackText` is shown instead.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="avatar" variant="with-custom-fallback" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.BrokenImage
+import androidx.compose.runtime.Composable
+import com.komoui.components.Avatar
+
+@Composable
+fun Example() {
+    Avatar(
+        model = "https://invalid-image-url.com/nonexistent.png",
+        contentDescription = "Broken image",
+        fallbackText = "ERR",
+        errorContent = {
+            Icon(Icons.Outlined.BrokenImage, contentDescription = null)
+        },
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## API reference
+
+### Avatar
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `model` | `Any?` | — | Coil3 image data — a URL string, `Uri`, `ImageRequest`, or `null` to always show the fallback. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the outer `Box` container after size and clip. |
+| `size` | `Dp` | `40.dp` | Diameter of the circular avatar. Fallback text scales at 40 % of this value. |
+| `contentDescription` | `String?` | `null` | Accessibility description for the image. |
+| `fallbackText` | `String` | — | Text shown when `model` is `null`, the image is loading (and no `loadingContent` is set), or the image fails (and no `errorContent` is set). |
+| `loadingContent` | `(@Composable () -> Unit)?` | `null` | Composable shown while the image is loading. Falls back to `fallbackText` when `null`. |
+| `errorContent` | `(@Composable () -> Unit)?` | `null` | Composable shown when the image fails to load. Falls back to `fallbackText` when `null`. |
+| `contentScale` | `ContentScale` | `ContentScale.Crop` | Scaling strategy for the loaded image inside the circular bounds. |
 
 </DocsPage>

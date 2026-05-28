@@ -1,6 +1,6 @@
 ---
 title: Calendar
-description: A date field component that allows users to enter and edit date.
+description: A Jetpack Compose calendar component inspired by shadcn/ui. Supports single date selection, date range selection, date restriction modes, month/year picker dialogs, and full color customization.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -10,10 +10,13 @@ import { Steps } from "@/components/mdx/steps"
 import { CodeWithFilename } from "@/components/mdx/code-with-filename"
 import { CodeConverter } from "@/components/docs/code-converter"
 
-
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Calendar.mdx">
 
+`Calendar` renders a month grid with navigation arrows, clickable month/year selector chips, and a day grid. It comes in two flavors of the primary composable — a convenience overload for single-date selection and a `selectionMode`-based overload that additionally supports range selection.
+
 ## Basic Usage
+
+The simplest way to use the calendar is through the single-date convenience overload. Pass `selectedDate` and an `onDateSelected` callback.
 
 <TabPreview>
 
@@ -24,10 +27,12 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Calendar
+import com.komoui.components.Calendar
+import kotlinx.datetime.LocalDate
 
+@Composable
 fun Example() {
-    var selectedDate by remember { mutableStateOf<LocalDate?>(LocalDate.now()) }
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
 
     Column(
         modifier = Modifier
@@ -37,9 +42,7 @@ fun Example() {
     ) {
         Calendar(
             selectedDate = selectedDate,
-            onDateSelected = { date ->
-                selectedDate = date
-            },
+            onDateSelected = { date -> selectedDate = date }
         )
     }
 }
@@ -49,9 +52,52 @@ fun Example() {
 
 </TabPreview>
 
-## Past or Today
+## Single Selection Mode
 
-Only enable calendar selection from past or today
+Use `CalendarSelectionMode.Single` with the `selectionMode` parameter for explicit single-date selection. This is the recommended approach when you need the full `selectionMode` parameter — for instance when combining it with other `CalendarSelectionMode` variants in your codebase.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="calendar" variant="default" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import com.komoui.components.Calendar
+import com.komoui.components.CalendarSelectionMode
+import kotlinx.datetime.LocalDate
+
+@Composable
+fun Example() {
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Calendar(
+            selectionMode = CalendarSelectionMode.Single(
+                selectedDate = selectedDate,
+                onDateSelected = { date -> selectedDate = date }
+            )
+        )
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Date Restriction Modes
+
+Use `dateSelectionMode` to restrict which dates are clickable. Disabled dates are rendered with a muted color and cannot be tapped.
+
+### Past or Today
 
 <TabPreview>
 
@@ -62,11 +108,13 @@ Only enable calendar selection from past or today
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Calendar
-import com.shadcn.ui.components.DateSelectionMode
+import com.komoui.components.Calendar
+import com.komoui.components.DateSelectionMode
+import kotlinx.datetime.LocalDate
 
+@Composable
 fun Example() {
-    var selectedDate by remember { mutableStateOf<LocalDate?>(LocalDate.now()) }
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
 
     Column(
         modifier = Modifier
@@ -76,9 +124,7 @@ fun Example() {
     ) {
         Calendar(
             selectedDate = selectedDate,
-            onDateSelected = { date ->
-                selectedDate = date
-            },
+            onDateSelected = { date -> selectedDate = date },
             dateSelectionMode = DateSelectionMode.PastOrToday
         )
     }
@@ -89,9 +135,7 @@ fun Example() {
 
 </TabPreview>
 
-## Future or Today
-
-Only enable calendar selection from future or today
+### Future or Today
 
 <TabPreview>
 
@@ -102,11 +146,13 @@ Only enable calendar selection from future or today
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Calendar
-import com.shadcn.ui.components.DateSelectionMode
+import com.komoui.components.Calendar
+import com.komoui.components.DateSelectionMode
+import kotlinx.datetime.LocalDate
 
+@Composable
 fun Example() {
-    var selectedDate by remember { mutableStateOf<LocalDate?>(LocalDate.now()) }
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
 
     Column(
         modifier = Modifier
@@ -116,9 +162,7 @@ fun Example() {
     ) {
         Calendar(
             selectedDate = selectedDate,
-            onDateSelected = { date ->
-                selectedDate = date
-            },
+            onDateSelected = { date -> selectedDate = date },
             dateSelectionMode = DateSelectionMode.FutureOrToday
         )
     }
@@ -129,9 +173,17 @@ fun Example() {
 
 </TabPreview>
 
+`DateSelectionMode` values and their behavior:
+
+| Mode | Clickable dates |
+|---|---|
+| `All` (default) | Every date in the grid |
+| `PastOrToday` | Today and any date before today |
+| `FutureOrToday` | Today and any date after today |
+
 ## Range Calendar
 
-Use `selectionMode = CalendarSelectionMode.Range` to display range calendar
+Pass `CalendarSelectionMode.Range` to enable range selection. The first tap sets the start date, the second tap sets the end date and fires `onRangeSelected`. Tapping again after a complete range resets and starts a new selection. If the second tap is before the first, the dates are automatically swapped.
 
 <TabPreview>
 
@@ -142,10 +194,11 @@ Use `selectionMode = CalendarSelectionMode.Range` to display range calendar
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Calendar
-import com.shadcn.ui.components.CalendarDefaults
-import com.shadcn.ui.components.CalendarSelectionMode
+import com.komoui.components.Calendar
+import com.komoui.components.CalendarSelectionMode
+import com.komoui.components.DateRange
 
+@Composable
 fun Example() {
     var selectedRange by remember { mutableStateOf<DateRange?>(null) }
 
@@ -157,11 +210,9 @@ fun Example() {
     ) {
         Calendar(
             selectionMode = CalendarSelectionMode.Range(
-              selectedRange = selectedRange,
-              onRangeSelected = { range ->
-                selectedRange = range
-              }
-          )
+                selectedRange = selectedRange,
+                onRangeSelected = { range -> selectedRange = range }
+            )
         )
     }
 }
@@ -171,9 +222,52 @@ fun Example() {
 
 </TabPreview>
 
+## Initial Month
+
+By default the calendar opens on the current month. Use `initialMonth` to open on a specific `YearMonth`.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="calendar" variant="default" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import com.komoui.components.Calendar
+import com.komoui.components.YearMonth
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month
+
+@Composable
+fun Example() {
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Calendar(
+            selectedDate = selectedDate,
+            onDateSelected = { date -> selectedDate = date },
+            initialMonth = YearMonth(2025, Month.JANUARY)
+        )
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+> `initialMonth` is only used on first composition. To programmatically navigate months after the calendar is rendered, hoist the state into a `YearMonth` variable and pass it each time.
+
 ## Custom Styles
 
-You can also customize the calendar color style by passing `CalendarStyle` to the `colors`
+Pass a `CalendarStyle` to the `colors` parameter to override any color token. Use `CalendarDefaults.colors { }` to get a pre-filled style based on the current theme and apply `copy(...)` inside the lambda for targeted overrides.
 
 <TabPreview>
 
@@ -184,12 +278,13 @@ You can also customize the calendar color style by passing `CalendarStyle` to th
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Calendar
-import com.shadcn.ui.components.CalendarDefaults
-import com.shadcn.ui.components.DateSelectionMode
+import com.komoui.components.Calendar
+import com.komoui.components.CalendarDefaults
+import kotlinx.datetime.LocalDate
 
+@Composable
 fun Example() {
-    var selectedDate by remember { mutableStateOf<LocalDate?>(LocalDate.now()) }
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
 
     Column(
         modifier = Modifier
@@ -199,11 +294,10 @@ fun Example() {
     ) {
         val chart3 = MaterialTheme.shadcnColors.chart3
         val chart4 = MaterialTheme.shadcnColors.chart4
+
         Calendar(
-            selectedDate = customDate,
-            onDateSelected = { date ->
-                customDate = date
-            },
+            selectedDate = selectedDate,
+            onDateSelected = { date -> selectedDate = date },
             colors = CalendarDefaults.colors {
                 copy(
                     rightIconTint = chart4,
@@ -230,5 +324,144 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+---
+
+## API Reference
+
+### Calendar (convenience overload)
+
+Single-date selection overload. Internally wraps `selectedDate` + `onDateSelected` into `CalendarSelectionMode.Single`.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the calendar container. |
+| `selectedDate` | `LocalDate?` | `null` | The currently selected date. |
+| `onDateSelected` | `(LocalDate) -> Unit` | — | Called when the user taps a date. |
+| `initialMonth` | `YearMonth` | `YearMonth.now()` | The month shown on first render. |
+| `dateSelectionMode` | `DateSelectionMode` | `DateSelectionMode.All` | Controls which dates are clickable. |
+| `colors` | `CalendarStyle` | `CalendarDefaults.colors()` | Color tokens for the calendar. |
+
+### Calendar (selectionMode overload)
+
+Full overload used for both single and range selection.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the calendar container. |
+| `selectionMode` | `CalendarSelectionMode` | — | Single or range selection configuration. |
+| `initialMonth` | `YearMonth` | `YearMonth.now()` | The month shown on first render. |
+| `dateSelectionMode` | `DateSelectionMode` | `DateSelectionMode.All` | Controls which dates are clickable. |
+| `colors` | `CalendarStyle` | `CalendarDefaults.colors()` | Color tokens for the calendar. |
+
+### DateSelectionMode
+
+Enum that restricts which dates are tappable.
+
+| Value | Description |
+|---|---|
+| `All` | All dates are enabled. |
+| `PastOrToday` | Only today and past dates are enabled. |
+| `FutureOrToday` | Only today and future dates are enabled. |
+
+### CalendarSelectionMode
+
+Sealed interface defining the selection behavior.
+
+#### `CalendarSelectionMode.Single`
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `selectedDate` | `LocalDate?` | `null` | The currently selected date. |
+| `onDateSelected` | `(LocalDate) -> Unit` | — | Called when the user taps a date. |
+
+#### `CalendarSelectionMode.Range`
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `selectedRange` | `DateRange?` | `null` | The currently selected date range. |
+| `onRangeSelected` | `(DateRange) -> Unit` | — | Called when the user completes a range selection. |
+
+### DateRange
+
+```kotlin
+data class DateRange(val start: LocalDate, val end: LocalDate)
+```
+
+Holds the start and end dates of a range selection.
+
+### YearMonth
+
+Helper class used for calendar navigation. Provides factory methods and arithmetic operators.
+
+| Member | Description |
+|---|---|
+| `YearMonth.now()` | Returns the current year-month from the system clock. |
+| `YearMonth.from(date: LocalDate)` | Creates a `YearMonth` from a `LocalDate`. |
+| `plusMonths(n)` | Returns a new `YearMonth` advanced by `n` months. |
+| `minusMonths(n)` | Returns a new `YearMonth` reduced by `n` months. |
+| `atDay(day)` | Returns a `LocalDate` for the given day in this month. |
+| `lengthOfMonth()` | Number of days in the month (leap-year aware). |
+
+### CalendarStyle
+
+All color tokens used to render the calendar. Obtain a default instance via `CalendarDefaults.colors()` and override fields using `CalendarDefaults.colors { copy(...) }`.
+
+| Field | Type | Description |
+|---|---|---|
+| `background` | `Color` | Background of the calendar container. |
+| `border` | `Color` | Border around the calendar container. |
+| `leftIconTint` | `Color` | Tint of the previous-month arrow icon. |
+| `rightIconTint` | `Color` | Tint of the next-month arrow icon. |
+| `monthText` | `Color` | Text color of the month selector chip. |
+| `yearText` | `Color` | Text color of the year selector chip. |
+| `monthSelectorBorder` | `Color` | Border of the month selector chip. |
+| `yearSelectorBorder` | `Color` | Border of the year selector chip. |
+| `weekDaysText` | `Color` | Text color of the weekday header row (Sun–Sat). |
+| `dateCellBgStyle` | `DateCellBackgroundStyle` | Background colors for individual day cells. |
+| `dateCellTextStyle` | `DateCellTextStyle` | Text colors for individual day cells. |
+| `dialogStyle` | `SelectorDialogStyle` | Colors for the month/year picker dialogs. |
+
+### DateCellBackgroundStyle
+
+| Field | Type | Description |
+|---|---|---|
+| `selectedDate` | `Color` | Background of the selected date cell. |
+| `todayUnselectedBg` | `Color` | Background of today's cell when not selected. |
+| `onPressed` | `Color` | Background color during press animation. |
+| `defaultDateCell` | `Color` | Background of a normal, unselected date cell. |
+| `rangeEndpointBg` | `Color` | Background of the range start/end cells. |
+| `inRangeBg` | `Color` | Background of cells between the range endpoints. |
+
+### DateCellTextStyle
+
+| Field | Type | Description |
+|---|---|---|
+| `selectedDate` | `Color` | Text color of the selected date. |
+| `todayUnselected` | `Color` | Text color of today when not selected. |
+| `currentMonthUnselected` | `Color` | Text color of normal, unselected days in the current month. |
+| `currentMonthDisabled` | `Color` | Text color of disabled days in the current month. |
+| `previousAndNextDateMonth` | `Color` | Text color of days spilling from the previous/next month. |
+| `previousAndNextDateMonthDisabled` | `Color` | Text color of disabled days outside the current month. |
+| `rangeEndpointText` | `Color` | Text color of the range start/end cells. |
+| `inRangeText` | `Color` | Text color of cells between the range endpoints. |
+
+### SelectorDialogStyle
+
+Shared color scheme for the month and year picker dialogs.
+
+| Field | Type | Description |
+|---|---|---|
+| `selectedBg` | `Color` | Background of the currently selected item. |
+| `selectedText` | `Color` | Text color of the currently selected item. |
+| `unselectedBg` | `Color` | Background of unselected items. |
+| `unselectedText` | `Color` | Text color of unselected items. |
+
+### CalendarDefaults
+
+| Member | Description |
+|---|---|
+| `colors()` | Returns a `CalendarStyle` populated from the current Material theme. |
+| `colors { copy(...) }` | Returns a `CalendarStyle` with selective overrides applied via a lambda. |
 
 </DocsPage>

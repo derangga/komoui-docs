@@ -270,6 +270,12 @@ code[data-theme*=" "] span {
   @apply px-4;
 }
 
+/* CodeWithFilename wraps the code block; the wrapper handles spacing (my-6),
+   so drop the typography plugin's default figure margins inside it. */
+.code-block-wrapper [data-rehype-pretty-code-figure] {
+  margin: 0;
+}
+
 .maven-badge {
   display: inline-block;
   margin: 0;

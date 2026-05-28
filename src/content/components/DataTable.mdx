@@ -1,0 +1,553 @@
+---
+title: Data Table
+description: Low-level table primitives plus a typed DataTable with sorting, row selection, and pagination — mirroring shadcn's <Table> and data-table demo.
+---
+
+import { DocsPage } from "@/components/mdx/docs-page"
+import { TabPreview } from "@/components/mdx/tab-preview"
+import { Preview } from "@/components/mdx/preview"
+
+<DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/DataTable.mdx">
+
+## Overview
+
+This page documents two layers that ship from the same `Table.kt` source:
+
+- **Table primitives** — `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`. A direct mirror of shadcn's `<Table>` family. Use these when you want full control over layout, custom headers, or non-rectangular data.
+- **`DataTable<T>`** — a typed, batteries-included data table inspired by shadcn's data-table demo. It owns state for sorting, optional checkbox selection, and Previous/Next pagination, and lets you swap in a custom pagination UI through a slot.
+
+Both layers share the same horizontal-scroll model: the table is **not** shrunk to viewport on mobile. Declare each column's width as a fixed `Dp` and the wrapper will scroll horizontally when needed. Header and body cells in the same column must share the same `Modifier.width(...)` so the columns line up.
+
+## Anatomy
+
+```kotlin
+Table {
+    TableHeader {
+        TableRow {
+            TableHead { /* header cell */ }
+            // ...one TableHead per column
+        }
+    }
+    TableBody {
+        TableRow {
+            TableCell { /* body cell */ }
+            // ...one TableCell per column
+        }
+        // The final body row should pass showBottomBorder = false
+    }
+    TableFooter { // optional
+        TableRow(showBottomBorder = false) {
+            TableCell { /* footer cell */ }
+        }
+    }
+}
+TableCaption(text = "Optional caption") // rendered outside the Table container
+```
+
+## Table primitives
+
+A hand-rolled invoice table. Each column declares a fixed `Dp` width and both `TableHead` and `TableCell` cells reuse the same width so the columns stay aligned under the horizontal scroller. The last body row passes `showBottomBorder = false` to drop its bottom border (matching shadcn's `[&_tr:last-child]:border-0`).
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="data-table" variant="basic" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Table
+import com.komoui.components.TableBody
+import com.komoui.components.TableCell
+import com.komoui.components.TableHead
+import com.komoui.components.TableHeader
+import com.komoui.components.TableRow
+
+private data class Invoice(
+    val id: String,
+    val status: String,
+    val method: String,
+    val amount: String,
+)
+
+private val invoices = listOf(
+    Invoice("INV001", "Paid",    "Credit Card", "$250.00"),
+    Invoice("INV002", "Pending", "PayPal",      "$150.00"),
+    Invoice("INV003", "Unpaid",  "Bank Transfer", "$350.00"),
+    Invoice("INV004", "Paid",    "Credit Card", "$450.00"),
+)
+
+@Composable
+fun BasicTableExample() {
+    Table {
+        TableHeader {
+            TableRow {
+                TableHead(modifier = Modifier.width(120.dp)) { Text("Invoice") }
+                TableHead(modifier = Modifier.width(120.dp)) { Text("Status") }
+                TableHead(modifier = Modifier.width(160.dp)) { Text("Method") }
+                TableHead(modifier = Modifier.width(120.dp)) { Text("Amount") }
+            }
+        }
+        TableBody {
+            invoices.forEachIndexed { index, invoice ->
+                TableRow(showBottomBorder = index != invoices.lastIndex) {
+                    TableCell(modifier = Modifier.width(120.dp)) { Text(invoice.id) }
+                    TableCell(modifier = Modifier.width(120.dp)) { Text(invoice.status) }
+                    TableCell(modifier = Modifier.width(160.dp)) { Text(invoice.method) }
+                    TableCell(modifier = Modifier.width(120.dp)) { Text(invoice.amount) }
+                }
+            }
+        }
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+### With footer and caption
+
+`TableFooter` paints a muted background and a top border — typically used for totals. The footer row's `showBottomBorder = false` keeps the rounded corner clean. `TableCaption` is rendered **outside** the `Table` container so it sits below the scrollable area.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="data-table" variant="with-footer" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Table
+import com.komoui.components.TableBody
+import com.komoui.components.TableCaption
+import com.komoui.components.TableCell
+import com.komoui.components.TableFooter
+import com.komoui.components.TableHead
+import com.komoui.components.TableHeader
+import com.komoui.components.TableRow
+
+@Composable
+fun TableWithFooterExample() {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Table {
+            TableHeader {
+                TableRow {
+                    TableHead(modifier = Modifier.width(120.dp)) { Text("Invoice") }
+                    TableHead(modifier = Modifier.width(120.dp)) { Text("Status") }
+                    TableHead(modifier = Modifier.width(120.dp)) { Text("Amount") }
+                }
+            }
+            TableBody {
+                TableRow {
+                    TableCell(modifier = Modifier.width(120.dp)) { Text("INV001") }
+                    TableCell(modifier = Modifier.width(120.dp)) { Text("Paid") }
+                    TableCell(modifier = Modifier.width(120.dp)) { Text("$250.00") }
+                }
+                TableRow(showBottomBorder = false) {
+                    TableCell(modifier = Modifier.width(120.dp)) { Text("INV002") }
+                    TableCell(modifier = Modifier.width(120.dp)) { Text("Pending") }
+                    TableCell(modifier = Modifier.width(120.dp)) { Text("$150.00") }
+                }
+            }
+            TableFooter {
+                TableRow(showBottomBorder = false) {
+                    TableCell(modifier = Modifier.width(240.dp)) { Text("Total") }
+                    TableCell(modifier = Modifier.width(120.dp)) { Text("$400.00") }
+                }
+            }
+        }
+        TableCaption(text = "A list of your recent invoices.")
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Data Table
+
+`DataTable<T>` accepts your full unsorted, unpaginated `items` list and a list of `DataTableColumn<T>` definitions. It handles sorting, optional selection, and Previous/Next pagination internally — pass `onSortChange` / `onSelectionChange` if you need to observe.
+
+Each column declares:
+
+- `id` — stable identifier used as the sort key and for visibility.
+- `header` — header label (also used as the accessible label when `headerContent` is provided).
+- `width` — fixed `Dp` width applied to both header and body cells in this column.
+- `cell` — renders a single body cell from one item.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="data-table" variant="data-table-basic" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import com.komoui.components.DataTable
+import com.komoui.components.DataTableColumn
+
+private data class Payment(
+    val id: String,
+    val amount: Double,
+    val status: String,
+    val email: String,
+)
+
+private val payments = listOf(
+    Payment("728ed52f", 100.0, "Pending",    "m@example.com"),
+    Payment("489e1d42", 125.0, "Processing", "example@gmail.com"),
+    Payment("a1b2c3d4", 200.0, "Success",    "ada@lovelace.io"),
+    Payment("e5f6g7h8",  75.0, "Failed",     "carl@friedrich.de"),
+)
+
+@Composable
+fun BasicDataTableExample() {
+    DataTable(
+        items = payments,
+        rowKey = { it.id },
+        columns = listOf(
+            DataTableColumn(
+                id = "status",
+                header = "Status",
+                width = 140.dp,
+                cell = { Text(it.status) },
+            ),
+            DataTableColumn(
+                id = "email",
+                header = "Email",
+                width = 240.dp,
+                cell = { Text(it.email) },
+            ),
+            DataTableColumn(
+                id = "amount",
+                header = "Amount",
+                width = 120.dp,
+                cell = { Text("$${it.amount}") },
+            ),
+        ),
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Sorting
+
+Set `sortable = true` on a column and supply a `comparator`. Clicking the header cycles through `NONE → ASC → DESC → NONE`. The active column shows an up/down arrow; unsorted sortable columns show a `UnfoldMore` icon. Observe changes with `onSortChange`, and seed an initial state with `initialSort = SortState(columnId = "amount", direction = SortDirection.DESC)`.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="data-table" variant="sortable" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import com.komoui.components.DataTable
+import com.komoui.components.DataTableColumn
+import com.komoui.components.SortDirection
+import com.komoui.components.SortState
+
+@Composable
+fun SortableDataTableExample() {
+    DataTable(
+        items = payments,
+        rowKey = { it.id },
+        initialSort = SortState(columnId = "amount", direction = SortDirection.DESC),
+        onSortChange = { state -> /* analytics, persistence, ... */ },
+        columns = listOf(
+            DataTableColumn(
+                id = "status",
+                header = "Status",
+                width = 140.dp,
+                sortable = true,
+                comparator = compareBy { it.status },
+                cell = { Text(it.status) },
+            ),
+            DataTableColumn(
+                id = "email",
+                header = "Email",
+                width = 240.dp,
+                sortable = true,
+                comparator = compareBy { it.email },
+                cell = { Text(it.email) },
+            ),
+            DataTableColumn(
+                id = "amount",
+                header = "Amount",
+                width = 120.dp,
+                sortable = true,
+                comparator = compareBy { it.amount },
+                cell = { Text("$${it.amount}") },
+            ),
+        ),
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Row selection
+
+Set `enableSelection = true` and `DataTable` auto-prepends a checkbox column (`selectionColumnWidth = 48.dp` by default). The header checkbox toggles **all rows on the current page**, and `onSelectionChange` emits the full `Set<T>` of selected items across all pages. A summary line below the table reads `"N of M row(s) selected."`.
+
+> The underlying `Checkbox` doesn't support an indeterminate visual, so the header checkbox is "checked" iff every row on the current page is selected. Toggling it adds or removes the current page's rows from the selection set.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="data-table" variant="with-selection" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.unit.dp
+import com.komoui.components.DataTable
+import com.komoui.components.DataTableColumn
+
+@Composable
+fun SelectableDataTableExample() {
+    var selected by remember { mutableStateOf<Set<Payment>>(emptySet()) }
+    DataTable(
+        items = payments,
+        rowKey = { it.id },
+        enableSelection = true,
+        onSelectionChange = { selected = it },
+        onRowClick = { /* navigate to details */ },
+        caption = "Click a row to view details.",
+        columns = listOf(
+            DataTableColumn(
+                id = "status",
+                header = "Status",
+                width = 140.dp,
+                cell = { Text(it.status) },
+            ),
+            DataTableColumn(
+                id = "email",
+                header = "Email",
+                width = 240.dp,
+                cell = { Text(it.email) },
+            ),
+            DataTableColumn(
+                id = "amount",
+                header = "Amount",
+                width = 120.dp,
+                cell = { Text("$${it.amount}") },
+            ),
+        ),
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Custom pagination
+
+The `pagination` slot defaults to `DefaultPagination` — Previous / Next outline buttons aligned to the end. To replace it, pass your own `@Composable PaginationScope.() -> Unit`. `PaginationScope` exposes `page`, `pageCount`, `canPrev`, `canNext`, `prev()`, `next()`, and `goTo(page)` so you can render numbered pages, jump-to controls, or anything else.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="data-table" variant="custom-pagination" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Button
+import com.komoui.components.ButtonSize
+import com.komoui.components.ButtonVariant
+import com.komoui.components.DataTable
+import com.komoui.components.DataTableColumn
+
+@Composable
+fun NumberedPaginationExample() {
+    DataTable(
+        items = payments,
+        rowKey = { it.id },
+        pageSize = 5,
+        columns = listOf(
+            DataTableColumn("status", "Status", 140.dp, cell = { Text(it.status) }),
+            DataTableColumn("email",  "Email",  240.dp, cell = { Text(it.email) }),
+            DataTableColumn("amount", "Amount", 120.dp, cell = { Text("$${it.amount}") }),
+        ),
+        pagination = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(4.dp, Alignment.End),
+            ) {
+                Button(
+                    onClick = ::prev,
+                    variant = ButtonVariant.Outline,
+                    size = ButtonSize.Sm,
+                    enabled = canPrev,
+                ) { Text("Prev") }
+
+                (0 until pageCount).forEach { i ->
+                    Button(
+                        onClick = { goTo(i) },
+                        variant = if (i == page) ButtonVariant.Default else ButtonVariant.Outline,
+                        size = ButtonSize.Sm,
+                    ) { Text("${i + 1}") }
+                }
+
+                Button(
+                    onClick = ::next,
+                    variant = ButtonVariant.Outline,
+                    size = ButtonSize.Sm,
+                    enabled = canNext,
+                ) { Text("Next") }
+            }
+        },
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## API reference
+
+### `Table`
+
+| Parameter     | Type                                   | Default                | Description                                                              |
+| ------------- | -------------------------------------- | ---------------------- | ------------------------------------------------------------------------ |
+| `modifier`    | `Modifier`                             | `Modifier`             | Modifier applied to the outer container.                                 |
+| `scrollState` | `ScrollState`                          | `rememberScrollState()` | Horizontal scroll state shared by header and body.                       |
+| `content`     | `@Composable ColumnScope.() -> Unit`   | —                      | Table sections — typically `TableHeader`, `TableBody`, and `TableFooter`. |
+
+### `TableRow`
+
+| Parameter           | Type                                | Default | Description                                                                                          |
+| ------------------- | ----------------------------------- | ------- | ---------------------------------------------------------------------------------------------------- |
+| `modifier`          | `Modifier`                          | `Modifier` | Pass `Modifier.width(...)` to make rows span the same total width under `Table`'s horizontal scroll. |
+| `onClick`           | `(() -> Unit)?`                     | `null`  | Optional click handler. When non-null the row becomes clickable.                                     |
+| `selected`          | `Boolean`                           | `false` | When true, the row paints a muted background.                                                        |
+| `showBottomBorder`  | `Boolean`                           | `true`  | When false, the row omits its bottom border — pass `false` for the final body row.                  |
+| `content`           | `@Composable RowScope.() -> Unit`   | —       | Cells of the row — typically `TableHead` or `TableCell`.                                            |
+
+### `TableHead` / `TableCell`
+
+Both accept a `modifier: Modifier` and a `content: @Composable RowScope.() -> Unit`. Pass `Modifier.width(...)` to set the column's width — header and body cells in the same column should share the same width.
+
+- `TableHead`: 40.dp min-height, 8.dp horizontal padding, medium-weight muted text.
+- `TableCell`: 8.dp all-around padding, foreground text color.
+
+### `TableCaption`
+
+| Parameter  | Type       | Default | Description                            |
+| ---------- | ---------- | ------- | -------------------------------------- |
+| `text`     | `String`   | —       | Caption text.                          |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the caption.   |
+
+Render `TableCaption` **outside** the `Table` container.
+
+### `DataTable<T>`
+
+| Parameter               | Type                                                  | Default              | Description                                                                                                       |
+| ----------------------- | ----------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `items`                 | `List<T>`                                             | —                    | Full unsorted, unpaginated data set.                                                                              |
+| `columns`               | `List<DataTableColumn<T>>`                            | —                    | Column definitions.                                                                                               |
+| `rowKey`                | `(T) -> Any`                                          | —                    | Stable key for an item. Used for selection identity.                                                              |
+| `modifier`              | `Modifier`                                            | `Modifier`           | Modifier applied to the outer container.                                                                          |
+| `enableSelection`       | `Boolean`                                             | `false`              | When true a leading checkbox column is auto-prepended.                                                            |
+| `selectionColumnWidth`  | `Dp`                                                  | `48.dp`              | Width of the auto-injected selection column.                                                                      |
+| `pageSize`              | `Int`                                                 | `10`                 | Rows per page.                                                                                                    |
+| `initialSort`           | `SortState`                                           | `SortState()`        | Initial sort state.                                                                                               |
+| `onSortChange`          | `((SortState) -> Unit)?`                              | `null`               | Observer fired when sort changes.                                                                                 |
+| `onSelectionChange`     | `((Set<T>) -> Unit)?`                                 | `null`               | Observer fired when selection changes.                                                                            |
+| `onRowClick`            | `((T) -> Unit)?`                                      | `null`               | Optional row click handler.                                                                                       |
+| `caption`               | `String?`                                             | `null`               | Optional caption text rendered below the table.                                                                   |
+| `pagination`            | `@Composable PaginationScope.() -> Unit`              | `DefaultPagination`  | Slot rendered as a full-width row below the summary line.                                                         |
+
+The summary row above the pagination slot reads `"N of M row(s) selected."` (when `enableSelection = true`) on the left and `"Page X of Y"` on the right.
+
+### `DataTableColumn<T>`
+
+| Field           | Type                                          | Description                                                                                                       |
+| --------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `id`            | `String`                                      | Stable identifier used as the sort key and visibility key.                                                        |
+| `header`        | `String`                                      | Header label text. Also the accessible label when `headerContent` is provided.                                    |
+| `width`         | `Dp`                                          | Fixed width applied to header and body cells in this column.                                                      |
+| `sortable`      | `Boolean = false`                             | When true, clicking the header cycles `NONE → ASC → DESC → NONE`. Requires `comparator`.                          |
+| `comparator`    | `Comparator<T>?`                              | Comparator used when `sortable` is true.                                                                          |
+| `headerContent` | `(@Composable RowScope.() -> Unit)?`          | Optional custom header cell content. When null, `header` is rendered as a medium-weight muted label.              |
+| `cell`          | `@Composable RowScope.(T) -> Unit`            | Renders one cell for the given row item.                                                                          |
+
+### `SortState` / `SortDirection`
+
+```kotlin
+enum class SortDirection { NONE, ASC, DESC }
+
+data class SortState(
+    val columnId: String? = null,
+    val direction: SortDirection = SortDirection.NONE,
+)
+```
+
+### `PaginationScope`
+
+The receiver for the `pagination` slot. Use it to render any pagination UI you like.
+
+| Member       | Type      | Description                                              |
+| ------------ | --------- | -------------------------------------------------------- |
+| `page`       | `Int`     | Current page index (0-based).                            |
+| `pageCount`  | `Int`     | Total number of pages. Always at least 1.                |
+| `canPrev`    | `Boolean` | `true` when `prev()` will advance backward.              |
+| `canNext`    | `Boolean` | `true` when `next()` will advance forward.               |
+| `prev()`     | `Unit`    | Go to the previous page if `canPrev`.                    |
+| `next()`     | `Unit`    | Go to the next page if `canNext`.                        |
+| `goTo(page)` | `Unit`    | Jump to an absolute 0-based page index (coerced in range). |
+
+The default slot (`DefaultPagination`) renders Previous / Next outline buttons aligned to the end of a full-width row.
+
+</DocsPage>

@@ -1,6 +1,6 @@
 ---
 title: Accordion
-description: A vertically stacked set of interactive headings that each reveal a section of content.
+description: A vertically stacked set of collapsible items with animated expand/collapse transitions and support for single or multi-item expansion.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -10,51 +10,71 @@ import { Steps } from "@/components/mdx/steps"
 import { CodeWithFilename } from "@/components/mdx/code-with-filename"
 import { CodeConverter } from "@/components/docs/code-converter"
 
-
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Accordion.mdx">
 
-## Usage
+`Accordion` renders a vertical list of `AccordionItemData` entries. Each item has a tappable header with a rotating chevron and an animated content panel that fades and expands into view. By default multiple items can be open simultaneously; set `singleItemExpand = true` to allow only one open item at a time.
+
+## Basic usage
 
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-
 <Preview name="accordion" variant="default" />
-
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Accordion
-import com.shadcn.ui.components.AccordionItemData
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import com.komoui.components.Accordion
+import com.komoui.components.AccordionItemData
 
+@Composable
 fun Example() {
-    val accordionItems = listOf(
+    val items = listOf(
         AccordionItemData(
             id = "item-1",
             header = { Text("Is it accessible?") },
-            content = { Text("Yes. It adheres to the WAI-ARIA design pattern.") }
+            content = { Text("Yes. It adheres to the WAI-ARIA design pattern.") },
         ),
         AccordionItemData(
             id = "item-2",
             header = { Text("Is it styled?") },
-            content = { Text("Yes. It comes with default styles that matches the other components' aesthetic.") }
+            content = { Text("Yes. It comes with default styles that match the other components' aesthetic.") },
         ),
         AccordionItemData(
             id = "item-3",
             header = { Text("Is it animated?") },
-            content = { Text("Yes. It's animated by default, but you can disable it if you prefer.") }
-        )
+            content = { Text("Yes. It's animated by default, but you can disable it if you prefer.") },
+        ),
     )
 
-    Column {
-        Accordion(items = accordionItems)
-    }
+    Accordion(items = items)
 }
 ```
 
 </TabPreview.Panel>
+
 </TabPreview>
+
+## API reference
+
+### Accordion
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `items` | `List<AccordionItemData>` | — | Ordered list of sections to render. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the root `Column` container. |
+| `defaultOpenItemId` | `String?` | `null` | ID of the item to expand on first composition. |
+| `singleItemExpand` | `Boolean` | `false` | When `true`, opening an item collapses any currently open item. |
+
+### AccordionItemData
+
+| Field | Type | Description |
+|---|---|---|
+| `id` | `String` | Unique identifier used to track expanded state. |
+| `header` | `@Composable () -> Unit` | Content rendered inside the tappable header row. |
+| `content` | `@Composable () -> Unit` | Content revealed when the item is expanded. |
 
 </DocsPage>

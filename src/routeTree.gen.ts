@@ -18,6 +18,7 @@ import { Route as DocsInstallationRouteImport } from './routes/docs/installation
 import { Route as DocsComponentsIndexRouteImport } from './routes/docs/components/index'
 import { Route as DocsComponentsTabsRouteImport } from './routes/docs/components/tabs'
 import { Route as DocsComponentsSwitchRouteImport } from './routes/docs/components/switch'
+import { Route as DocsComponentsSpinnerRouteImport } from './routes/docs/components/spinner'
 import { Route as DocsComponentsSonnerRouteImport } from './routes/docs/components/sonner'
 import { Route as DocsComponentsSliderRouteImport } from './routes/docs/components/slider'
 import { Route as DocsComponentsSkeletonRouteImport } from './routes/docs/components/skeleton'
@@ -26,13 +27,17 @@ import { Route as DocsComponentsSelectRouteImport } from './routes/docs/componen
 import { Route as DocsComponentsRadioGroupRouteImport } from './routes/docs/components/radio-group'
 import { Route as DocsComponentsProgressRouteImport } from './routes/docs/components/progress'
 import { Route as DocsComponentsPopoverRouteImport } from './routes/docs/components/popover'
+import { Route as DocsComponentsInputOtpRouteImport } from './routes/docs/components/input-otp'
 import { Route as DocsComponentsInputRouteImport } from './routes/docs/components/input'
 import { Route as DocsComponentsDropdownMenuRouteImport } from './routes/docs/components/dropdown-menu'
 import { Route as DocsComponentsDrawerRouteImport } from './routes/docs/components/drawer'
 import { Route as DocsComponentsDialogRouteImport } from './routes/docs/components/dialog'
 import { Route as DocsComponentsDatePickerRouteImport } from './routes/docs/components/date-picker'
+import { Route as DocsComponentsDataTableRouteImport } from './routes/docs/components/data-table'
 import { Route as DocsComponentsComboboxRouteImport } from './routes/docs/components/combobox'
+import { Route as DocsComponentsCollapsibleRouteImport } from './routes/docs/components/collapsible'
 import { Route as DocsComponentsCheckboxRouteImport } from './routes/docs/components/checkbox'
+import { Route as DocsComponentsChartRouteImport } from './routes/docs/components/chart'
 import { Route as DocsComponentsCarouselRouteImport } from './routes/docs/components/carousel'
 import { Route as DocsComponentsCardRouteImport } from './routes/docs/components/card'
 import { Route as DocsComponentsCalendarRouteImport } from './routes/docs/components/calendar'
@@ -88,6 +93,11 @@ const DocsComponentsSwitchRoute = DocsComponentsSwitchRouteImport.update({
   path: '/components/switch',
   getParentRoute: () => DocsRouteRoute,
 } as any)
+const DocsComponentsSpinnerRoute = DocsComponentsSpinnerRouteImport.update({
+  id: '/components/spinner',
+  path: '/components/spinner',
+  getParentRoute: () => DocsRouteRoute,
+} as any)
 const DocsComponentsSonnerRoute = DocsComponentsSonnerRouteImport.update({
   id: '/components/sonner',
   path: '/components/sonner',
@@ -129,6 +139,11 @@ const DocsComponentsPopoverRoute = DocsComponentsPopoverRouteImport.update({
   path: '/components/popover',
   getParentRoute: () => DocsRouteRoute,
 } as any)
+const DocsComponentsInputOtpRoute = DocsComponentsInputOtpRouteImport.update({
+  id: '/components/input-otp',
+  path: '/components/input-otp',
+  getParentRoute: () => DocsRouteRoute,
+} as any)
 const DocsComponentsInputRoute = DocsComponentsInputRouteImport.update({
   id: '/components/input',
   path: '/components/input',
@@ -156,14 +171,30 @@ const DocsComponentsDatePickerRoute =
     path: '/components/date-picker',
     getParentRoute: () => DocsRouteRoute,
   } as any)
+const DocsComponentsDataTableRoute = DocsComponentsDataTableRouteImport.update({
+  id: '/components/data-table',
+  path: '/components/data-table',
+  getParentRoute: () => DocsRouteRoute,
+} as any)
 const DocsComponentsComboboxRoute = DocsComponentsComboboxRouteImport.update({
   id: '/components/combobox',
   path: '/components/combobox',
   getParentRoute: () => DocsRouteRoute,
 } as any)
+const DocsComponentsCollapsibleRoute =
+  DocsComponentsCollapsibleRouteImport.update({
+    id: '/components/collapsible',
+    path: '/components/collapsible',
+    getParentRoute: () => DocsRouteRoute,
+  } as any)
 const DocsComponentsCheckboxRoute = DocsComponentsCheckboxRouteImport.update({
   id: '/components/checkbox',
   path: '/components/checkbox',
+  getParentRoute: () => DocsRouteRoute,
+} as any)
+const DocsComponentsChartRoute = DocsComponentsChartRouteImport.update({
+  id: '/components/chart',
+  path: '/components/chart',
   getParentRoute: () => DocsRouteRoute,
 } as any)
 const DocsComponentsCarouselRoute = DocsComponentsCarouselRouteImport.update({
@@ -229,13 +260,17 @@ export interface FileRoutesByFullPath {
   '/docs/components/calendar': typeof DocsComponentsCalendarRoute
   '/docs/components/card': typeof DocsComponentsCardRoute
   '/docs/components/carousel': typeof DocsComponentsCarouselRoute
+  '/docs/components/chart': typeof DocsComponentsChartRoute
   '/docs/components/checkbox': typeof DocsComponentsCheckboxRoute
+  '/docs/components/collapsible': typeof DocsComponentsCollapsibleRoute
   '/docs/components/combobox': typeof DocsComponentsComboboxRoute
+  '/docs/components/data-table': typeof DocsComponentsDataTableRoute
   '/docs/components/date-picker': typeof DocsComponentsDatePickerRoute
   '/docs/components/dialog': typeof DocsComponentsDialogRoute
   '/docs/components/drawer': typeof DocsComponentsDrawerRoute
   '/docs/components/dropdown-menu': typeof DocsComponentsDropdownMenuRoute
   '/docs/components/input': typeof DocsComponentsInputRoute
+  '/docs/components/input-otp': typeof DocsComponentsInputOtpRoute
   '/docs/components/popover': typeof DocsComponentsPopoverRoute
   '/docs/components/progress': typeof DocsComponentsProgressRoute
   '/docs/components/radio-group': typeof DocsComponentsRadioGroupRoute
@@ -244,6 +279,7 @@ export interface FileRoutesByFullPath {
   '/docs/components/skeleton': typeof DocsComponentsSkeletonRoute
   '/docs/components/slider': typeof DocsComponentsSliderRoute
   '/docs/components/sonner': typeof DocsComponentsSonnerRoute
+  '/docs/components/spinner': typeof DocsComponentsSpinnerRoute
   '/docs/components/switch': typeof DocsComponentsSwitchRoute
   '/docs/components/tabs': typeof DocsComponentsTabsRoute
   '/docs/components/': typeof DocsComponentsIndexRoute
@@ -264,13 +300,17 @@ export interface FileRoutesByTo {
   '/docs/components/calendar': typeof DocsComponentsCalendarRoute
   '/docs/components/card': typeof DocsComponentsCardRoute
   '/docs/components/carousel': typeof DocsComponentsCarouselRoute
+  '/docs/components/chart': typeof DocsComponentsChartRoute
   '/docs/components/checkbox': typeof DocsComponentsCheckboxRoute
+  '/docs/components/collapsible': typeof DocsComponentsCollapsibleRoute
   '/docs/components/combobox': typeof DocsComponentsComboboxRoute
+  '/docs/components/data-table': typeof DocsComponentsDataTableRoute
   '/docs/components/date-picker': typeof DocsComponentsDatePickerRoute
   '/docs/components/dialog': typeof DocsComponentsDialogRoute
   '/docs/components/drawer': typeof DocsComponentsDrawerRoute
   '/docs/components/dropdown-menu': typeof DocsComponentsDropdownMenuRoute
   '/docs/components/input': typeof DocsComponentsInputRoute
+  '/docs/components/input-otp': typeof DocsComponentsInputOtpRoute
   '/docs/components/popover': typeof DocsComponentsPopoverRoute
   '/docs/components/progress': typeof DocsComponentsProgressRoute
   '/docs/components/radio-group': typeof DocsComponentsRadioGroupRoute
@@ -279,6 +319,7 @@ export interface FileRoutesByTo {
   '/docs/components/skeleton': typeof DocsComponentsSkeletonRoute
   '/docs/components/slider': typeof DocsComponentsSliderRoute
   '/docs/components/sonner': typeof DocsComponentsSonnerRoute
+  '/docs/components/spinner': typeof DocsComponentsSpinnerRoute
   '/docs/components/switch': typeof DocsComponentsSwitchRoute
   '/docs/components/tabs': typeof DocsComponentsTabsRoute
   '/docs/components': typeof DocsComponentsIndexRoute
@@ -300,13 +341,17 @@ export interface FileRoutesById {
   '/docs/components/calendar': typeof DocsComponentsCalendarRoute
   '/docs/components/card': typeof DocsComponentsCardRoute
   '/docs/components/carousel': typeof DocsComponentsCarouselRoute
+  '/docs/components/chart': typeof DocsComponentsChartRoute
   '/docs/components/checkbox': typeof DocsComponentsCheckboxRoute
+  '/docs/components/collapsible': typeof DocsComponentsCollapsibleRoute
   '/docs/components/combobox': typeof DocsComponentsComboboxRoute
+  '/docs/components/data-table': typeof DocsComponentsDataTableRoute
   '/docs/components/date-picker': typeof DocsComponentsDatePickerRoute
   '/docs/components/dialog': typeof DocsComponentsDialogRoute
   '/docs/components/drawer': typeof DocsComponentsDrawerRoute
   '/docs/components/dropdown-menu': typeof DocsComponentsDropdownMenuRoute
   '/docs/components/input': typeof DocsComponentsInputRoute
+  '/docs/components/input-otp': typeof DocsComponentsInputOtpRoute
   '/docs/components/popover': typeof DocsComponentsPopoverRoute
   '/docs/components/progress': typeof DocsComponentsProgressRoute
   '/docs/components/radio-group': typeof DocsComponentsRadioGroupRoute
@@ -315,6 +360,7 @@ export interface FileRoutesById {
   '/docs/components/skeleton': typeof DocsComponentsSkeletonRoute
   '/docs/components/slider': typeof DocsComponentsSliderRoute
   '/docs/components/sonner': typeof DocsComponentsSonnerRoute
+  '/docs/components/spinner': typeof DocsComponentsSpinnerRoute
   '/docs/components/switch': typeof DocsComponentsSwitchRoute
   '/docs/components/tabs': typeof DocsComponentsTabsRoute
   '/docs/components/': typeof DocsComponentsIndexRoute
@@ -337,13 +383,17 @@ export interface FileRouteTypes {
     | '/docs/components/calendar'
     | '/docs/components/card'
     | '/docs/components/carousel'
+    | '/docs/components/chart'
     | '/docs/components/checkbox'
+    | '/docs/components/collapsible'
     | '/docs/components/combobox'
+    | '/docs/components/data-table'
     | '/docs/components/date-picker'
     | '/docs/components/dialog'
     | '/docs/components/drawer'
     | '/docs/components/dropdown-menu'
     | '/docs/components/input'
+    | '/docs/components/input-otp'
     | '/docs/components/popover'
     | '/docs/components/progress'
     | '/docs/components/radio-group'
@@ -352,6 +402,7 @@ export interface FileRouteTypes {
     | '/docs/components/skeleton'
     | '/docs/components/slider'
     | '/docs/components/sonner'
+    | '/docs/components/spinner'
     | '/docs/components/switch'
     | '/docs/components/tabs'
     | '/docs/components/'
@@ -372,13 +423,17 @@ export interface FileRouteTypes {
     | '/docs/components/calendar'
     | '/docs/components/card'
     | '/docs/components/carousel'
+    | '/docs/components/chart'
     | '/docs/components/checkbox'
+    | '/docs/components/collapsible'
     | '/docs/components/combobox'
+    | '/docs/components/data-table'
     | '/docs/components/date-picker'
     | '/docs/components/dialog'
     | '/docs/components/drawer'
     | '/docs/components/dropdown-menu'
     | '/docs/components/input'
+    | '/docs/components/input-otp'
     | '/docs/components/popover'
     | '/docs/components/progress'
     | '/docs/components/radio-group'
@@ -387,6 +442,7 @@ export interface FileRouteTypes {
     | '/docs/components/skeleton'
     | '/docs/components/slider'
     | '/docs/components/sonner'
+    | '/docs/components/spinner'
     | '/docs/components/switch'
     | '/docs/components/tabs'
     | '/docs/components'
@@ -407,13 +463,17 @@ export interface FileRouteTypes {
     | '/docs/components/calendar'
     | '/docs/components/card'
     | '/docs/components/carousel'
+    | '/docs/components/chart'
     | '/docs/components/checkbox'
+    | '/docs/components/collapsible'
     | '/docs/components/combobox'
+    | '/docs/components/data-table'
     | '/docs/components/date-picker'
     | '/docs/components/dialog'
     | '/docs/components/drawer'
     | '/docs/components/dropdown-menu'
     | '/docs/components/input'
+    | '/docs/components/input-otp'
     | '/docs/components/popover'
     | '/docs/components/progress'
     | '/docs/components/radio-group'
@@ -422,6 +482,7 @@ export interface FileRouteTypes {
     | '/docs/components/skeleton'
     | '/docs/components/slider'
     | '/docs/components/sonner'
+    | '/docs/components/spinner'
     | '/docs/components/switch'
     | '/docs/components/tabs'
     | '/docs/components/'
@@ -497,6 +558,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsComponentsSwitchRouteImport
       parentRoute: typeof DocsRouteRoute
     }
+    '/docs/components/spinner': {
+      id: '/docs/components/spinner'
+      path: '/components/spinner'
+      fullPath: '/docs/components/spinner'
+      preLoaderRoute: typeof DocsComponentsSpinnerRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
     '/docs/components/sonner': {
       id: '/docs/components/sonner'
       path: '/components/sonner'
@@ -553,6 +621,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsComponentsPopoverRouteImport
       parentRoute: typeof DocsRouteRoute
     }
+    '/docs/components/input-otp': {
+      id: '/docs/components/input-otp'
+      path: '/components/input-otp'
+      fullPath: '/docs/components/input-otp'
+      preLoaderRoute: typeof DocsComponentsInputOtpRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
     '/docs/components/input': {
       id: '/docs/components/input'
       path: '/components/input'
@@ -588,6 +663,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsComponentsDatePickerRouteImport
       parentRoute: typeof DocsRouteRoute
     }
+    '/docs/components/data-table': {
+      id: '/docs/components/data-table'
+      path: '/components/data-table'
+      fullPath: '/docs/components/data-table'
+      preLoaderRoute: typeof DocsComponentsDataTableRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
     '/docs/components/combobox': {
       id: '/docs/components/combobox'
       path: '/components/combobox'
@@ -595,11 +677,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsComponentsComboboxRouteImport
       parentRoute: typeof DocsRouteRoute
     }
+    '/docs/components/collapsible': {
+      id: '/docs/components/collapsible'
+      path: '/components/collapsible'
+      fullPath: '/docs/components/collapsible'
+      preLoaderRoute: typeof DocsComponentsCollapsibleRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
     '/docs/components/checkbox': {
       id: '/docs/components/checkbox'
       path: '/components/checkbox'
       fullPath: '/docs/components/checkbox'
       preLoaderRoute: typeof DocsComponentsCheckboxRouteImport
+      parentRoute: typeof DocsRouteRoute
+    }
+    '/docs/components/chart': {
+      id: '/docs/components/chart'
+      path: '/components/chart'
+      fullPath: '/docs/components/chart'
+      preLoaderRoute: typeof DocsComponentsChartRouteImport
       parentRoute: typeof DocsRouteRoute
     }
     '/docs/components/carousel': {
@@ -682,13 +778,17 @@ interface DocsRouteRouteChildren {
   DocsComponentsCalendarRoute: typeof DocsComponentsCalendarRoute
   DocsComponentsCardRoute: typeof DocsComponentsCardRoute
   DocsComponentsCarouselRoute: typeof DocsComponentsCarouselRoute
+  DocsComponentsChartRoute: typeof DocsComponentsChartRoute
   DocsComponentsCheckboxRoute: typeof DocsComponentsCheckboxRoute
+  DocsComponentsCollapsibleRoute: typeof DocsComponentsCollapsibleRoute
   DocsComponentsComboboxRoute: typeof DocsComponentsComboboxRoute
+  DocsComponentsDataTableRoute: typeof DocsComponentsDataTableRoute
   DocsComponentsDatePickerRoute: typeof DocsComponentsDatePickerRoute
   DocsComponentsDialogRoute: typeof DocsComponentsDialogRoute
   DocsComponentsDrawerRoute: typeof DocsComponentsDrawerRoute
   DocsComponentsDropdownMenuRoute: typeof DocsComponentsDropdownMenuRoute
   DocsComponentsInputRoute: typeof DocsComponentsInputRoute
+  DocsComponentsInputOtpRoute: typeof DocsComponentsInputOtpRoute
   DocsComponentsPopoverRoute: typeof DocsComponentsPopoverRoute
   DocsComponentsProgressRoute: typeof DocsComponentsProgressRoute
   DocsComponentsRadioGroupRoute: typeof DocsComponentsRadioGroupRoute
@@ -697,6 +797,7 @@ interface DocsRouteRouteChildren {
   DocsComponentsSkeletonRoute: typeof DocsComponentsSkeletonRoute
   DocsComponentsSliderRoute: typeof DocsComponentsSliderRoute
   DocsComponentsSonnerRoute: typeof DocsComponentsSonnerRoute
+  DocsComponentsSpinnerRoute: typeof DocsComponentsSpinnerRoute
   DocsComponentsSwitchRoute: typeof DocsComponentsSwitchRoute
   DocsComponentsTabsRoute: typeof DocsComponentsTabsRoute
   DocsComponentsIndexRoute: typeof DocsComponentsIndexRoute
@@ -716,13 +817,17 @@ const DocsRouteRouteChildren: DocsRouteRouteChildren = {
   DocsComponentsCalendarRoute: DocsComponentsCalendarRoute,
   DocsComponentsCardRoute: DocsComponentsCardRoute,
   DocsComponentsCarouselRoute: DocsComponentsCarouselRoute,
+  DocsComponentsChartRoute: DocsComponentsChartRoute,
   DocsComponentsCheckboxRoute: DocsComponentsCheckboxRoute,
+  DocsComponentsCollapsibleRoute: DocsComponentsCollapsibleRoute,
   DocsComponentsComboboxRoute: DocsComponentsComboboxRoute,
+  DocsComponentsDataTableRoute: DocsComponentsDataTableRoute,
   DocsComponentsDatePickerRoute: DocsComponentsDatePickerRoute,
   DocsComponentsDialogRoute: DocsComponentsDialogRoute,
   DocsComponentsDrawerRoute: DocsComponentsDrawerRoute,
   DocsComponentsDropdownMenuRoute: DocsComponentsDropdownMenuRoute,
   DocsComponentsInputRoute: DocsComponentsInputRoute,
+  DocsComponentsInputOtpRoute: DocsComponentsInputOtpRoute,
   DocsComponentsPopoverRoute: DocsComponentsPopoverRoute,
   DocsComponentsProgressRoute: DocsComponentsProgressRoute,
   DocsComponentsRadioGroupRoute: DocsComponentsRadioGroupRoute,
@@ -731,6 +836,7 @@ const DocsRouteRouteChildren: DocsRouteRouteChildren = {
   DocsComponentsSkeletonRoute: DocsComponentsSkeletonRoute,
   DocsComponentsSliderRoute: DocsComponentsSliderRoute,
   DocsComponentsSonnerRoute: DocsComponentsSonnerRoute,
+  DocsComponentsSpinnerRoute: DocsComponentsSpinnerRoute,
   DocsComponentsSwitchRoute: DocsComponentsSwitchRoute,
   DocsComponentsTabsRoute: DocsComponentsTabsRoute,
   DocsComponentsIndexRoute: DocsComponentsIndexRoute,

@@ -1,0 +1,473 @@
+---
+title: Chart
+description: Bar, Line, and Area charts built from Compose Canvas — no external charting library.
+---
+
+import { DocsPage } from "@/components/mdx/docs-page"
+import { TabPreview } from "@/components/mdx/tab-preview"
+import { Preview } from "@/components/mdx/preview"
+
+<DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Chart.mdx">
+
+## Overview
+
+The chart family ships three Composables — `BarChart`, `LineChart`, and `AreaChart` — that share the same axis system, animation pipeline, and tap‑and‑drag tooltip ("scrub"). All three are drawn directly into a `Canvas`, so there is no external charting dependency.
+
+Each chart takes a list of strongly‑typed series (`BarSeries`, `LineSeries`, `AreaSeries`) whose points carry a string `x` category and a `Float` y value. Axis behavior — gridlines, tick count, tick formatting, optional y‑domain override — is configured through a single `ChartAxisOptions` value.
+
+Common parameters across the three charts:
+
+- `chartHeight: Dp = 220.dp` — fixed plot height. **Required** to be a fixed value; do not rely on parent `Modifier.height(...)` alone.
+- `animate: Boolean = true` — first‑composition reveal (bars grow up, lines/areas sweep left → right).
+- `showTooltip: Boolean = true` — press‑and‑drag the plot to scrub through categories.
+- `showLegend: Boolean = false` — render a legend row beneath the plot.
+- `scrollable: Boolean = false` — when true, the plot scrolls horizontally and each x‑category is given at least `minColumnWidth` (default `56.dp`). The y‑axis stays pinned. Tooltips are force‑disabled in scrollable mode.
+
+## Bar Chart
+
+A vertical bar chart supporting one or more grouped series. Bars animate from baseline to their target height on first composition.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="bar-basic" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import com.komoui.components.charts.BarChart
+import com.komoui.components.charts.BarSeries
+import com.komoui.components.charts.BarPoint
+
+@Composable
+fun Example() {
+    BarChart(
+        series = listOf(
+            BarSeries(
+                key = "desktop",
+                label = "Desktop",
+                color = MaterialTheme.styles.chart1,
+                points = listOf(
+                    BarPoint("Jan", 186f),
+                    BarPoint("Feb", 305f),
+                    BarPoint("Mar", 237f),
+                    BarPoint("Apr", 273f),
+                    BarPoint("May", 209f),
+                    BarPoint("Jun", 214f),
+                ),
+            ),
+        ),
+        chartHeight = 240.dp,
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+### Grouped (multi-series)
+
+Pass more than one `BarSeries` and bars are drawn side‑by‑side per x‑category. `barWidthFraction` controls how much of each category slot the bar group occupies (default `0.7f`).
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="bar-grouped" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+BarChart(
+    series = listOf(
+        BarSeries(
+            key = "desktop",
+            label = "Desktop",
+            color = MaterialTheme.styles.chart1,
+            points = listOf(
+                BarPoint("Jan", 186f), BarPoint("Feb", 305f), BarPoint("Mar", 237f),
+                BarPoint("Apr", 273f), BarPoint("May", 209f), BarPoint("Jun", 214f),
+            ),
+        ),
+        BarSeries(
+            key = "mobile",
+            label = "Mobile",
+            color = MaterialTheme.styles.chart2,
+            points = listOf(
+                BarPoint("Jan", 80f),  BarPoint("Feb", 200f), BarPoint("Mar", 120f),
+                BarPoint("Apr", 190f), BarPoint("May", 130f), BarPoint("Jun", 140f),
+            ),
+        ),
+    ),
+    showLegend = true,
+    chartHeight = 260.dp,
+)
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+### With value labels
+
+Set `showValueLabels = true` to draw the formatted y‑value above each bar after the grow‑in animation completes. The label uses `axisOptions.yLabelFormatter`.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="bar-labeled" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+BarChart(
+    series = listOf(
+        BarSeries(
+            key = "visitors",
+            label = "Visitors",
+            color = MaterialTheme.styles.chart3,
+            points = listOf(
+                BarPoint("Jan", 186f),
+                BarPoint("Feb", 305f),
+                BarPoint("Mar", 237f),
+                BarPoint("Apr", 273f),
+                BarPoint("May", 209f),
+                BarPoint("Jun", 214f),
+            ),
+        ),
+    ),
+    showValueLabels = true,
+    chartHeight = 240.dp,
+)
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+### Scrollable
+
+Enable `scrollable = true` for dense data sets. The plot scrolls horizontally, the y‑axis stays pinned, and each x‑category is given at least `minColumnWidth` of room. Drag‑scrub tooltips are disabled in this mode so the gesture goes to the scroller.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="bar-scrollable" assetExtension=".gif"/>
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+val weeks = (1..24).map { "W$it" }
+val visits = listOf(
+    120f, 145f, 132f, 168f, 192f, 174f, 205f, 188f,
+    221f, 240f, 215f, 198f, 230f, 262f, 248f, 271f,
+    290f, 275f, 302f, 318f, 295f, 311f, 340f, 358f,
+)
+
+BarChart(
+    series = listOf(
+        BarSeries(
+            key = "visits",
+            label = "Visits",
+            color = MaterialTheme.styles.chart2,
+            points = weeks.zip(visits).map { (w, v) -> BarPoint(w, v) },
+        ),
+    ),
+    scrollable = true,
+    chartHeight = 240.dp,
+)
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Line Chart
+
+A line chart that connects points with cubic Bézier segments by default (`smooth = true`). The stroke sweeps in from left to right on first composition.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="line-straight" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+LineChart(
+    modifier = Modifier.fillMaxWidth(),
+    chartHeight = 240.dp,
+    series = listOf(
+        LineSeries(
+            key = "visitors",
+            label = "Visitors",
+            color = MaterialTheme.styles.chart1,
+            points = months.zip(listOf(186f, 305f, 237f, 273f, 209f, 214f))
+                .map { (m, v) -> LinePoint(m, v) },
+        ),
+    ),
+)
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+### Multi-series with legend
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="line-multi" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+LineChart(
+    series = listOf(
+        LineSeries(
+            key = "desktop",
+            label = "Desktop",
+            color = MaterialTheme.styles.chart1,
+            points = listOf(
+                LinePoint("Jan", 186f), LinePoint("Feb", 305f), LinePoint("Mar", 237f),
+                LinePoint("Apr", 273f), LinePoint("May", 209f), LinePoint("Jun", 214f),
+            ),
+        ),
+        LineSeries(
+            key = "mobile",
+            label = "Mobile",
+            color = MaterialTheme.styles.chart2,
+            points = listOf(
+                LinePoint("Jan", 80f),  LinePoint("Feb", 200f), LinePoint("Mar", 120f),
+                LinePoint("Apr", 190f), LinePoint("May", 130f), LinePoint("Jun", 140f),
+            ),
+        ),
+    ),
+    showLegend = true,
+    chartHeight = 260.dp,
+)
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+### Scrollable, multi-series
+
+Set `scrollable = true` for dense time series. The y‑axis stays pinned, and each x‑category is given at least `minColumnWidth` of room. Drag‑scrub tooltips are disabled in this mode.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="line-scrollable" assetExtension=".gif"/>
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+val weeks = (1..24).map { "W$it" }
+val a = listOf(
+    120f, 145f, 132f, 168f, 192f, 174f, 205f, 188f,
+    221f, 240f, 215f, 198f, 230f, 262f, 248f, 271f,
+    290f, 275f, 302f, 318f, 295f, 311f, 340f, 358f,
+)
+val b = listOf(
+    60f, 78f, 71f, 90f, 105f, 92f, 118f, 110f,
+    132f, 145f, 128f, 119f, 140f, 158f, 149f, 165f,
+    178f, 168f, 188f, 196f, 182f, 190f, 210f, 220f,
+)
+
+LineChart(
+    series = listOf(
+        LineSeries(
+            key = "desktop",
+            label = "Desktop",
+            color = MaterialTheme.styles.chart1,
+            points = weeks.zip(a).map { (w, v) -> LinePoint(w, v) },
+        ),
+        LineSeries(
+            key = "mobile",
+            label = "Mobile",
+            color = MaterialTheme.styles.chart2,
+            points = weeks.zip(b).map { (w, v) -> LinePoint(w, v) },
+        ),
+    ),
+    scrollable = true,
+    showLegend = true,
+    chartHeight = 240.dp,
+)
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Area Chart
+
+An area chart renders a stroked line over a filled region down to the baseline. By default the fill is a vertical gradient from the series color (40% alpha at top) to transparent at the baseline.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="area-gradient" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import com.komoui.components.charts.AreaChart
+import com.komoui.components.charts.AreaSeries
+import com.komoui.components.charts.AreaPoint
+
+@Composable
+fun Example() {
+    AreaChart(
+        series = listOf(
+            AreaSeries(
+                key = "visitors",
+                label = "Visitors",
+                color = MaterialTheme.styles.chart1,
+                points = listOf(
+                    AreaPoint("Jan", 186f),
+                    AreaPoint("Feb", 305f),
+                    AreaPoint("Mar", 237f),
+                    AreaPoint("Apr", 273f),
+                    AreaPoint("May", 209f),
+                    AreaPoint("Jun", 214f),
+                ),
+            ),
+        ),
+        chartHeight = 240.dp,
+    )
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+### Flat fill
+
+Disable the gradient with `gradientFill = false` and control opacity via `fillAlpha`.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="area-flat" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+AreaChart(
+    series = listOf(
+        AreaSeries(
+            key = "signups",
+            label = "Signups",
+            color = MaterialTheme.styles.chart4,
+            points = listOf(
+                AreaPoint("Mon", 12f), AreaPoint("Tue", 19f), AreaPoint("Wed", 14f),
+                AreaPoint("Thu", 22f), AreaPoint("Fri", 28f), AreaPoint("Sat", 9f),
+                AreaPoint("Sun", 11f),
+            ),
+        ),
+    ),
+    gradientFill = false,
+    fillAlpha = 0.25f,
+    chartHeight = 240.dp,
+)
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+### Multi-series
+
+When multiple area series overlap, lower the `fillAlpha` (or keep `gradientFill = true`) so both series remain visible.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="chart" variant="area-multi" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+AreaChart(
+    series = listOf(
+        AreaSeries(
+            key = "desktop",
+            label = "Desktop",
+            color = MaterialTheme.styles.chart1,
+            points = listOf(
+                AreaPoint("Jan", 186f), AreaPoint("Feb", 305f), AreaPoint("Mar", 237f),
+                AreaPoint("Apr", 273f), AreaPoint("May", 209f), AreaPoint("Jun", 214f),
+            ),
+        ),
+        AreaSeries(
+            key = "mobile",
+            label = "Mobile",
+            color = MaterialTheme.styles.chart2,
+            points = listOf(
+                AreaPoint("Jan", 80f),  AreaPoint("Feb", 200f), AreaPoint("Mar", 120f),
+                AreaPoint("Apr", 190f), AreaPoint("May", 130f), AreaPoint("Jun", 140f),
+            ),
+        ),
+    ),
+    showLegend = true,
+    chartHeight = 260.dp,
+)
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Axis options
+
+Every chart accepts a `ChartAxisOptions` to tune gridlines, tick density, and label formatting. The defaults show the y‑axis labels, a horizontal grid, the x‑axis labels, and a 4‑tick y‑axis derived from the data.
+
+```kotlin
+import com.komoui.components.charts.ChartAxisOptions
+
+LineChart(
+    series = series,
+    axisOptions = ChartAxisOptions(
+        showHorizontalGrid = true,
+        showVerticalGrid = true,
+        yTickCount = 5,
+        yDomain = 0f..400f,
+        xLabelFormatter = { it.uppercase() },
+        yLabelFormatter = { "$${it.toInt()}" },
+    ),
+    chartHeight = 240.dp,
+)
+```
+
+| Parameter            | Default                | Description                                                                          |
+| -------------------- | ---------------------- | ------------------------------------------------------------------------------------ |
+| `showX`              | `true`                 | Show x‑axis tick labels.                                                             |
+| `showY`              | `true`                 | Show y‑axis tick labels in a pinned canvas on the left.                              |
+| `showHorizontalGrid` | `true`                 | Draw dashed horizontal gridlines at each y‑tick.                                     |
+| `showVerticalGrid`   | `false`                | Draw dashed vertical gridlines at each x‑category.                                   |
+| `yTickCount`         | `4`                    | Approximate number of y‑ticks (including 0 and the "nice" max).                      |
+| `yDomain`            | `null`                 | Optional override for the y‑axis range; when `null`, computed from the data.         |
+| `xLabelFormatter`    | identity               | Transforms raw x labels before rendering.                                            |
+| `yLabelFormatter`    | compact (`K`, `M`)     | Transforms numeric y‑values into tick labels.                                        |
+
+## Tooltips & scrubbing
+
+When `showTooltip = true` (the default), pressing anywhere on the plot snaps a vertical indicator to the nearest x‑category and reveals a tooltip card with every series' value for that column. Continuing to drag horizontally moves the indicator; releasing dismisses it.
+
+The scrub gesture is **claim‑on‑down** — it consumes the first pointer event so the tooltip appears instantly under the finger, without a touch‑slop delay. This is intentional but means it cannot coexist with `Modifier.horizontalScroll`, which is **claim‑after‑touch‑slop**. The chart resolves this by force‑disabling tooltips whenever `scrollable = true`. If you need both in the same chart, switch to a long‑press‑then‑scrub or tap‑only gesture (see the source `Chart.md` for the trade‑offs).
+
+</DocsPage>

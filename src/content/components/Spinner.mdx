@@ -1,0 +1,140 @@
+---
+title: Spinner
+description: Indeterminate loading indicator with four animated visual variants — circular arc, bouncing rings, moon orbit, and pulsing dots.
+---
+
+import { DocsPage } from "@/components/mdx/docs-page"
+import { TabPreview } from "@/components/mdx/tab-preview"
+import { Preview } from "@/components/mdx/preview"
+
+<DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Spinner.mdx">
+
+`Spinner` is a stateless indeterminate loading indicator. Choose from four visual styles via the `variant` parameter: `Circular` (default), `Bounce`, `Moon`, and `Pulse`. The `size` and `color` parameters apply to all variants; `strokeWidth` is respected only by `Circular` and `Moon`.
+
+## Basic usage
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="spinner" variant="default" assetExtension=".gif"/>
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.komoui.components.Spinner
+
+@Composable
+fun Example() {
+    Spinner()
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Bounce variant
+
+Two concentric circles pulse in and out with a staggered half-cycle offset, producing a ripple effect.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="spinner" variant="bounce" assetExtension=".gif"/>
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.komoui.components.Spinner
+import com.komoui.components.SpinnerVariant
+
+@Composable
+fun Example() {
+    Spinner(variant = SpinnerVariant.Bounce)
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Moon variant
+
+A faint full-circle track is drawn at 30 % opacity; a short 30° arc orbits it continuously, evoking a crescent moon chasing its tail.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="spinner" variant="moon" assetExtension=".gif"/>
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.komoui.components.Spinner
+import com.komoui.components.SpinnerVariant
+
+@Composable
+fun Example() {
+    Spinner(variant = SpinnerVariant.Moon)
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Pulse variant
+
+Three dots scale in and out in sequence with a 160 ms stagger between each, creating a left-to-right wave.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="spinner" variant="pulse" assetExtension=".gif"/>
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.runtime.Composable
+import com.komoui.components.Spinner
+import com.komoui.components.SpinnerVariant
+
+@Composable
+fun Example() {
+    Spinner(variant = SpinnerVariant.Pulse)
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## API reference
+
+### Spinner
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the spinner container. |
+| `variant` | `SpinnerVariant` | `SpinnerVariant.Circular` | Visual style of the animation. |
+| `size` | `Dp` | `40.dp` | Overall bounding size of the spinner. |
+| `color` | `Color` | `MaterialTheme.styles.primary` | Primary colour used for the animation. |
+| `strokeWidth` | `Dp` | `3.dp` | Stroke width for `Circular` and `Moon` variants; ignored by `Bounce` and `Pulse`. |
+
+### SpinnerVariant
+
+| Value | Description |
+|---|---|
+| `Circular` | Rotating 270° arc — the default. Completes one revolution every 1 200 ms with linear easing. |
+| `Bounce` | Two concentric filled circles that scale in and out with a staggered half-cycle phase offset. |
+| `Moon` | Full-circle track at 30 % opacity with a short orbiting arc. One revolution every 1 000 ms with ease-in-out. |
+| `Pulse` | Three dots in a row, each scaling up and back down in sequence with 160 ms between each dot. |
+
+</DocsPage>

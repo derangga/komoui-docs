@@ -13,7 +13,9 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Switch.mdx">
 
-## Usage
+## Basic Usage
+
+`Switch` is a fully custom-drawn toggle (40×18 dp track, 16 dp thumb). The thumb slides and colors animate with a 150 ms tween on every state change.
 
 <TabPreview>
 
@@ -24,23 +26,40 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Switch
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Switch
 
 @Composable
 fun Example() {
-    var switchChecked by remember { mutableStateOf(false) }
+    var checked by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 24.dp, start = 16.dp, end = 16.dp),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Switch(
-                checked = switchChecked,
-                onCheckedChange = { switchChecked = it }
+                checked = checked,
+                onCheckedChange = { checked = it }
             )
-            Text("Enable feature", color = MaterialTheme.colors.foreground)
+            Text("Enable feature")
         }
     }
 }
@@ -52,6 +71,8 @@ fun Example() {
 
 ## Disabled
 
+Set `enabled = false` to prevent interaction. Both the track and thumb are rendered at 50% opacity.
+
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
@@ -61,24 +82,35 @@ fun Example() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Switch
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Switch
 
 @Composable
 fun Example() {
-    var switchChecked by remember { mutableStateOf(false) }
-
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 24.dp, start = 16.dp, end = 16.dp),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Switch(
-                checked = switchChecked,
-                onCheckedChange = { switchChecked = it },
+                checked = false,
+                onCheckedChange = { },
                 enabled = false
             )
-            Text("Disabled option", color = MaterialTheme.colors.mutedForeground)
+            Text("Disabled option")
         }
     }
 }
@@ -87,5 +119,107 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## Custom Colors
+
+Pass a `SwitchStyle` to `colors` to override any of the six color tokens for checked and unchecked states.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="switch" variant="custom-colors" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Switch
+import com.komoui.components.SwitchStyle
+
+@Composable
+fun Example() {
+    var checked by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(top = 24.dp, start = 16.dp, end = 16.dp),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Switch(
+                checked = checked,
+                onCheckedChange = { checked = it },
+                colors = SwitchStyle(
+                    checkedTrack = Color(0xFF22C55E),
+                    checkedBorder = Color(0xFF22C55E),
+                    checkedThumb = Color.White,
+                    uncheckedTrack = Color(0xFFE2E8F0),
+                    uncheckedBorder = Color(0xFFCBD5E1),
+                    uncheckedThumb = Color(0xFF64748B),
+                )
+            )
+            Text(if (checked) "On" else "Off")
+        }
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## API Reference
+
+### `Switch`
+
+| Parameter         | Type                         | Default                  | Description                                                                                      |
+| ----------------- | ---------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------ |
+| `checked`         | `Boolean`                    | —                        | Whether the switch is in the on state.                                                           |
+| `onCheckedChange` | `((Boolean) -> Unit)?`       | —                        | Callback invoked with the new state when toggled. Pass `null` to make the switch non-interactive. |
+| `modifier`        | `Modifier`                   | `Modifier`               | Modifier applied to the switch container.                                                        |
+| `enabled`         | `Boolean`                    | `true`                   | When false, the toggle is non-interactive and all colors render at 50% opacity.                  |
+| `colors`          | `SwitchStyle`                | `SwitchDefaults.colors()` | Color tokens for both checked and unchecked states — see `SwitchStyle`.                         |
+
+### `SwitchStyle`
+
+| Field              | Type    | Description                                              |
+| ------------------ | ------- | -------------------------------------------------------- |
+| `checkedTrack`     | `Color` | Track fill color when the switch is on.                  |
+| `checkedBorder`    | `Color` | Track border color when the switch is on.                |
+| `checkedThumb`     | `Color` | Thumb color when the switch is on.                       |
+| `uncheckedTrack`   | `Color` | Track fill color when the switch is off.                 |
+| `uncheckedBorder`  | `Color` | Track border color when the switch is off.               |
+| `uncheckedThumb`   | `Color` | Thumb color when the switch is off.                      |
+
+### `SwitchDefaults`
+
+| Member              | Description                                                               |
+| ------------------- | ------------------------------------------------------------------------- |
+| `colors(): SwitchStyle` | Returns the default `SwitchStyle` resolved from the current `MaterialTheme`. Checked state uses `primary`/`primaryForeground`; unchecked state uses `input`/`primary`. |
+
+### Behaviour notes
+
+- The switch is entirely drawn with `drawBehind` — no Compose layout children are used for the track or thumb.
+- Thumb position, track color, border color, and thumb color each animate independently with a 150 ms tween.
+- The component uses `Modifier.toggleable` with `Role.Switch` for correct accessibility semantics.
+- Passing `onCheckedChange = null` renders a read-only switch that cannot be interacted with (distinct from `enabled = false`, which also applies opacity).
 
 </DocsPage>

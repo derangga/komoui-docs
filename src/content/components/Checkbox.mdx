@@ -1,6 +1,6 @@
 ---
 title: Checkbox
-description: A control that allows the user to toggle between checked and not checked.
+description: A 24 dp rounded square toggle with animated color transitions, a disabled state, and full color customization via CheckboxDefaults.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -10,10 +10,11 @@ import { Steps } from "@/components/mdx/steps"
 import { CodeWithFilename } from "@/components/mdx/code-with-filename"
 import { CodeConverter } from "@/components/docs/code-converter"
 
-
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Checkbox.mdx">
 
-## Basic Usage
+`Checkbox` renders a 24 dp square with a `sm` corner radius. Background, border, and checkmark colors all animate over 100 ms when the state changes. When pressed, the border briefly switches to the theme's `ring` color as a focus indicator.
+
+## Basic usage
 
 <TabPreview>
 
@@ -24,28 +25,31 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Checkbox
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Checkbox
 
 @Composable
 fun Example() {
-    var checkedState by remember { mutableStateOf(false) }
+    var checked by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Checkbox(
-                checked = checkedState,
-                onCheckedChange = { checkedState = it }
-            )
-            Text("Basic Checkbox")
-        }
+        Checkbox(
+            checked = checked,
+            onCheckedChange = { checked = it },
+        )
+        Text("Accept terms and conditions")
     }
 }
 ```
@@ -56,6 +60,8 @@ fun Example() {
 
 ## Disabled
 
+Set `enabled = false` to prevent interaction. The component renders with the theme's `muted` background and ignores taps.
+
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
@@ -65,28 +71,30 @@ fun Example() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Checkbox
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Checkbox
 
+@Composable
 fun Example() {
-    var checkedState by remember { mutableStateOf(false) }
+    val checked = remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            Checkbox(
-                checked = checkedState,
-                onCheckedChange = { checkedState = it },
-                enabled = false
-            )
-            Text("Disabled Checkbox")
-        }
+        Checkbox(
+            checked = checked.value,
+            onCheckedChange = { checked.value = it },
+            enabled = false,
+        )
+        Text("Disabled checkbox")
     }
 }
 ```
@@ -95,7 +103,9 @@ fun Example() {
 
 </TabPreview>
 
-## Custom Styles
+## Custom colors
+
+Override any color token via `CheckboxDefaults.colors().copy(...)`. The example below wires border and fill colors to state so the surrounding card also reacts to the checked value.
 
 <TabPreview>
 
@@ -106,52 +116,59 @@ fun Example() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Checkbox
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Checkbox
+import com.komoui.components.CheckboxDefaults
+import com.komoui.themes.styles
 
+@Composable
 fun Example() {
-    var checkedState by remember { mutableStateOf(false) }
-    val borderColor = if (checkedState) {
-        MaterialTheme.colors.chart3
-    } else {
-        MaterialTheme.colors.border
-    }
-    val background = if (checkedState) {
-        MaterialTheme.colors.chart1
-    } else {
-        MaterialTheme.colors.background
-    }
+    var checked by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    val accentColor = Color(0xFF6366F1)
+    val borderColor = if (checked) accentColor else MaterialTheme.styles.border
+    val bgColor = if (checked) accentColor.copy(alpha = 0.05f) else MaterialTheme.styles.background
+
+    Box(
+        modifier = androidx.compose.ui.Modifier
+            .border(1.dp, borderColor, MaterialTheme.shapes.small)
+            .background(bgColor, MaterialTheme.shapes.small)
     ) {
-        Box(
-            modifier = Modifier
-                .border(1.dp, borderColor, MaterialTheme.shapes.small)
-                .background(background, MaterialTheme.shapes.small)
+        Row(
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = androidx.compose.ui.Modifier.padding(12.dp),
         ) {
-            Row(
-                verticalAlignment = Alignment.Top,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.padding(12.dp)
-            ) {
-                Checkbox(
-                    checked = checkedState,
-                    onCheckedChange = { checkedState = it },
-                    colors = CheckboxDefaults.colors().copy(
-                        checkedColors = MaterialTheme.colors.chart3,
-                        checkedBorderColors = MaterialTheme.colors.chart3
-                    )
+            Checkbox(
+                checked = checked,
+                onCheckedChange = { checked = it },
+                colors = CheckboxDefaults.colors().copy(
+                    checkedColor = accentColor,
+                    checkedBorderColor = accentColor,
+                ),
+            )
+            Column {
+                Text("Enable notifications")
+                Text(
+                    "You can enable or disable anytime",
+                    color = MaterialTheme.styles.mutedForeground,
                 )
-                Column {
-                    Text("Enable Notification")
-                    Text(
-                        "You can enable or disable anytime",
-                        color = MaterialTheme.colors.mutedForeground
-                    )
-                }
             }
         }
     }
@@ -161,5 +178,36 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
+
+## API reference
+
+### Checkbox
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `checked` | `Boolean` | — | Whether the checkbox is currently checked. |
+| `onCheckedChange` | `((Boolean) -> Unit)?` | — | Called with the new value when the user toggles. Pass `null` to make the checkbox non-interactive while still rendering state. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the 24 dp box. |
+| `enabled` | `Boolean` | `true` | When `false`, the checkbox ignores input and renders with the `muted` color. |
+| `colors` | `CheckboxColors` | `CheckboxDefaults.colors()` | Color tokens for each visual state. |
+
+### CheckboxColors
+
+| Field | Type | Description |
+|---|---|---|
+| `checkedColor` | `Color` | Background when checked. |
+| `uncheckedColor` | `Color` | Background when unchecked. Defaults to `Color.Transparent`. |
+| `disabledColor` | `Color` | Background when disabled. |
+| `checkedCheckmarkColor` | `Color` | Check icon tint when checked. |
+| `uncheckedCheckmarkColor` | `Color` | Check icon tint when unchecked. Defaults to `Color.Transparent`. |
+| `disabledCheckmarkColor` | `Color` | Check icon tint when disabled. |
+| `checkedBorderColor` | `Color` | Border color when checked. |
+| `uncheckedBorderColor` | `Color` | Border color when unchecked. |
+
+### CheckboxDefaults
+
+| Member | Description |
+|---|---|
+| `colors()` | Returns a `CheckboxColors` using `primary` for checked states, `input` for the unchecked border, and `muted` for the disabled background. |
 
 </DocsPage>

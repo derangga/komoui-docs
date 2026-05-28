@@ -13,7 +13,11 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Dialog.mdx">
 
+`Dialog` renders a modal overlay with three optional slots — `header`, `body`, and `footer`. The header slot automatically includes a close (`×`) button in the top-right corner. All slots are optional so you can compose only what you need.
+
 ## Basic Usage
+
+A confirmation dialog uses only `header` and `footer`. `DialogTitle` and `DialogDescription` provide the correct typography inside the header slot; `DialogAction` and `DialogCancel` render the primary and outline buttons in the footer.
 
 <TabPreview>
 
@@ -24,20 +28,19 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Button
-import com.shadcn.ui.components.Dialog
-import com.shadcn.ui.components.DialogAction
-import com.shadcn.ui.components.DialogCancel
-import com.shadcn.ui.components.DialogDescription
-import com.shadcn.ui.components.DialogTitle
+import com.komoui.components.Button
+import com.komoui.components.Dialog
+import com.komoui.components.DialogAction
+import com.komoui.components.DialogCancel
+import com.komoui.components.DialogDescription
+import com.komoui.components.DialogTitle
 
 @Composable
-fun ExampleDialog() {
+fun Example() {
     var showDialog by remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -47,24 +50,24 @@ fun ExampleDialog() {
     }
 
     Dialog(
-            open = showDialog,
-            onDismissRequest = { showDialog = false },
-            header = {
-                DialogTitle { Text("Exit application") }
-                DialogDescription {
-                    Text("Are you sure want to close the application")
-                }
-            },
-            footer = {
-                DialogCancel(onClick = { showDialog = false }) {
-                    Text("No")
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                DialogAction(onClick = { showDialog = false }) {
-                    Text("Yes")
-                }
+        open = showDialog,
+        onDismissRequest = { showDialog = false },
+        header = {
+            DialogTitle { Text("Exit application") }
+            DialogDescription {
+                Text("Are you sure you want to close the application?")
             }
-        )
+        },
+        footer = {
+            DialogCancel(onClick = { showDialog = false }) {
+                Text("No")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            DialogAction(onClick = { showDialog = false }) {
+                Text("Yes")
+            }
+        }
+    )
 }
 ```
 
@@ -73,6 +76,8 @@ fun ExampleDialog() {
 </TabPreview>
 
 ## With Body Content
+
+Use the `body` slot to place form fields, lists, or any freeform content between the header and footer.
 
 <TabPreview>
 
@@ -83,79 +88,154 @@ fun ExampleDialog() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Button
-import com.shadcn.ui.components.Dialog
-import com.shadcn.ui.components.DialogAction
-import com.shadcn.ui.components.DialogCancel
-import com.shadcn.ui.components.DialogDescription
-import com.shadcn.ui.components.DialogTitle
-import com.shadcn.ui.components.Input
+import com.komoui.components.Button
+import com.komoui.components.Dialog
+import com.komoui.components.DialogAction
+import com.komoui.components.DialogCancel
+import com.komoui.components.DialogDescription
+import com.komoui.components.DialogTitle
+import com.komoui.components.Input
 
 @Composable
-fun ExampleDialog() {
+fun Example() {
     var showDialog by remember { mutableStateOf(false) }
     var nameTxt by remember { mutableStateOf("John Doe") }
     var userTxt by remember { mutableStateOf("johndoe") }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(onClick = { showDialog = true }) {
-            Text("Open Dialog")
+            Text("Edit Profile")
         }
-
-        Dialog(
-            open = showFormDialog,
-            onDismissRequest = { showFormDialog = false },
-            header = {
-                DialogTitle { Text("Edit Profile") }
-                DialogDescription {
-                    Text("Make changes to your profile here. Click save when you're done.")
-                }
-            },
-            body = {
-                Text(
-                    text = "Name",
-                    fontWeight = FontWeight.SemiBold,
-                )
-                Input(
-                    value = nameTxt,
-                    onValueChange = { nameTxt = it },
-                    placeholder = "Enter your name",
-                    singleLine = true
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                Text(
-                    text = "Username",
-                    fontWeight = FontWeight.SemiBold,
-                )
-                Input(
-                    value = userTxt,
-                    onValueChange = { userTxt = it },
-                    placeholder = "Enter your username",
-                    singleLine = true
-                )
-            },
-            footer = {
-                // Order: Cancel then Action, with spacing
-                DialogCancel(onClick = { showFormDialog = false }) {
-                    Text("Cancel")
-                }
-                Spacer(modifier = Modifier.width(8.dp))
-                DialogAction(onClick = { showFormDialog = false }) {
-                    Text("Save changes")
-                }
-            }
-        )
     }
+
+    Dialog(
+        open = showDialog,
+        onDismissRequest = { showDialog = false },
+        header = {
+            DialogTitle { Text("Edit Profile") }
+            DialogDescription {
+                Text("Make changes to your profile here. Click save when you're done.")
+            }
+        },
+        body = {
+            Text(
+                text = "Name",
+                fontWeight = FontWeight.SemiBold,
+            )
+            Input(
+                value = nameTxt,
+                onValueChange = { nameTxt = it },
+                placeholder = "Enter your name",
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = "Username",
+                fontWeight = FontWeight.SemiBold,
+            )
+            Input(
+                value = userTxt,
+                onValueChange = { userTxt = it },
+                placeholder = "Enter your username",
+                singleLine = true
+            )
+        },
+        footer = {
+            DialogCancel(onClick = { showDialog = false }) {
+                Text("Cancel")
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            DialogAction(onClick = { showDialog = false }) {
+                Text("Save changes")
+            }
+        }
+    )
 }
 ```
 
 </TabPreview.Panel>
 
 </TabPreview>
+
+## Header Only
+
+When no user action is needed you can omit `footer` entirely. The close button in the header corner still dismisses the dialog.
+
+```kotlin
+import com.komoui.components.Dialog
+import com.komoui.components.DialogDescription
+import com.komoui.components.DialogTitle
+
+@Composable
+fun Example() {
+    var showDialog by remember { mutableStateOf(false) }
+
+    Dialog(
+        open = showDialog,
+        onDismissRequest = { showDialog = false },
+        header = {
+            DialogTitle { Text("Information") }
+            DialogDescription { Text("This action has been completed successfully.") }
+        }
+    )
+}
+```
+
+---
+
+## API Reference
+
+### Dialog
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `open` | `Boolean` | — | Controls whether the dialog is visible. |
+| `onDismissRequest` | `() -> Unit` | — | Called when the user taps outside the dialog or the close button. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the dialog's content container. |
+| `header` | `(@Composable ColumnScope.() -> Unit)?` | `null` | Header slot. Rendered alongside an auto-inserted close button. Typically contains `DialogTitle` and `DialogDescription`. |
+| `body` | `(@Composable ColumnScope.() -> Unit)?` | `null` | Body slot. Placed between header and footer. Use for forms, lists, or freeform content. |
+| `footer` | `(@Composable RowScope.() -> Unit)?` | `null` | Footer slot. Rendered in a right-aligned `Row`. Typically contains `DialogCancel` and `DialogAction`. |
+
+### DialogTitle
+
+Applies `foreground` color, 18 sp, and `SemiBold` weight to its content via `ProvideTextStyle`.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the title container. |
+| `content` | `@Composable () -> Unit` | — | Slot content — typically a `Text`. |
+
+### DialogDescription
+
+Applies `mutedForeground` color and 14 sp to its content via `ProvideTextStyle`.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the description container. |
+| `content` | `@Composable () -> Unit` | — | Slot content — typically a `Text`. |
+
+### DialogAction
+
+A primary action button using `ButtonVariant.Default`. Place inside the `footer` slot.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the button. |
+| `content` | `@Composable () -> Unit` | — | Button label — typically a `Text`. |
+
+### DialogCancel
+
+A secondary cancel button using `ButtonVariant.Outline`. Place inside the `footer` slot.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the button. |
+| `content` | `@Composable () -> Unit` | — | Button label — typically a `Text`. |
 
 </DocsPage>

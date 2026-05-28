@@ -1,6 +1,6 @@
 ---
 title: Card
-description: Displays a card with header, content, and footer.
+description: A bordered, shadowed surface with composable slots for header, title, description, content, and footer.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -10,10 +10,11 @@ import { Steps } from "@/components/mdx/steps"
 import { CodeWithFilename } from "@/components/mdx/code-with-filename"
 import { CodeConverter } from "@/components/docs/code-converter"
 
-
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Card.mdx">
 
-## Basic Usage
+`Card` is a `Column`-based container with a rounded border, a drop shadow, and a `card` background from the active theme. Five slot composables — `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter` — provide consistent padding and typography without any required nesting order.
+
+## Basic usage
 
 <TabPreview>
 
@@ -24,38 +25,35 @@ import { CodeConverter } from "@/components/docs/code-converter"
 <TabPreview.Panel name="Code">
 
 ```kotlin
-import com.shadcn.ui.components.Card
-import com.shadcn.ui.components.CardContent
-import com.shadcn.ui.components.CardDescription
-import com.shadcn.ui.components.CardFooter
-import com.shadcn.ui.components.CardHeader
-import com.shadcn.ui.components.CardTitle
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Card
+import com.komoui.components.CardContent
+import com.komoui.components.CardDescription
+import com.komoui.components.CardFooter
+import com.komoui.components.CardHeader
+import com.komoui.components.CardTitle
 
 @Composable
 fun Example() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp),
-        ) {
-            CardHeader {
-                CardTitle { Text("This is title") }
-                CardDescription { Text("This is description") }
-            }
-            CardContent {
-                Text("This is the main content of the card.")
-                Spacer(modifier = Modifier.height(8.dp))
-                Text("You can put any composables here.")
-            }
-            CardFooter {
-                Text("This is footer")
-            }
+    Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)) {
+        CardHeader {
+            CardTitle { Text("Card title") }
+            CardDescription { Text("Card description") }
+        }
+        CardContent {
+            Text("This is the main content of the card.")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text("You can place any composables here.")
+        }
+        CardFooter {
+            Text("Card footer")
         }
     }
 }
@@ -65,7 +63,9 @@ fun Example() {
 
 </TabPreview>
 
-## With Background Image
+## With background image
+
+Pass any composable directly inside `Card` without using the slot helpers. Coil3's `AsyncImage` fills the card naturally since `Card` is a `ColumnScope`.
 
 <TabPreview>
 
@@ -76,23 +76,63 @@ fun Example() {
 <TabPreview.Panel name="Code">
 
 ```kotlin
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.shadcn.ui.components.Card
+import androidx.compose.runtime.Composable
+import com.komoui.components.Card
 
 @Composable
 fun Example() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp, vertical = 32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Card {
+        AsyncImage(
+            model = "https://heroui.com/images/hero-card.jpeg",
+            contentDescription = null,
+            modifier = Modifier.size(200.dp),
+        )
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Custom radius
+
+`radius` accepts any `Dp` value to override the default `lg` corner rounding.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="card" variant="custom-radius" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Card
+import com.komoui.components.CardContent
+import com.komoui.components.CardHeader
+import com.komoui.components.CardTitle
+
+@Composable
+fun Example() {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
+        radius = 4.dp,
     ) {
-        Card(border = null) {
-            AsyncImage(
-                "https://heroui.com/images/hero-card.jpeg",
-                contentDescription = "",
-                modifier = Modifier.size(200.dp)
-            )
+        CardHeader {
+            CardTitle { Text("Sharp corners") }
+        }
+        CardContent {
+            Text("This card uses a 4 dp corner radius.")
         }
     }
 }
@@ -102,32 +142,146 @@ fun Example() {
 
 </TabPreview>
 
-## Custom Styles
+## Custom shadow
 
-### Colors
+Pass a `List<BoxShadow>` to `shadow` to adjust depth or remove the shadow entirely. Use `MaterialTheme.shadow` presets or supply your own values.
 
-You can also set the card background color by passing `Color` to the `background`
+<TabPreview>
 
-```kotlin
-Card(
-    modifier = Modifier
-        .size(200.dp),
-    background = Color.Blue,
-)
-```
+<TabPreview.Panel name="Preview">
+<Preview name="card" variant="custom-shadow" />
+</TabPreview.Panel>
 
-### Shadow
-
-You can also adjust the card shadow by passing `BoxShadow` to the `shadow`.
+<TabPreview.Panel name="Code">
 
 ```kotlin
-Card(
-    modifier = Modifier
-        .size(200.dp),
-    shadow = MaterialTheme.shadow.mdx,
-)
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Card
+import com.komoui.components.CardContent
+import com.komoui.components.CardHeader
+import com.komoui.components.CardTitle
+import com.komoui.themes.shadow
+
+@Composable
+fun Example() {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
+        shadow = MaterialTheme.shadow.mdx,
+    ) {
+        CardHeader {
+            CardTitle { Text("Deeper shadow") }
+        }
+        CardContent {
+            Text("This card uses the mdx shadow preset.")
+        }
+    }
+}
 ```
 
-Shadcn compose has a default shadow configuration, you can also override the shadow configuration by extending `ShadcnShadows` and pass it through `ShadcnTheme`
+</TabPreview.Panel>
+
+</TabPreview>
+
+> Override the global shadow scale by extending `ShadcnShadows` and passing it to `ShadcnTheme`.
+
+## Centered header
+
+`CardHeader` and `CardContent` accept `horizontalAlignment` so you can center content without extra wrappers.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="card" variant="centered" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Card
+import com.komoui.components.CardDescription
+import com.komoui.components.CardFooter
+import com.komoui.components.CardHeader
+import com.komoui.components.CardTitle
+import com.komoui.components.Button
+
+@Composable
+fun Example() {
+    Card(modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)) {
+        CardHeader(horizontalAlignment = Alignment.CenterHorizontally) {
+            CardTitle { Text("Centered title") }
+            CardDescription { Text("Subtitle text") }
+        }
+        CardFooter(horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center) {
+            Button(onClick = {}) { Text("Action") }
+        }
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## API reference
+
+### Card
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the inner `Column` content area. |
+| `radius` | `Dp` | `MaterialTheme.radius.lg` | Corner radius for the card border and clip. |
+| `shadow` | `List<BoxShadow>` | `MaterialTheme.styles.shadow()` | Drop shadow(s) drawn behind the card. Pass `emptyList()` to remove. |
+| `content` | `@Composable ColumnScope.() -> Unit` | — | Card body; receives `ColumnScope` so standard column modifiers apply. |
+
+### CardHeader
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied after the default full-width 16 dp padding. |
+| `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.Start` | Horizontal alignment of header children. |
+| `content` | `@Composable ColumnScope.() -> Unit` | — | Header content; typically `CardTitle` and `CardDescription`. |
+
+### CardTitle
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the wrapper column. |
+| `content` | `@Composable () -> Unit` | — | Title content. Rendered semibold at 18 sp using `cardForeground`. |
+
+### CardDescription
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the wrapper column. |
+| `content` | `@Composable () -> Unit` | — | Description content. Rendered at 14 sp using `mutedForeground`. |
+
+### CardContent
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied after the default horizontal 16 dp padding. |
+| `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.Start` | Horizontal alignment of content children. |
+| `content` | `@Composable ColumnScope.() -> Unit` | — | Main body content. |
+
+### CardFooter
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied after the default full-width 16 dp padding. |
+| `horizontalArrangement` | `Arrangement.Horizontal` | `Arrangement.Start` | Horizontal arrangement of footer children. |
+| `content` | `@Composable RowScope.() -> Unit` | — | Footer content; laid out in a `Row` aligned to center vertically. |
 
 </DocsPage>

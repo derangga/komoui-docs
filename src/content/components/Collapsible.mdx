@@ -1,0 +1,285 @@
+---
+title: Collapsible
+description: A fully controlled single-section disclosure primitive with animated expand/collapse and scoped trigger and content slots.
+---
+
+import { DocsPage } from "@/components/mdx/docs-page"
+import { TabPreview } from "@/components/mdx/tab-preview"
+import { Preview } from "@/components/mdx/preview"
+import { Steps } from "@/components/mdx/steps"
+import { CodeWithFilename } from "@/components/mdx/code-with-filename"
+import { CodeConverter } from "@/components/docs/code-converter"
+
+<DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Collapsible.mdx">
+
+`Collapsible` is a controlled disclosure primitive — the caller owns the `open` state and receives toggle intent via `onOpenChange`. Inside the trailing `content` lambda, `CollapsibleScope` exposes two slots: `CollapsibleTrigger` (a clickable `Row`) and `CollapsibleContent` (an `AnimatedVisibility`-wrapped `Column` with 300 ms fade + expand/shrink animation).
+
+## Basic usage
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="collapsible" variant="default" assetExtension=".gif"/>
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Collapsible
+import com.komoui.themes.styles
+
+@Composable
+fun Example() {
+    var open by remember { mutableStateOf(false) }
+    val styles = MaterialTheme.styles
+    val radius = MaterialTheme.radius
+
+    Collapsible(
+        open = open, onOpenChange = { open = it }, modifier = Modifier.fillMaxWidth()
+    ) {
+        CollapsibleTrigger(
+            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(radius.md))
+                .background(styles.secondary).padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = if (open) "Hide details" else "Show details",
+                color = styles.foreground,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            Icon(Icons.Default.UnfoldMore, contentDescription = "")
+        }
+        CollapsibleContent(
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
+                .clip(RoundedCornerShape(radius.md))
+                .border(1.dp, styles.border, RoundedCornerShape(radius.md)).padding(16.dp)
+        ) {
+            Text(
+                text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua",
+                color = styles.foreground,
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## With icon
+
+Animate an `Icon` rotation with `animateFloatAsState` to give a visual hint of the open direction.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="collapsible" variant="with-icon" assetExtension=".gif"/>
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Collapsible
+import com.komoui.themes.styles
+
+@Composable
+fun Example() {
+    var open by remember { mutableStateOf(false) }
+    val styles = MaterialTheme.styles
+    val radius = MaterialTheme.radius
+
+    val rows = listOf(
+        "@radix-ui/primitives",
+        "@radix-ui/colors",
+        "@stitches/react",
+        "@floating-ui/react",
+        "@tanstack/react-query"
+    )
+
+    Collapsible(
+        open = open, onOpenChange = { open = it }, modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                text = rows.first(),
+                color = styles.foreground,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(radius.md))
+                    .border(1.dp, styles.border, RoundedCornerShape(radius.md)).padding(12.dp)
+            )
+
+            CollapsibleContent(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    rows.drop(1).forEach { item ->
+                        Text(
+                            text = item,
+                            color = styles.foreground,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(radius.md))
+                                .border(1.dp, styles.border, RoundedCornerShape(radius.md))
+                                .padding(12.dp)
+                        )
+                    }
+                }
+            }
+
+            CollapsibleTrigger(
+                modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(radius.md))
+                    .background(styles.secondary).padding(horizontal = 16.dp, vertical = 10.dp)
+            ) {
+                Text(
+                    text = if (open) "Show less" else "Show ${rows.size - 1} more",
+                    color = styles.foreground,
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                )
+            }
+        }
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## Disabled
+
+Set `enabled = false` to prevent the trigger from responding to taps. The content stays in its current `open` state but cannot be changed by the user.
+
+<TabPreview>
+
+<TabPreview.Panel name="Preview">
+<Preview name="collapsible" variant="disabled" />
+</TabPreview.Panel>
+
+<TabPreview.Panel name="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Collapsible
+import com.komoui.themes.styles
+
+@Composable
+fun Example() {
+    var open by remember { mutableStateOf(false) }
+
+    Collapsible(
+        open = open,
+        onOpenChange = { open = it },
+        enabled = false,
+        modifier = Modifier.fillMaxWidth().padding(16.dp),
+    ) {
+        CollapsibleTrigger(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = "Disabled section",
+                fontWeight = FontWeight.SemiBold,
+                color = MaterialTheme.styles.mutedForeground,
+            )
+            Text("Locked", color = MaterialTheme.styles.mutedForeground)
+        }
+
+        CollapsibleContent(modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
+            Text(
+                text = "This content cannot be revealed because the trigger is disabled.",
+                color = MaterialTheme.styles.mutedForeground,
+            )
+        }
+    }
+}
+```
+
+</TabPreview.Panel>
+
+</TabPreview>
+
+## API reference
+
+### Collapsible
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `open` | `Boolean` | — | Whether the content is currently expanded. Owned by the caller. |
+| `onOpenChange` | `(Boolean) -> Unit` | — | Invoked with the requested new open state when the trigger is tapped. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the root `Column`. |
+| `enabled` | `Boolean` | `true` | When `false`, the trigger does not respond to taps. |
+| `content` | `@Composable CollapsibleScope.() -> Unit` | — | Slot for `CollapsibleTrigger` and `CollapsibleContent`. |
+
+### CollapsibleTrigger
+
+Scoped to `CollapsibleScope`. A `Row` that toggles `open` on tap.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the trigger `Row`. |
+| `horizontalArrangement` | `Arrangement.Horizontal` | `Arrangement.Start` | Horizontal arrangement of the trigger's children. |
+| `verticalAlignment` | `Alignment.Vertical` | `Alignment.Top` | Vertical alignment of the trigger's children. |
+| `content` | `@Composable RowScope.() -> Unit` | — | Trigger content. |
+
+### CollapsibleContent
+
+Scoped to `CollapsibleScope`. An `AnimatedVisibility` wrapper that fades and expands/shrinks over 300 ms.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the inner `Column`. |
+| `content` | `@Composable ColumnScope.() -> Unit` | — | Content revealed when `open` is `true`. |
+
+</DocsPage>
