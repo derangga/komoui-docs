@@ -1,6 +1,6 @@
 ---
 title: Calendar
-description: A Jetpack Compose calendar component inspired by shadcn/ui. Supports single date selection, date range selection, date restriction modes, month/year picker dialogs, and full color customization.
+description: A Jetpack Compose calendar component. Supports single date selection, date range selection, date restriction modes, month/year picker dialogs, and full color customization.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -292,8 +292,8 @@ fun Example() {
             .padding(horizontal = 16.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val chart3 = MaterialTheme.shadcnColors.chart3
-        val chart4 = MaterialTheme.shadcnColors.chart4
+        val chart3 = MaterialTheme.styles.chart3
+        val chart4 = MaterialTheme.styles.chart4
 
         Calendar(
             selectedDate = selectedDate,

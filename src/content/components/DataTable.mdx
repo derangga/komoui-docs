@@ -1,6 +1,6 @@
 ---
 title: Data Table
-description: Low-level table primitives plus a typed DataTable with sorting, row selection, and pagination — mirroring shadcn's <Table> and data-table demo.
+description: Low-level table primitives plus a typed DataTable with sorting, row selection, and pagination.
 ---
 
 import { DocsPage } from "@/components/mdx/docs-page"
@@ -13,8 +13,8 @@ import { Preview } from "@/components/mdx/preview"
 
 This page documents two layers that ship from the same `Table.kt` source:
 
-- **Table primitives** — `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`. A direct mirror of shadcn's `<Table>` family. Use these when you want full control over layout, custom headers, or non-rectangular data.
-- **`DataTable<T>`** — a typed, batteries-included data table inspired by shadcn's data-table demo. It owns state for sorting, optional checkbox selection, and Previous/Next pagination, and lets you swap in a custom pagination UI through a slot.
+- **Table primitives** — `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`. Use these when you want full control over layout, custom headers, or non-rectangular data.
+- **`DataTable<T>`** — a typed, batteries-included data table. It owns state for sorting, optional checkbox selection, and Previous/Next pagination, and lets you swap in a custom pagination UI through a slot.
 
 Both layers share the same horizontal-scroll model: the table is **not** shrunk to viewport on mobile. Declare each column's width as a fixed `Dp` and the wrapper will scroll horizontally when needed. Header and body cells in the same column must share the same `Modifier.width(...)` so the columns line up.
 
@@ -46,7 +46,7 @@ TableCaption(text = "Optional caption") // rendered outside the Table container
 
 ## Table primitives
 
-A hand-rolled invoice table. Each column declares a fixed `Dp` width and both `TableHead` and `TableCell` cells reuse the same width so the columns stay aligned under the horizontal scroller. The last body row passes `showBottomBorder = false` to drop its bottom border (matching shadcn's `[&_tr:last-child]:border-0`).
+A hand-rolled invoice table. Each column declares a fixed `Dp` width and both `TableHead` and `TableCell` cells reuse the same width so the columns stay aligned under the horizontal scroller. The last body row passes `showBottomBorder = false` to drop its bottom border.
 
 <TabPreview>
 

@@ -36,7 +36,7 @@ export function Header() {
             className="flex items-center font-bold text-foreground gap-2"
           >
             <Android className="size-8" />
-            shadcn/compose
+            KomoUI
           </Link>
 
           <div className="hidden md:flex items-center space-x-4">
@@ -79,7 +79,7 @@ export function Header() {
 
         <div className="w-fit flex flex-row h-5 items-center justify-between space-x-2 md:justify-end">
           <a
-            href="https://github.com/derangga/shadcn-ui-kmp"
+            href="https://github.com/derangga/komoui"
             className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:bg-accent hover:text-accent-foreground w-8 h-8"
             target="_blank"
             rel="noopener noreferrer"

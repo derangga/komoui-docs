@@ -17,12 +17,12 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Shadcn Compose",
+        title: "KomoUI",
       },
       {
         name: "description",
         content:
-          "shadcn-compose is inspired by shadcn, providing beautifully designed components that you can copy and paste into your apps",
+          "KomoUI is a Kotlin Multiplatform UI library for Jetpack Compose, providing beautifully designed components that you can copy and paste into your apps.",
       },
       {
         property: "og:type",
@@ -30,16 +30,16 @@ export const Route = createRootRoute({
       },
       {
         property: "og:title",
-        content: "Shadcn Compose",
+        content: "KomoUI",
       },
       {
         property: "og:description",
         content:
-          "shadcn-compose is inspired by shadcn, providing beautifully designed components that you can copy and paste into your apps",
+          "KomoUI is a Kotlin Multiplatform UI library for Jetpack Compose, providing beautifully designed components that you can copy and paste into your apps.",
       },
       {
         property: "og:image",
-        content: "https://shadcn-compose.site/og-image.webp",
+        content: "https://komoui.site/og-image.webp",
       },
       {
         property: "og:locale",
@@ -47,11 +47,11 @@ export const Route = createRootRoute({
       },
       {
         property: "og:url",
-        content: "https://shadcn-compose.site/",
+        content: "https://komoui.site/",
       },
       {
         property: "og:site_name",
-        content: "Shadcn Compose",
+        content: "KomoUI",
       },
       {
         name: "twitter:card",
@@ -59,16 +59,16 @@ export const Route = createRootRoute({
       },
       {
         name: "twitter:title",
-        content: "Shadcn Compose",
+        content: "KomoUI",
       },
       {
         name: "twitter:description",
         content:
-          "shadcn-compose is inspired by shadcn, providing beautifully designed components that you can copy and paste into your apps",
+          "KomoUI is a Kotlin Multiplatform UI library for Jetpack Compose, providing beautifully designed components that you can copy and paste into your apps.",
       },
       {
         name: "twitter:image",
-        content: "https://shadcn-compose.site/og-image.webp",
+        content: "https://komoui.site/og-image.webp",
       },
     ],
     links: [

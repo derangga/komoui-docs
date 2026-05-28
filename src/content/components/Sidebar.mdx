@@ -13,7 +13,7 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 <DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/Sidebar.mdx">
 
-Sidebars are one of the most complex components to build. They are central to any application and often contain a lot of moving parts. `shadcn-compose`'s sidebar mirrors the [shadcn/ui React component](https://ui.shadcn.com/docs/components/sidebar) one-to-one: `Sidebar` and `SidebarInset` are placed as **siblings inside `SidebarProvider`**, and the provider arranges them as a `Row` on desktop or as a `ModalNavigationDrawer` on mobile (viewport &lt; `SidebarDefaults.MobileBreakpoint`, default `768.dp`).
+Sidebars are one of the most complex components to build. They are central to any application and often contain a lot of moving parts. KomoUI's sidebar exposes `Sidebar` and `SidebarInset` as **siblings inside `SidebarProvider`**, and the provider arranges them as a `Row` on desktop or as a `ModalNavigationDrawer` on mobile (viewport &lt; `SidebarDefaults.MobileBreakpoint`, default `768.dp`).
 
 ## Structure
 
@@ -29,7 +29,7 @@ A Sidebar component is composed of the following parts:
 - `SidebarTrigger` — A ghost icon button that toggles the sidebar.
 - `SidebarRail` — Optional thin clickable strip on the sidebar's outer edge.
 
-<img src="https://img.shadcn-compose.site/assets/components/sidebar/sidebar-structure.webp" alt="sidebar-structure" />
+<img src="https://img.komoui.site/assets/components/sidebar/sidebar-structure.webp" alt="sidebar-structure" />
 
 ## Usage
 
@@ -229,7 +229,7 @@ fun SidebarLayoutPage() {
 
 You've created your first sidebar, you should see something like this:
 
-<img src="https://img.shadcn-compose.site/assets/components/sidebar/default.gif" />
+<img src="https://img.komoui.site/assets/components/sidebar/default.gif" />
 
 </Steps>
 
@@ -268,15 +268,15 @@ Here is the preview of sidebar inset and floating
 
 ### Inset
 
-<img src="https://img.shadcn-compose.site/assets/components/sidebar/inset.gif" />
+<img src="https://img.komoui.site/assets/components/sidebar/inset.gif" />
 
 ### Floating
 
-<img src="https://img.shadcn-compose.site/assets/components/sidebar/floating.gif" />
+<img src="https://img.komoui.site/assets/components/sidebar/floating.gif" />
 
 ### With collapsible icon
 
-<img src="https://img.shadcn-compose.site/assets/components/sidebar/default-with-collapsible-icon.gif" />
+<img src="https://img.komoui.site/assets/components/sidebar/default-with-collapsible-icon.gif" />
 
 ## Side
 
@@ -394,17 +394,17 @@ SidebarFooter {
             SidebarMenuButton(
                 onClick = { /* open user menu */ },
                 size = SidebarMenuButtonSize.Large,
-                tooltip = "shadcn",
+                tooltip = "komoui",
                 icon = {
                     Avatar(
                         model = null,
                         size = 32.dp,
-                        fallbackText = "SH",
+                        fallbackText = "KO",
                     )
                 },
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("shadcn", fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                    Text("komoui", fontSize = 14.sp, fontWeight = FontWeight.Medium)
                     Text(
                         "m@example.com",
                         fontSize = 12.sp,

@@ -1,6 +1,6 @@
 export function tailwindToKotlin(
   css: string,
-  interfaceName = "ShadcnStyles",
+  interfaceName = "KomoStyles",
   lightClassName = "LightStyles",
   darkClassName = "DarkStyles",
 ): string {
@@ -272,7 +272,7 @@ export function tailwindToKotlin(
     "import androidx.compose.runtime.Composable",
     "import androidx.compose.ui.graphics.Color",
     "import androidx.compose.ui.unit.dp",
-    "import com.komoui.themes.ShadcnStyles",
+    "import com.komoui.themes.KomoStyles",
     "import com.komoui.themes.BoxShadow",
     "import com.komoui.themes.styles",
     "",

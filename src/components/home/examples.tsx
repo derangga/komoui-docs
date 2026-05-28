@@ -15,8 +15,8 @@ export function MyButton() {
   )
 }`,
   kotlin: `// komoui (Kotlin)
-import com.shadcncompose.ui.Button
-import com.shadcncompose.ui.ButtonDefaults
+import com.komoui.components.Button
+import com.komoui.components.ButtonDefaults
 
 @Composable
 fun MyButton() {

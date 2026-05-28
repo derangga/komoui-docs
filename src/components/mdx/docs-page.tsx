@@ -12,10 +12,10 @@ interface DocsPageProps {
 export function DocsPage({
   title,
   description,
-  path = "https://github.com/derangga/shadcn-compose-docs/",
+  path = "https://github.com/derangga/komoui-docs/",
   children,
 }: DocsPageProps) {
-  const source = `https://github.com/derangga/shadcn-compose-docs/tree/master/src/${path}`;
+  const source = `https://github.com/derangga/komoui-docs/tree/master/src/${path}`;
 
   return (
     <div className="mb-40">

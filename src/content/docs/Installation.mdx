@@ -30,7 +30,7 @@ Update your `build.gradle` by adding KomoUI <a href="https://mvnrepository.com/a
 
 ```gradle
 dependencies {
-    implementation 'io.github.derangga:shadcn-ui-kmp:shadcn_compose_version'
+    implementation 'io.github.derangga:komoui:komoui_version'
 }
 ```
 
@@ -40,21 +40,21 @@ dependencies {
 
 ```kts
 dependencies {
-    implementation("io.github.derangga:shadcn-ui-kmp:shadcn_compose_version")
+    implementation("io.github.derangga:komoui:komoui_version")
 }
 ```
 
 </TabPreview.Panel>
 </TabPreview>
 
-#### Replace existing theme with ShadcnTheme
+#### Replace existing theme with KomoTheme
 
 ```kotlin
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ShadcnTheme {
+            KomoTheme {
                 // rest of your screen navigation or components
             }
         }
@@ -79,7 +79,7 @@ fun ExampleInput() {
         Text(
             text = "Name",
             fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.shadcnColors.foreground
+            color = MaterialTheme.styles.foreground
         )
         Input(
             value = nameTxt,
