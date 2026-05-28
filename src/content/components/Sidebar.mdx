@@ -110,41 +110,66 @@ fun AppSidebar(
     )
 
     Sidebar {
-        SidebarHeader(
-            title = "My App",
-            icon = { Icon(Icons.Default.Star, contentDescription = "logo") },
-        )
-
-        SidebarContent {
-            SidebarGroup {
-                SidebarGroupLabel("Navigation")
-                SidebarGroupContent {
-                    SidebarMenu {
-                        menus.forEach { item ->
-                            SidebarMenuButton(
-                                text = item.title,
-                                onClick = {
-                                    onMenuClick(item.title)
-                                    sidebarNav.navigate(item.route)
-                                },
-                                isActive = selectedMenu == item.title,
-                                tooltip = item.title,
-                                icon = {
-                                    Icon(
-                                        item.icon,
-                                        contentDescription = item.title,
-                                        modifier = Modifier.size(20.dp),
-                                    )
-                                },
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        SidebarFooter(text = "© 2025 Shadcn Compose")
-        SidebarRail()
+      SidebarHeader(
+          title = "My App",
+          icon = {
+              Box(
+                  modifier = Modifier.size(28.dp).background(
+                      MaterialTheme.styles.foreground,
+                      RoundedCornerShape(MaterialTheme.radius.md),
+                  ),
+                  contentAlignment = Alignment.Center
+              ) {
+                   Icon(
+                      Icons.Default.Star,
+                      contentDescription = "logo",
+                      tint = MaterialTheme.styles.sidebarPrimaryForeground,
+                      modifier = Modifier.size(24.dp),
+                  )
+              }
+          },
+      )
+      SidebarContent {
+          SidebarGroup {
+              SidebarGroupLabel("Navigation")
+              SidebarGroupContent {
+                  SidebarMenu {
+                       menus.forEach { item ->
+                          SidebarMenuItem {
+                              SidebarMenuButton(
+                                  onClick = {
+                                      onMenuClick(item.title)
+                                      sidebarNav.navigate(item.route)
+                                  },
+                                  isActive = selectedMenu == item.title,
+                                  icon = {
+                                      Icon(
+                                          imageVector = when (item.title) {
+                                              "Dashboard" -> Icons.Default.Home
+                                              "Projects" -> Icons.Default.Star
+                                              else -> Icons.AutoMirrored.Filled.List
+                                          },
+                                          contentDescription = item.title,
+                                          modifier = Modifier.size(20.dp),
+                                          tint = MaterialTheme.styles.sidebarForeground,
+                                      )
+                                  },
+                              ) {
+                                  Text(
+                                      text = item.title,
+                                      color = MaterialTheme.styles.sidebarForeground,
+                                      fontSize = 14.sp,
+                                      fontWeight = FontWeight.Medium,
+                                      modifier = Modifier.weight(1f),
+                                  )
+                              }
+                          }
+                      }
+                  }
+              }
+          }
+      }
+      SidebarFooter(text = "© 2025 KomoUI")
     }
 }
 ```
@@ -175,7 +200,7 @@ fun SidebarLayoutPage() {
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.styles.background)
-                    .padding(16.dp)
+                    .padding(horizontal = 8.dp),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -190,7 +215,6 @@ fun SidebarLayoutPage() {
                         color = MaterialTheme.styles.foreground,
                     )
                 }
-
                 Spacer(modifier = Modifier.height(24.dp))
                 SidebarNavigation(sidebarNav)
             }
@@ -239,6 +263,20 @@ Pass `variant` to `SidebarProvider` to switch the sidebar / inset chrome.
 | `Sidebar`  | Full-bleed `Column` on `styles.sidebar`         | Flush content on `styles.background`             |
 | `Floating` | Padded outer container; rounded bordered card   | Same as `Sidebar`                                |
 | `Inset`    | Sidebar background extends to the screen edge   | Margin + `radius.xl` rounded card with shadow    |
+
+Here is the preview of sidebar inset and floating
+
+### Inset
+
+<img src="https://img.shadcn-compose.site/assets/components/sidebar/inset.gif" />
+
+### Floating
+
+<img src="https://img.shadcn-compose.site/assets/components/sidebar/floating.gif" />
+
+### With collapsible icon
+
+<img src="https://img.shadcn-compose.site/assets/components/sidebar/default-with-collapsible-icon.gif" />
 
 ## Side
 

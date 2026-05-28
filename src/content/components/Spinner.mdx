@@ -16,7 +16,7 @@ import { Preview } from "@/components/mdx/preview"
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-<Preview name="spinner" variant="default" />
+<Preview name="spinner" variant="default" assetExtension=".gif"/>
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
@@ -42,7 +42,7 @@ Two concentric circles pulse in and out with a staggered half-cycle offset, prod
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-<Preview name="spinner" variant="bounce" />
+<Preview name="spinner" variant="bounce" assetExtension=".gif"/>
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
@@ -69,7 +69,7 @@ A faint full-circle track is drawn at 30 % opacity; a short 30° arc orbits it c
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-<Preview name="spinner" variant="moon" />
+<Preview name="spinner" variant="moon" assetExtension=".gif"/>
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
@@ -96,7 +96,7 @@ Three dots scale in and out in sequence with a 160 ms stagger between each, crea
 <TabPreview>
 
 <TabPreview.Panel name="Preview">
-<Preview name="spinner" variant="pulse" />
+<Preview name="spinner" variant="pulse" assetExtension=".gif"/>
 </TabPreview.Panel>
 
 <TabPreview.Panel name="Code">
@@ -115,70 +115,6 @@ fun Example() {
 </TabPreview.Panel>
 
 </TabPreview>
-
-## Custom size and color
-
-`size` controls the bounding box for all variants. `color` is drawn directly — pass `MaterialTheme.colorScheme.secondary` or any arbitrary `Color`.
-
-<TabPreview>
-
-<TabPreview.Panel name="Preview">
-<Preview name="spinner" variant="custom-size-color" />
-</TabPreview.Panel>
-
-<TabPreview.Panel name="Code">
-
-```kotlin
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
-import com.shadcn.ui.components.Spinner
-
-@Composable
-fun Example() {
-    Spinner(
-        size = 64.dp,
-        color = MaterialTheme.colorScheme.secondary,
-    )
-}
-```
-
-</TabPreview.Panel>
-
-</TabPreview>
-
-## Custom stroke width
-
-`strokeWidth` affects only `Circular` and `Moon`. Increase it for a bolder look or decrease it for a hairline spinner.
-
-<TabPreview>
-
-<TabPreview.Panel name="Preview">
-<Preview name="spinner" variant="custom-stroke" />
-</TabPreview.Panel>
-
-<TabPreview.Panel name="Code">
-
-```kotlin
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.unit.dp
-import com.shadcn.ui.components.Spinner
-import com.shadcn.ui.components.SpinnerVariant
-
-@Composable
-fun Example() {
-    Spinner(
-        variant = SpinnerVariant.Moon,
-        strokeWidth = 6.dp,
-    )
-}
-```
-
-</TabPreview.Panel>
-
-</TabPreview>
-
-> `strokeWidth` is ignored by `SpinnerVariant.Bounce` and `SpinnerVariant.Pulse` — those variants render filled circles, not stroked arcs.
 
 ## API reference
 
