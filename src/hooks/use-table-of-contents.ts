@@ -15,6 +15,16 @@ interface UseTableOfContentsOptions {
   visibilityBuffer?: number;
 }
 
+function generateIdFromText(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 export function useTableOfContents(options: UseTableOfContentsOptions = {}) {
   const {
     contentSelector = ".prose",
@@ -29,17 +39,10 @@ export function useTableOfContents(options: UseTableOfContentsOptions = {}) {
   const [activeHeading, setActiveHeading] = useState("");
   const [visibleHeadings, setVisibleHeadings] = useState<string[]>([]);
   const scrollContainerRef = useRef<HTMLElement | null>(null);
-  const headingElementsRef = useRef<Map<string, HTMLElement>>(new Map());
-
-  const generateIdFromText = (text: string): string => {
-    return text
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .replace(/^-|-$/g, "");
-  };
+  const headingElementsRef = useRef<Map<string, HTMLElement> | null>(null);
+  if (headingElementsRef.current === null) {
+    headingElementsRef.current = new Map();
+  }
 
   const extractHeadings = useCallback(() => {
     const contentElement = document.querySelector(contentSelector);
@@ -68,7 +71,9 @@ export function useTableOfContents(options: UseTableOfContentsOptions = {}) {
 
   const updateActiveHeading = useCallback(() => {
     const scrollContainer = scrollContainerRef.current;
-    if (!scrollContainer || headingElementsRef.current.size === 0) return;
+    const headingElements = headingElementsRef.current;
+    if (!scrollContainer || !headingElements || headingElements.size === 0)
+      return;
 
     const scrollTop = scrollContainer.scrollTop;
     const containerHeight = scrollContainer.clientHeight;
@@ -78,7 +83,7 @@ export function useTableOfContents(options: UseTableOfContentsOptions = {}) {
     const currentVisible: string[] = [];
     let primaryActive = "";
 
-    headingElementsRef.current.forEach((element, id) => {
+    headingElements.forEach((element, id) => {
       const elementTop = element.offsetTop;
       const elementHeight = Math.max(element.offsetHeight || 32, 32);
       const elementBottom = elementTop + elementHeight;
@@ -91,7 +96,7 @@ export function useTableOfContents(options: UseTableOfContentsOptions = {}) {
     if (currentVisible.length > 0) {
       primaryActive = currentVisible[0];
     } else {
-      const entries = Array.from(headingElementsRef.current.entries());
+      const entries = Array.from(headingElements.entries());
       for (let i = entries.length - 1; i >= 0; i--) {
         const [id, element] = entries[i];
         if (element.offsetTop <= scrollTop + offsetTop) {
@@ -101,8 +106,8 @@ export function useTableOfContents(options: UseTableOfContentsOptions = {}) {
       }
     }
 
-    if (scrollTop <= offsetTop && headingElementsRef.current.size > 0) {
-      const firstId = headingElementsRef.current.keys().next().value;
+    if (scrollTop <= offsetTop && headingElements.size > 0) {
+      const firstId = headingElements.keys().next().value;
       if (firstId && !currentVisible.includes(firstId)) {
         currentVisible.unshift(firstId);
       }

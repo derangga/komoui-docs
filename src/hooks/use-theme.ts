@@ -1,34 +1,52 @@
-import { useState, useEffect, useCallback } from "react";
+import { useSyncExternalStore, useEffect, useCallback } from "react";
+
+function applyTheme(dark: boolean) {
+  if (dark) {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+  }
+}
+
+const listeners = new Set<() => void>();
+
+function subscribe(callback: () => void) {
+  listeners.add(callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    listeners.delete(callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function emitChange() {
+  for (const listener of listeners) listener();
+}
+
+function getSnapshot() {
+  const savedTheme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia(
+    "(prefers-color-scheme: dark)"
+  ).matches;
+  return savedTheme === "dark" || (!savedTheme && prefersDark);
+}
+
+function getServerSnapshot() {
+  return false;
+}
 
 export function useTheme() {
-  const [isDark, setIsDark] = useState(false);
+  const isDark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    const dark = savedTheme === "dark" || (!savedTheme && prefersDark);
-    setIsDark(dark);
-    applyTheme(dark);
-  }, []);
-
-  const applyTheme = (dark: boolean) => {
-    if (dark) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  };
+    applyTheme(isDark);
+  }, [isDark]);
 
   const toggleTheme = useCallback(() => {
-    setIsDark((prev) => {
-      const next = !prev;
-      applyTheme(next);
-      return next;
-    });
+    applyTheme(!getSnapshot());
+    emitChange();
   }, []);
 
   return { isDark, toggleTheme };
