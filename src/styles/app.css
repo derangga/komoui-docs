@@ -252,6 +252,23 @@ code[data-theme*=" "] span {
   background-color: var(--shiki-dark-bg);
 }
 
+/* Runtime Shiki highlighting (home page examples) — dual theme via CSS vars */
+.home-code .shiki {
+  @apply text-sm font-mono;
+  margin: 0;
+  background-color: transparent !important;
+}
+
+.home-code .shiki,
+.home-code .shiki span {
+  color: var(--shiki-light);
+}
+
+.dark .home-code .shiki,
+.dark .home-code .shiki span {
+  color: var(--shiki-dark);
+}
+
 /* rehype-pretty-code styling */
 [data-rehype-pretty-code-figure] pre {
   @apply p-4 rounded-lg overflow-x-auto;

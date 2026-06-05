@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet, Link, useLocation } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 import { Android } from "@/components/icons";
 import {
   Sidebar,
@@ -11,6 +12,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   Breadcrumb,
@@ -30,13 +32,35 @@ export const Route = createFileRoute("/docs")({
   component: DocsLayout,
 });
 
+// Close the mobile sidebar drawer whenever the route changes. Must live inside
+// SidebarProvider so it can access the sidebar context.
+function CloseMobileSidebarOnNavigate({ pathname }: { pathname: string }) {
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  useEffect(() => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  }, [pathname, isMobile, setOpenMobile]);
+
+  return null;
+}
+
 function DocsLayout() {
   const location = useLocation();
   const pathname = location.pathname;
   const hideTocPaths = ["/docs/components"];
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  // Reset scroll to the top whenever the page changes — the scroll container
+  // persists across navigation, so otherwise it keeps the previous position.
+  useEffect(() => {
+    scrollContainerRef.current?.scrollTo({ top: 0, left: 0 });
+  }, [pathname]);
 
   return (
     <SidebarProvider>
+      <CloseMobileSidebarOnNavigate pathname={pathname} />
       <Sidebar>
         <SidebarHeader className="px-4">
           <SidebarMenu>
@@ -92,7 +116,10 @@ function DocsLayout() {
         </header>
 
         <div className="relative px-6 lg:gap-10 lg:grid lg:grid-cols-[1fr_280px]">
-          <div className="scrollbar-hide overflow-y-auto h-screen px-3 sm:px-0">
+          <div
+            ref={scrollContainerRef}
+            className="scrollbar-hide overflow-y-auto h-screen px-3 sm:px-0"
+          >
             <div className="prose dark:prose-invert mx-auto">
               <Outlet />
             </div>

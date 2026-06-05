@@ -131,44 +131,63 @@ export function useTableOfContents(options: UseTableOfContentsOptions = {}) {
   );
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      extractHeadings();
-      scrollContainerRef.current = document.querySelector(
-        scrollContainerSelector
-      );
+    // Reset immediately so the previous page's headings never linger.
+    setHeadings([]);
+    setActiveHeading("");
+    setVisibleHeadings([]);
+    headingElementsRef.current = new Map();
 
-      const container = scrollContainerRef.current;
-      if (!container) return;
+    scrollContainerRef.current = document.querySelector(scrollContainerSelector);
+    const container = scrollContainerRef.current;
 
-      let lastExecTime = 0;
-      let timeoutId: number | null = null;
+    let lastExecTime = 0;
+    let timeoutId: number | null = null;
+    let observer: MutationObserver | null = null;
 
-      const throttledUpdate = () => {
-        const now = Date.now();
-        if (now - lastExecTime > 100) {
-          updateActiveHeading();
-          lastExecTime = now;
-        } else {
-          if (timeoutId) clearTimeout(timeoutId);
-          timeoutId = window.setTimeout(() => {
-            updateActiveHeading();
-            lastExecTime = Date.now();
-          }, 100 - (now - lastExecTime));
-        }
-      };
-
-      container.addEventListener("scroll", throttledUpdate, { passive: true });
-      updateActiveHeading();
-
-      return () => {
-        container.removeEventListener("scroll", throttledUpdate);
+    const throttledUpdate = () => {
+      const now = Date.now();
+      if (now - lastExecTime > 100) {
+        updateActiveHeading();
+        lastExecTime = now;
+      } else {
         if (timeoutId) clearTimeout(timeoutId);
-      };
-    }, 100);
+        timeoutId = window.setTimeout(() => {
+          updateActiveHeading();
+          lastExecTime = Date.now();
+        }, 100 - (now - lastExecTime));
+      }
+    };
 
-    return () => clearTimeout(timer);
+    if (container) {
+      container.addEventListener("scroll", throttledUpdate, { passive: true });
+    }
+
+    // Use a MutationObserver so extraction fires on actual DOM changes rather
+    // than a fixed timer guess. This handles slow renders and code-split MDX.
+    const contentElement = document.querySelector(contentSelector);
+    const observeTarget = contentElement ?? document.body;
+
+    observer = new MutationObserver(() => {
+      extractHeadings();
+      updateActiveHeading();
+    });
+
+    observer.observe(observeTarget, { childList: true, subtree: true });
+
+    // Also run immediately in case the content is already in the DOM.
+    extractHeadings();
+    updateActiveHeading();
+
+    return () => {
+      observer?.disconnect();
+      if (container) {
+        container.removeEventListener("scroll", throttledUpdate);
+      }
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [
     location.pathname,
+    contentSelector,
     extractHeadings,
     updateActiveHeading,
     scrollContainerSelector,
