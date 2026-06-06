@@ -22,17 +22,9 @@ export function Hero({ onScrollTo }: HeroProps) {
         </h1>
 
         <p className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed max-w-2xl mx-auto">
-          shadcn-compose is inspired by{" "}
-          <a
-            href="https://ui.shadcn.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-medium text-foreground underline"
-          >
-            shadcn
-          </a>
-          , providing beautifully designed components that you can copy and paste
-          into your apps. Accessible, customizable, and open source.
+          KomoUI brings a modern, beautifully designed component library to
+          Jetpack Compose and Kotlin Multiplatform. Accessible, customizable,
+          and open source.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

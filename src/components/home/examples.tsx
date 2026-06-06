@@ -2,6 +2,7 @@ import { forwardRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, Copy } from "lucide-react";
+import { CodeHighlight } from "./code-highlight";
 
 const codeExamples = {
   react: `// shadcn/ui (React)
@@ -15,8 +16,8 @@ export function MyButton() {
   )
 }`,
   kotlin: `// komoui (Kotlin)
-import com.shadcncompose.ui.Button
-import com.shadcncompose.ui.ButtonDefaults
+import com.komoui.components.Button
+import com.komoui.components.ButtonDefaults
 
 @Composable
 fun MyButton() {
@@ -74,9 +75,11 @@ export const Examples = forwardRef<HTMLElement>(function Examples(_, ref) {
               </div>
             </CardHeader>
             <CardContent>
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto h-80">
-                <code className="text-sm font-mono">{codeExamples.react}</code>
-              </pre>
+              <CodeHighlight
+                code={codeExamples.react}
+                lang="tsx"
+                className="bg-muted p-4 rounded-lg overflow-x-auto h-80"
+              />
             </CardContent>
           </Card>
 
@@ -101,9 +104,11 @@ export const Examples = forwardRef<HTMLElement>(function Examples(_, ref) {
               </div>
             </CardHeader>
             <CardContent>
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto h-80">
-                <code className="text-sm font-mono">{codeExamples.kotlin}</code>
-              </pre>
+              <CodeHighlight
+                code={codeExamples.kotlin}
+                lang="kotlin"
+                className="bg-muted p-4 rounded-lg overflow-x-auto h-80"
+              />
             </CardContent>
           </Card>
         </div>

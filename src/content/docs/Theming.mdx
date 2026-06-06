@@ -15,15 +15,15 @@ import { CodeConverter } from "@/components/docs/code-converter"
 
 ## Color
 
-KomoUI provides a ShadcnColors class that manages the color scheme configuration.
-To customize the theme colors, simply override the ShadcnColors class and assign it to your ShadcnTheme instance.
+KomoUI provides a KomoStyles class that manages the color scheme configuration.
+To customize the theme colors, simply override the KomoStyles class and assign it to your KomoTheme instance.
 
 <Steps>
 
 #### Create custom color class
 
 ```kotlin
-object ShadcnLightColors : ShadcnColors {
+object KomoLightStyles : KomoStyles {
     override val background: Color = Color(0xFFF7F3F9)
     override val foreground: Color = Color(0xFF374151)
     override val card: Color = Color(0xFFFFFFFF)
@@ -67,8 +67,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ShadcnTheme(
-                shadcnLightColors = ShadcnLightColors,
+            KomoTheme(
+                komoLightColors = KomoLightStyles,
             ) {
                 // rest of your screen navigation or components
             }
@@ -81,15 +81,15 @@ class MainActivity : ComponentActivity() {
 
 ## Radius
 
-KomoUI provides the ShadcnRadius class to define corner radius configurations used across components.
-To adjust the radius values, override the ShadcnRadius class and assign it to your ShadcnTheme.
+KomoUI provides the KomoRadius class to define corner radius configurations used across components.
+To adjust the radius values, override the KomoRadius class and assign it to your KomoTheme.
 
 <Steps>
 
 #### Create custom radius class
 
 ```kotlin
-object Radius : ShadcnRadius {
+object Radius : KomoRadius {
     override val radius: Dp = 4.dp
     override val sm: Dp = max(0.dp, radius - 4.dp)
     override val md: Dp = max(0.dp, radius - 2.dp)
@@ -106,8 +106,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ShadcnTheme(
-                shadcnRadius = Radius,
+            KomoTheme(
+                komoRadius = Radius,
             ) {
                 // rest of your screen navigation or components
             }

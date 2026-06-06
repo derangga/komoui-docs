@@ -10,7 +10,7 @@ interface PreviewProps {
 }
 
 type Status = "Loading" | "Loaded" | "Error";
-const SITE = "https://img.shadcn-compose.site";
+const SITE = "https://img.komoui.site";
 
 export function Preview({
   name,

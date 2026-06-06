@@ -1,5 +1,5 @@
 ## Overview
-This is a documentation web for [shadcn-compose](https://github.com/derangga/shadcn-ui-kmp) library
+This is the documentation website for [KomoUI](https://github.com/derangga/komoui), a Kotlin Multiplatform UI library for Jetpack Compose.
 
 ## Development
 - You must have node.js with version 20 or higher
@@ -10,4 +10,4 @@ This is a documentation web for [shadcn-compose](https://github.com/derangga/sha
 
 ## License
 
-Shadcn-Compose-Docs is available under the MIT License. See the `LICENSE.md` file for details.
+KomoUI-Docs is available under the MIT License. See the `LICENSE.md` file for details.

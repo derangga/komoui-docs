@@ -1,8 +1,8 @@
-# CLAUDE.md — shadcn-compose-docs
+# CLAUDE.md — komoui-docs
 
 ## What is this project?
 
-Documentation website for [shadcn-compose](https://github.com/derangga/shadcn-ui-kmp), a Kotlin Multiplatform port of shadcn/ui for Jetpack Compose. Live at `shadcn-compose.site`.
+Documentation website for [KomoUI](https://github.com/derangga/komoui) (Kotlin Modern UI), a Kotlin Multiplatform UI library for Jetpack Compose inspired by shadcn/ui. Live at `komoui.site`.
 
 ## Tech stack
 

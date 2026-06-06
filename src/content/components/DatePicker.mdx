@@ -226,7 +226,7 @@ import kotlinx.datetime.LocalDate
 @Composable
 fun Example() {
     var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
-    val accent = MaterialTheme.shadcnColors.chart3
+    val accent = MaterialTheme.styles.chart3
 
     DatePicker(
         selectedDate = selectedDate,

@@ -20,7 +20,7 @@ To use a Sonner (snackbar) komoui, you need to use `Scaffold` as a root composab
 ```kotlin
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import com.komoui.themes.ShadcnTheme
+import com.komoui.themes.KomoTheme
 import com.komoui.components.sooner.ObserveAsEvent
 import com.komoui.components.sooner.SonnerHost
 import com.komoui.components.sooner.SonnerProvider
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ShadcnTheme {
+            KomoTheme {
                 val scope = rememberCoroutineScope()
                 val snackbarHostState = remember { SnackbarHostState() }
                 ObserveAsEvent(SonnerProvider.events) { event ->
