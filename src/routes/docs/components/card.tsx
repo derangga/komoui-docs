@@ -4,5 +4,5 @@ import { docsMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/docs/components/card")({
   component: () => <Content />,
-  head: () => ({ meta: docsMeta(frontmatter.title, frontmatter.description) }),
+  head: () => ({ meta: docsMeta(frontmatter.title, frontmatter.description, "/docs/components/card", "Components") }),
 });

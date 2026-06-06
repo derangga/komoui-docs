@@ -15,7 +15,16 @@ export default defineConfig({
   plugins: [
     cloudflare({ viteEnvironment: { name: "ssr" } }),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+      },
+      sitemap: {
+        enabled: true,
+        host: "https://komoui.site",
+      },
+    }),
     {
       enforce: "pre",
       ...mdx({

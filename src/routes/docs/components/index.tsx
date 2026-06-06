@@ -1,16 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Separator } from "@/components/ui/separator";
 import componentMenus from "@/lib/component-menu";
-import { docsMeta } from "@/lib/seo";
+import { componentsIndexMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/docs/components/")({
   component: ComponentsView,
-  head: () => ({
-    meta: docsMeta(
-      "Components",
-      "Here you can find all the components available in the library."
-    ),
-  }),
+  head: () => ({ meta: componentsIndexMeta() }),
 });
 
 function ComponentsView() {
