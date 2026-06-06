@@ -1,16 +1,16 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { Separator } from "@/components/ui/separator";
 import componentMenus from "@/lib/component-menu";
 import { componentsIndexMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/docs/components")({
-  component: ComponentsView,
+  component: ComponentsLayout,
   head: () => ({ meta: componentsIndexMeta() }),
 });
 
-function ComponentsView() {
+function ComponentsLayout() {
   return (
-    <div>
+    <>
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-foreground mb-4">Components</h1>
         <p className="text-lg text-muted-foreground">
@@ -32,6 +32,8 @@ function ComponentsView() {
           </Link>
         ))}
       </div>
-    </div>
+
+      <Outlet />
+    </>
   );
 }
