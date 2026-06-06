@@ -3,7 +3,7 @@ import { Separator } from "@/components/ui/separator";
 import componentMenus from "@/lib/component-menu";
 import { componentsIndexMeta } from "@/lib/seo";
 
-export const Route = createFileRoute("/docs/components/")({
+export const Route = createFileRoute("/docs/components")({
   component: ComponentsView,
   head: () => ({ meta: componentsIndexMeta() }),
 });
