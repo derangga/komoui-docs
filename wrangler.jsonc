@@ -1,15 +1,17 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "shadcn-compose-docs",
+  "name": "komoui-docs",
   "compatibility_date": "2025-10-09",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "main": "@tanstack/react-start/server-entry",
   "observability": {
     "enabled": true
   },
   "routes": [
     {
-      "pattern": "shadcn-compose.site",
+      "pattern": "komoui.site",
       "custom_domain": true
     }
   ]
