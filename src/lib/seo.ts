@@ -76,18 +76,8 @@ export function docsMeta(
     { name: "twitter:description", content: description },
     { name: "twitter:image", content: "https://komoui.site/og-image.webp" },
     { rel: "canonical", href: canonicalUrl },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(techArticleSchema),
-      },
-    },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(breadcrumbSchema),
-      },
-    },
+    { "script:ld+json": techArticleSchema },
+    { "script:ld+json": breadcrumbSchema },
   ];
 }
 
@@ -141,12 +131,7 @@ export function homeMeta() {
     },
     { name: "twitter:image", content: "https://komoui.site/og-image.webp" },
     { rel: "canonical", href: "https://komoui.site/" },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(webSiteSchema),
-      },
-    },
+    { "script:ld+json": webSiteSchema },
   ];
 }
 
@@ -237,17 +222,7 @@ export function componentsIndexMeta() {
     },
     { name: "twitter:image", content: "https://komoui.site/og-image.webp" },
     { rel: "canonical", href: "https://komoui.site/docs/components" },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(collectionPageSchema),
-      },
-    },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(breadcrumbSchema),
-      },
-    },
+    { "script:ld+json": collectionPageSchema },
+    { "script:ld+json": breadcrumbSchema },
   ];
 }
