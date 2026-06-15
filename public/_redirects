@@ -1,0 +1,2 @@
+# Redirect trailing slash URLs to non-trailing-slash canonical form
+/docs/components/  /docs/components  301

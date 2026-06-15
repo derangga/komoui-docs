@@ -19,6 +19,19 @@ export default defineConfig({
       prerender: {
         enabled: true,
         crawlLinks: true,
+        // Emit flat `<path>.html` files instead of `<path>/index.html`. On
+        // Cloudflare's asset server this makes the non-trailing URL (the form
+        // used in our sitemap and rel=canonical tags) the 200 canonical, instead
+        // of 307-redirecting it to a trailing-slash variant.
+        autoSubfolderIndex: false,
+        // The /docs/components index route is crawlable as both /docs/components
+        // and /docs/components/. Keep the trailing-slash variant out of the
+        // sitemap so only the canonical (non-trailing) URL is submitted to Google.
+        onSuccess: ({ page }) => {
+          if (page.path !== "/" && page.path.endsWith("/")) {
+            return { ...page, sitemap: { ...page.sitemap, exclude: true } };
+          }
+        },
       },
       sitemap: {
         enabled: true,

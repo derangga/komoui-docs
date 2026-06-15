@@ -11,17 +11,7 @@ export function docsMeta(
     ? `KomoUI Component: ${title}`
     : `${title} - KomoUI`;
 
-  const breadcrumbs = url
-    ? url
-        .split("/")
-        .filter(Boolean)
-        .map((segment, index, arr) => ({
-          "@type": "ListItem",
-          position: index + 1,
-          name: formatSegment(segment),
-          item: `https://komoui.site/${arr.slice(0, index + 1).join("/")}`,
-        }))
-    : [];
+  const segments = url ? url.split("/").filter(Boolean) : [];
 
   const techArticleSchema = {
     "@context": "https://schema.org",
@@ -55,40 +45,36 @@ export function docsMeta(
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://komoui.site/" },
-      { "@type": "ListItem", position: 2, name: "Documentation", item: "https://komoui.site/docs" },
-      ...breadcrumbs,
+      ...segments.map((segment, index) => ({
+        "@type": "ListItem",
+        position: index + 2,
+        name: formatSegment(segment),
+        item: `https://komoui.site/${segments.slice(0, index + 1).join("/")}`,
+      })),
     ],
   };
 
-  return [
-    { title: `${title} - KomoUI` },
-    { name: "description", content: description },
-    { property: "og:title", content: pageTitle },
-    { property: "og:description", content: description },
-    { property: "og:image", content: "https://komoui.site/og-image.webp" },
-    { property: "og:image:width", content: "1200" },
-    { property: "og:image:height", content: "630" },
-    { property: "og:type", content: ogType },
-    { property: "og:url", content: canonicalUrl },
-    { property: "og:site_name", content: "KomoUI" },
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: pageTitle },
-    { name: "twitter:description", content: description },
-    { name: "twitter:image", content: "https://komoui.site/og-image.webp" },
-    { rel: "canonical", href: canonicalUrl },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(techArticleSchema),
-      },
-    },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(breadcrumbSchema),
-      },
-    },
-  ];
+  return {
+    meta: [
+      { title: `${title} - KomoUI` },
+      { name: "description", content: description },
+      { property: "og:title", content: pageTitle },
+      { property: "og:description", content: description },
+      { property: "og:image", content: "https://komoui.site/og-image.webp" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:type", content: ogType },
+      { property: "og:url", content: canonicalUrl },
+      { property: "og:site_name", content: "KomoUI" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: pageTitle },
+      { name: "twitter:description", content: description },
+      { name: "twitter:image", content: "https://komoui.site/og-image.webp" },
+      { "script:ld+json": techArticleSchema },
+      { "script:ld+json": breadcrumbSchema },
+    ],
+    links: [{ rel: "canonical", href: canonicalUrl }],
+  };
 }
 
 function formatSegment(segment: string): string {
@@ -113,41 +99,38 @@ export function homeMeta() {
     },
   };
 
-  return [
-    { title: "KomoUI - Kotlin Multiplatform UI Library for Jetpack Compose" },
-    {
-      name: "description",
-      content:
-        "KomoUI is a Kotlin Multiplatform UI library for Jetpack Compose, providing beautifully designed components that you can copy and paste into your apps.",
-    },
-    { property: "og:title", content: "KomoUI" },
-    {
-      property: "og:description",
-      content:
-        "KomoUI is a Kotlin Multiplatform UI library for Jetpack Compose, providing beautifully designed components that you can copy and paste into your apps.",
-    },
-    { property: "og:image", content: "https://komoui.site/og-image.webp" },
-    { property: "og:image:width", content: "1200" },
-    { property: "og:image:height", content: "630" },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://komoui.site/" },
-    { property: "og:site_name", content: "KomoUI" },
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: "KomoUI" },
-    {
-      name: "twitter:description",
-      content:
-        "KomoUI is a Kotlin Multiplatform UI library for Jetpack Compose, providing beautifully designed components that you can copy and paste into your apps.",
-    },
-    { name: "twitter:image", content: "https://komoui.site/og-image.webp" },
-    { rel: "canonical", href: "https://komoui.site/" },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(webSiteSchema),
+  return {
+    meta: [
+      { title: "KomoUI - Kotlin Multiplatform UI Library for Jetpack Compose" },
+      {
+        name: "description",
+        content:
+          "KomoUI is a Kotlin Multiplatform UI library for Jetpack Compose, providing beautifully designed components that you can copy and paste into your apps.",
       },
-    },
-  ];
+      { property: "og:title", content: "KomoUI" },
+      {
+        property: "og:description",
+        content:
+          "KomoUI is a Kotlin Multiplatform UI library for Jetpack Compose, providing beautifully designed components that you can copy and paste into your apps.",
+      },
+      { property: "og:image", content: "https://komoui.site/og-image.webp" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://komoui.site/" },
+      { property: "og:site_name", content: "KomoUI" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "KomoUI" },
+      {
+        name: "twitter:description",
+        content:
+          "KomoUI is a Kotlin Multiplatform UI library for Jetpack Compose, providing beautifully designed components that you can copy and paste into your apps.",
+      },
+      { name: "twitter:image", content: "https://komoui.site/og-image.webp" },
+      { "script:ld+json": webSiteSchema },
+    ],
+    links: [{ rel: "canonical", href: "https://komoui.site/" }],
+  };
 }
 
 export function componentsIndexMeta() {
@@ -209,45 +192,37 @@ export function componentsIndexMeta() {
     ],
   };
 
-  return [
-    { title: "Components - KomoUI" },
-    {
-      name: "description",
-      content:
-        "Browse all KomoUI components for Jetpack Compose. Buttons, inputs, dialogs, navigation, and more.",
-    },
-    { property: "og:title", content: "Components - KomoUI" },
-    {
-      property: "og:description",
-      content:
-        "Browse all KomoUI components for Jetpack Compose. Buttons, inputs, dialogs, navigation, and more.",
-    },
-    { property: "og:image", content: "https://komoui.site/og-image.webp" },
-    { property: "og:image:width", content: "1200" },
-    { property: "og:image:height", content: "630" },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://komoui.site/docs/components" },
-    { property: "og:site_name", content: "KomoUI" },
-    { name: "twitter:card", content: "summary_large_image" },
-    { name: "twitter:title", content: "Components - KomoUI" },
-    {
-      name: "twitter:description",
-      content:
-        "Browse all KomoUI components for Jetpack Compose. Buttons, inputs, dialogs, navigation, and more.",
-    },
-    { name: "twitter:image", content: "https://komoui.site/og-image.webp" },
-    { rel: "canonical", href: "https://komoui.site/docs/components" },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(collectionPageSchema),
+  return {
+    meta: [
+      { title: "Components - KomoUI" },
+      {
+        name: "description",
+        content:
+          "Browse all KomoUI components for Jetpack Compose. Buttons, inputs, dialogs, navigation, and more.",
       },
-    },
-    {
-      script: {
-        type: "application/ld+json",
-        children: JSON.stringify(breadcrumbSchema),
+      { property: "og:title", content: "Components - KomoUI" },
+      {
+        property: "og:description",
+        content:
+          "Browse all KomoUI components for Jetpack Compose. Buttons, inputs, dialogs, navigation, and more.",
       },
-    },
-  ];
+      { property: "og:image", content: "https://komoui.site/og-image.webp" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://komoui.site/docs/components" },
+      { property: "og:site_name", content: "KomoUI" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Components - KomoUI" },
+      {
+        name: "twitter:description",
+        content:
+          "Browse all KomoUI components for Jetpack Compose. Buttons, inputs, dialogs, navigation, and more.",
+      },
+      { name: "twitter:image", content: "https://komoui.site/og-image.webp" },
+      { "script:ld+json": collectionPageSchema },
+      { "script:ld+json": breadcrumbSchema },
+    ],
+    links: [{ rel: "canonical", href: "https://komoui.site/docs/components" }],
+  };
 }

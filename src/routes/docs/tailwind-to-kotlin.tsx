@@ -4,5 +4,5 @@ import { docsMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/docs/tailwind-to-kotlin")({
   component: () => <Content />,
-  head: () => ({ meta: docsMeta(frontmatter.title, frontmatter.description, "/docs/tailwind-to-kotlin", "Getting Started") }),
+  head: () => docsMeta(frontmatter.title, frontmatter.description, "/docs/tailwind-to-kotlin", "Getting Started"),
 });

@@ -4,5 +4,5 @@ import { docsMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/docs/components/date-picker")({
   component: () => <Content />,
-  head: () => ({ meta: docsMeta(frontmatter.title, frontmatter.description, "/docs/components/date-picker", "Components") }),
+  head: () => docsMeta(frontmatter.title, frontmatter.description, "/docs/components/date-picker", "Components"),
 });
