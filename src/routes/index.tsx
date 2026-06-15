@@ -6,7 +6,7 @@ import { Examples } from "@/components/home/examples";
 import { homeMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: homeMeta() }),
+  head: () => homeMeta(),
   component: HomePage,
 });
 

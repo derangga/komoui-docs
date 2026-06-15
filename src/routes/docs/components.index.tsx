@@ -5,7 +5,7 @@ import { componentsIndexMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/docs/components/")({
   component: ComponentsView,
-  head: () => ({ meta: componentsIndexMeta() }),
+  head: () => componentsIndexMeta(),
 });
 
 function ComponentsView() {
