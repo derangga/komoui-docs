@@ -1,0 +1,46 @@
+# KomoUI
+
+> KomoUI (Kotlin Modern UI) is a Kotlin Multiplatform UI library for Jetpack
+> Compose, inspired by shadcn/ui. Beautifully designed components you copy and
+> paste into your apps, targeting Android, iOS, Desktop, and Web.
+
+## Getting started
+
+- [Introduction](https://komoui.site/docs/introduction): What KomoUI is and how the copy-paste model works
+- [Installation](https://komoui.site/docs/installation): Add KomoUI to a Kotlin Multiplatform / Compose project
+- [Theming](https://komoui.site/docs/theming): Colors, typography, and dark mode
+- [Tailwind to Kotlin](https://komoui.site/docs/tailwind-to-kotlin): Convert Tailwind CSS classes to Compose modifiers
+
+## Components
+
+- [Accordion](https://komoui.site/docs/components/accordion): Vertically stacked, expandable sections
+- [Alert](https://komoui.site/docs/components/alert): Callout for important messages
+- [Alert Dialog](https://komoui.site/docs/components/alert-dialog): Modal dialog for confirming a destructive action
+- [Avatar](https://komoui.site/docs/components/avatar): User image with fallback initials
+- [Badge](https://komoui.site/docs/components/badge): Small status or label indicator
+- [Button](https://komoui.site/docs/components/button): Clickable button with variants and sizes
+- [Calendar](https://komoui.site/docs/components/calendar): Date grid for selecting days
+- [Card](https://komoui.site/docs/components/card): Container with header, content, and footer
+- [Carousel](https://komoui.site/docs/components/carousel): Swipeable set of slides
+- [Chart](https://komoui.site/docs/components/chart): Data visualization components
+- [Checkbox](https://komoui.site/docs/components/checkbox): Toggleable checkbox input
+- [Collapsible](https://komoui.site/docs/components/collapsible): Show/hide a section of content
+- [Combobox](https://komoui.site/docs/components/combobox): Searchable select input
+- [Data Table](https://komoui.site/docs/components/data-table): Sortable, filterable tabular data
+- [Date Picker](https://komoui.site/docs/components/date-picker): Input paired with a calendar for picking dates
+- [Dialog](https://komoui.site/docs/components/dialog): Modal overlay window
+- [Drawer (Bottom Sheet)](https://komoui.site/docs/components/drawer): Panel that slides in from an edge
+- [Dropdown Menu](https://komoui.site/docs/components/dropdown-menu): Menu triggered by a button
+- [Input](https://komoui.site/docs/components/input): Text input field
+- [Input OTP](https://komoui.site/docs/components/input-otp): One-time-password / code entry field
+- [Popover](https://komoui.site/docs/components/popover): Floating content anchored to a trigger
+- [Progress](https://komoui.site/docs/components/progress): Progress bar indicator
+- [Radio Group](https://komoui.site/docs/components/radio-group): Mutually exclusive set of options
+- [Select](https://komoui.site/docs/components/select): Dropdown selection input
+- [Sidebar](https://komoui.site/docs/components/sidebar): Collapsible navigation sidebar
+- [Skeleton](https://komoui.site/docs/components/skeleton): Loading placeholder
+- [Slider](https://komoui.site/docs/components/slider): Draggable value selector
+- [Sonner](https://komoui.site/docs/components/sonner): Toast notifications
+- [Spinner](https://komoui.site/docs/components/spinner): Loading spinner indicator
+- [Switch](https://komoui.site/docs/components/switch): On/off toggle
+- [Tabs](https://komoui.site/docs/components/tabs): Switch between panels of content

@@ -227,6 +227,7 @@ fun Example() {
 | `variant` | `BadgeVariant` | `BadgeVariant.Default` | Determines background, text, and border colors when `backgroundColor` is not set. |
 | `backgroundColor` | `Color?` | `null` | Explicit fill color. Overrides the variant's default background when non-null. |
 | `roundedSize` | `Dp` | `MaterialTheme.radius.full` | Corner radius of the badge shape. |
+| `contentDescription` | `String?` | `null` | Accessibility label for screen readers. Set this for notification counts or the content-less dot badge, which otherwise carry no meaning to TalkBack/VoiceOver. |
 | `content` | `(@Composable () -> Unit)?` | `null` | Badge label. When `null`, renders as a 6 dp filled dot with no padding. |
 
 ### BadgeVariant
