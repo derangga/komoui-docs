@@ -64,6 +64,7 @@ export const Examples = forwardRef<HTMLElement>(function Examples(_, ref) {
                 <Button
                   variant="ghost"
                   size="sm"
+                  aria-label="Copy React code"
                   onClick={() => copyToClipboard(codeExamples.react, "react")}
                 >
                   {copiedCode === "react" ? (
@@ -93,6 +94,7 @@ export const Examples = forwardRef<HTMLElement>(function Examples(_, ref) {
                 <Button
                   variant="ghost"
                   size="sm"
+                  aria-label="Copy Kotlin code"
                   onClick={() => copyToClipboard(codeExamples.kotlin, "kotlin")}
                 >
                   {copiedCode === "kotlin" ? (

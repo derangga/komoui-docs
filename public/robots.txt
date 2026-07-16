@@ -1,4 +1,17 @@
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: *
 Allow: /
 
 Sitemap: https://komoui.site/sitemap.xml
+LLMs: https://komoui.site/llms.txt

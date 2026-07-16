@@ -10,6 +10,7 @@ import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { light as shikiLight, dark as shikiDark } from "./src/lib/shiki-theme";
 
 export default defineConfig({
   plugins: [
@@ -48,8 +49,8 @@ export default defineConfig({
             rehypePrettyCode,
             {
               theme: {
-                dark: "github-dark",
-                light: "github-light",
+                dark: shikiDark,
+                light: shikiLight,
               },
             },
           ],

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { codeToHtml } from "shiki";
 import type { BundledLanguage } from "shiki";
+import { light as shikiLight, dark as shikiDark } from "@/lib/shiki-theme";
 
 interface CodeHighlightProps {
   code: string;
@@ -21,7 +22,7 @@ export function CodeHighlight({ code, lang, className }: CodeHighlightProps) {
     let active = true;
     codeToHtml(code, {
       lang,
-      themes: { light: "github-light", dark: "github-dark" },
+      themes: { light: shikiLight, dark: shikiDark },
       defaultColor: false,
     }).then((out) => {
       if (active) setHtml(out);

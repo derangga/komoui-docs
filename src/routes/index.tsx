@@ -20,10 +20,10 @@ function HomePage() {
   return (
     <>
       <Header />
-      <div className="container mx-auto overflow-hidden">
+      <main className="container mx-auto overflow-hidden">
         <Hero onScrollTo={scrollToExamples} />
         <Examples ref={examplesRef} />
-      </div>
+      </main>
     </>
   );
 }

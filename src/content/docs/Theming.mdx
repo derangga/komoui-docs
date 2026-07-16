@@ -118,4 +118,55 @@ class MainActivity : ComponentActivity() {
 
 </Steps>
 
+## Localization
+
+KomoUI ships built-in labels and accessibility descriptions in English — dialog close
+labels, sidebar toggle, "No results" text, search placeholders, and the calendar's month and
+weekday names. Override any of them with the `KomoStrings` class and pass it to `KomoTheme`'s
+`strings` parameter. Unspecified fields keep their English defaults, so you only override what
+you translate.
+
+<Steps>
+
+#### Provide custom strings
+
+```kotlin
+val EnglishStrings = KomoStrings(
+    closeDialog = "Close dialog",
+    close = "Close",
+    toggleSidebar = "Toggle Sidebar",
+    noResults = "No result.",
+    searchPlaceholder = "Search...",
+    rowsSelected = { selected, total -> "$selected from $total selected rows." },
+    monthNamesFull = listOf(
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December",
+    ),
+    weekdayNamesShort = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+)
+```
+
+Month lists are indexed by `ordinal`: months `JANUARY(0)..DECEMBER(11)`, weekdays
+`MONDAY(0)..SUNDAY(6)`. The `rowsSelected` and `pageIndicator` fields are lambdas so counts
+can be interpolated per locale.
+
+#### Use the custom strings
+
+```kotlin
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            KomoTheme(
+                strings = EnglishStrings,
+            ) {
+                // rest of your screen navigation or components
+            }
+        }
+    }
+}
+```
+
+</Steps>
+
 </DocsPage>
