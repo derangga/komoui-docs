@@ -82,16 +82,16 @@ fun Example() {
 
 | Parameter          | Type                        | Default  | Description                                                                                   |
 | ------------------ | --------------------------- | -------- | --------------------------------------------------------------------------------------------- |
-| `open`             | `Boolean`                   | —        | Controls whether the popover panel is visible.                                                |
+| `open`             | `Boolean`                   | -        | Controls whether the popover panel is visible.                                                |
 | `modifier`         | `Modifier`                  | `Modifier` | Modifier applied to the inner content `Column` inside the floating panel.                   |
 | `onDismissRequest` | `(() -> Unit)?`             | `null`   | Called when the user taps outside the popover. Use this to set `open = false`.                |
-| `trigger`          | `@Composable () -> Unit`    | —        | The composable that anchors the popover. The panel appears just below this content.           |
-| `content`          | `@Composable () -> Unit`    | —        | The content rendered inside the floating panel.                                               |
+| `trigger`          | `@Composable () -> Unit`    | -        | The composable that anchors the popover. The panel appears just below this content.           |
+| `content`          | `@Composable () -> Unit`    | -        | The content rendered inside the floating panel.                                               |
 
 ### Behaviour notes
 
 - The panel is positioned **below the trigger** with a fixed 12 dp gap, horizontally centered relative to it.
 - Content is automatically wrapped in `ProvideTextStyle` with the theme's `popoverForeground` color and 14 sp font size, so plain `Text` calls match the popover style without extra styling.
 - The popover uses Jetpack Compose's `Popup`, so it renders outside the normal layout hierarchy and is not clipped by parent containers.
-- `open` is fully controlled — you own the state. Toggle it in `trigger`'s `onClick` and reset it in `onDismissRequest`.
+- `open` is fully controlled: you own the state. Toggle it in `trigger`'s `onClick` and reset it in `onDismissRequest`.
 

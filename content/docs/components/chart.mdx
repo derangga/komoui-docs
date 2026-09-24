@@ -1,21 +1,21 @@
 ---
 title: Chart
-description: Bar, Line, and Area charts built from Compose Canvas — no external charting library.
+description: Bar, Line, and Area charts built from Compose Canvas, with no external charting library.
 ---
 
 ## Overview
 
-The chart family ships three Composables — `BarChart`, `LineChart`, and `AreaChart` — that share the same axis system, animation pipeline, and tap‑and‑drag tooltip ("scrub"). All three are drawn directly into a `Canvas`, so there is no external charting dependency.
+The chart family ships three Composables: `BarChart`, `LineChart`, and `AreaChart`. They share the same axis system, animation pipeline, and tap‑and‑drag tooltip ("scrub"). All three are drawn directly into a `Canvas`, so there is no external charting dependency.
 
-Each chart takes a list of strongly‑typed series (`BarSeries`, `LineSeries`, `AreaSeries`) whose points carry a string `x` category and a `Float` y value. Axis behavior — gridlines, tick count, tick formatting, optional y‑domain override — is configured through a single `ChartAxisOptions` value.
+Each chart takes a list of strongly‑typed series (`BarSeries`, `LineSeries`, `AreaSeries`) whose points carry a string `x` category and a `Float` y value. Axis behavior, including gridlines, tick count, tick formatting, and an optional y‑domain override, is configured through a single `ChartAxisOptions` value.
 
 Common parameters across the three charts:
 
-- `chartHeight: Dp = 220.dp` — fixed plot height. **Required** to be a fixed value; do not rely on parent `Modifier.height(...)` alone.
-- `animate: Boolean = true` — first‑composition reveal (bars grow up, lines/areas sweep left → right).
-- `showTooltip: Boolean = true` — press‑and‑drag the plot to scrub through categories.
-- `showLegend: Boolean = false` — render a legend row beneath the plot.
-- `scrollable: Boolean = false` — when true, the plot scrolls horizontally and each x‑category is given at least `minColumnWidth` (default `56.dp`). The y‑axis stays pinned. Tooltips are force‑disabled in scrollable mode.
+- `chartHeight: Dp = 220.dp`: fixed plot height. **Required** to be a fixed value; do not rely on parent `Modifier.height(...)` alone.
+- `animate: Boolean = true`: first‑composition reveal (bars grow up, lines/areas sweep left → right).
+- `showTooltip: Boolean = true`: press‑and‑drag the plot to scrub through categories.
+- `showLegend: Boolean = false`: render a legend row beneath the plot.
+- `scrollable: Boolean = false`: when true, the plot scrolls horizontally and each x‑category is given at least `minColumnWidth` (default `56.dp`). The y‑axis stays pinned. Tooltips are force‑disabled in scrollable mode.
 
 ## Bar Chart
 
@@ -462,5 +462,5 @@ LineChart(
 
 When `showTooltip = true` (the default), pressing anywhere on the plot snaps a vertical indicator to the nearest x‑category and reveals a tooltip card with every series' value for that column. Continuing to drag horizontally moves the indicator; releasing dismisses it.
 
-The scrub gesture is **claim‑on‑down** — it consumes the first pointer event so the tooltip appears instantly under the finger, without a touch‑slop delay. This is intentional but means it cannot coexist with `Modifier.horizontalScroll`, which is **claim‑after‑touch‑slop**. The chart resolves this by force‑disabling tooltips whenever `scrollable = true`. If you need both in the same chart, switch to a long‑press‑then‑scrub or tap‑only gesture (see the source `Chart.md` for the trade‑offs).
+The scrub gesture is **claim‑on‑down**: it consumes the first pointer event so the tooltip appears instantly under the finger, without a touch‑slop delay. This is intentional but means it cannot coexist with `Modifier.horizontalScroll`, which is **claim‑after‑touch‑slop**. The chart resolves this by force‑disabling tooltips whenever `scrollable = true`. If you need both in the same chart, switch to a long‑press‑then‑scrub or tap‑only gesture (see the source `Chart.md` for the trade‑offs).
 

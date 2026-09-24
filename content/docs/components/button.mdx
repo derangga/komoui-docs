@@ -315,7 +315,7 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onClick` | `() -> Unit` | — | Called when the button is pressed |
+| `onClick` | `() -> Unit` | - | Called when the button is pressed |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the button |
 | `variant` | `ButtonVariant` | `ButtonVariant.Default` | Visual style of the button |
 | `size` | `ButtonSize` | `ButtonSize.Default` | Size preset controlling padding and minimum height |
@@ -325,7 +325,7 @@ fun Example() {
 | `shape` | `Shape` | `RoundedCornerShape(radius.md)` | Shape of the button container |
 | `contentPadding` | `PaddingValues?` | `null` | Overrides size-derived content padding when non-null |
 | `color` | `ButtonColors?` | `null` | Overrides variant-derived colors when non-null |
-| `content` | `@Composable RowScope.() -> Unit` | — | Content displayed inside the button |
+| `content` | `@Composable RowScope.() -> Unit` | - | Content displayed inside the button |
 
 ### IconButton
 
@@ -333,14 +333,14 @@ A convenience composable for icon-only buttons. Thin wrapper around `Button` wit
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onClick` | `() -> Unit` | — | Called when the button is pressed |
+| `onClick` | `() -> Unit` | - | Called when the button is pressed |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the button |
 | `variant` | `ButtonVariant` | `ButtonVariant.Ghost` | Visual style of the button |
 | `size` | `ButtonSize` | `ButtonSize.Icon` | Size preset |
 | `enabled` | `Boolean` | `true` | When false, the button is non-interactive and visually dimmed |
 | `shape` | `Shape` | `RoundedCornerShape(radius.md)` | Shape of the button container |
 | `color` | `ButtonColors?` | `null` | Overrides variant-derived colors when non-null |
-| `content` | `@Composable RowScope.() -> Unit` | — | Icon content displayed inside the button |
+| `content` | `@Composable RowScope.() -> Unit` | - | Icon content displayed inside the button |
 
 ### ButtonVariant
 

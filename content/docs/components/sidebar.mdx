@@ -9,15 +9,15 @@ Sidebars are one of the most complex components to build. They are central to an
 
 A Sidebar component is composed of the following parts:
 
-- `SidebarProvider` — Owns the open/collapsed state, detects the viewport, and orchestrates desktop vs mobile layout.
-- `Sidebar` — The sidebar container; sibling of `SidebarInset`.
-- `SidebarInset` — The main content area beside the sidebar; hosts the mobile drawer.
-- `SidebarHeader` / `SidebarFooter` — Sticky top and bottom sections.
-- `SidebarContent` — Scrollable middle section.
-- `SidebarGroup` — A labelled section of menu items inside `SidebarContent`.
-- `SidebarMenu` / `SidebarMenuItem` / `SidebarMenuButton` — The navigation rows.
-- `SidebarTrigger` — A ghost icon button that toggles the sidebar.
-- `SidebarRail` — Optional thin clickable strip on the sidebar's outer edge.
+- `SidebarProvider`: owns the open/collapsed state, detects the viewport, and orchestrates desktop vs mobile layout.
+- `Sidebar`: the sidebar container; sibling of `SidebarInset`.
+- `SidebarInset`: the main content area beside the sidebar; hosts the mobile drawer.
+- `SidebarHeader` / `SidebarFooter`: sticky top and bottom sections.
+- `SidebarContent`: scrollable middle section.
+- `SidebarGroup`: a labelled section of menu items inside `SidebarContent`.
+- `SidebarMenu` / `SidebarMenuItem` / `SidebarMenuButton`: the navigation rows.
+- `SidebarTrigger`: a ghost icon button that toggles the sidebar.
+- `SidebarRail`: optional thin clickable strip on the sidebar's outer edge.
 
 <img src="https://img.komoui.site/assets/components/sidebar/sidebar-structure.webp" alt="sidebar-structure" />
 
@@ -229,7 +229,7 @@ You've created your first sidebar, you should see something like this:
 
 ## Composition model
 
-`Sidebar` and `SidebarInset` are **slot-registering** composables — they don't emit their own subtree, they record their content into provider-owned slots. The provider then renders those slots in the right layout for the viewport. Practically:
+`Sidebar` and `SidebarInset` are **slot-registering** composables: they don't emit their own subtree, they record their content into provider-owned slots. The provider then renders those slots in the right layout for the viewport. Practically:
 
 - Always place `Sidebar` and `SidebarInset` as direct children of `SidebarProvider`.
 - The composition order matches the React docs (sidebar first, then inset).
@@ -238,10 +238,10 @@ You've created your first sidebar, you should see something like this:
 ## Controlled vs uncontrolled
 
 ```kotlin
-// Uncontrolled — provider owns the state.
+// Uncontrolled: provider owns the state.
 SidebarProvider(defaultOpen = true) { /* ... */ }
 
-// Controlled — you own the state.
+// Controlled: you own the state.
 var open by rememberSaveable { mutableStateOf(true) }
 SidebarProvider(open = open, onOpenChange = { open = it }) { /* ... */ }
 ```
@@ -329,11 +329,11 @@ On Android, the sidebar background extends behind the status and navigation bars
 | `Sidebar`                                   | Sidebar root; registers content into the sidebar slot.                        |
 | `SidebarInset`                              | Main content area; registers content into the inset slot.                     |
 | `SidebarTrigger`                            | Ghost icon button bound to `state.toggleSidebar()`.                           |
-| `SidebarRail`                               | Marker — opts the sidebar into rendering an outer-edge click rail.            |
+| `SidebarRail`                               | Marker: opts the sidebar into rendering an outer-edge click rail.            |
 | `SidebarHeader { content }`                 | Top sticky section, free-form slot.                                           |
-| `SidebarHeader(title, icon)`                | Brand-style overload — title hides in icon mode; icon (if any) remains.       |
+| `SidebarHeader(title, icon)`                | Brand-style overload; title hides in icon mode, icon (if any) remains.       |
 | `SidebarFooter { content }`                 | Bottom sticky section, free-form slot.                                        |
-| `SidebarFooter(text, icon)`                 | Convenience overload — text hides in icon mode; icon (if any) remains.        |
+| `SidebarFooter(text, icon)`                 | Convenience overload; text hides in icon mode, icon (if any) remains.        |
 | `SidebarSeparator`                          | Themed horizontal divider.                                                    |
 | `SidebarInput`                              | Themed text field (uses `styles.background`).                                 |
 | `SidebarContent`                            | Scrollable middle section; must be inside `Sidebar`'s `ColumnScope`.          |
@@ -420,10 +420,10 @@ SidebarFooter {
 
 The sidebar reads from `MaterialTheme.styles`:
 
-- `sidebar`, `sidebarForeground` — root colors.
-- `sidebarAccent`, `sidebarAccentForeground` — active row colors.
-- `sidebarBorder` — separators, outline-variant border, and the rail.
-- `sidebarRing` — focus ring (reserved, not yet applied).
+- `sidebar`, `sidebarForeground`: root colors.
+- `sidebarAccent`, `sidebarAccentForeground`: active row colors.
+- `sidebarBorder`: separators, outline-variant border, and the rail.
+- `sidebarRing`: focus ring (reserved, not yet applied).
 
 Corner radii come from `MaterialTheme.radius` (`sm`, `md`, `lg`, `xl`).
 

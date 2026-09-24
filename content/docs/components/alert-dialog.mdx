@@ -3,7 +3,7 @@ title: Alert Dialog
 description: A modal dialog that interrupts the user with important content and expects a response, with slots for title, description, and action buttons.
 ---
 
-`AlertDialog` wraps the Compose `Dialog` primitive and renders a card-shaped surface with a title, description, and a right-aligned actions row. Visibility is fully controlled by the caller via the `open` parameter. Use `AlertDialogAction` for the primary button and `AlertDialogCancel` for the secondary button — both are pre-styled `Button` wrappers.
+`AlertDialog` wraps the Compose `Dialog` primitive and renders a card-shaped surface with a title, description, and a right-aligned actions row. Visibility is fully controlled by the caller via the `open` parameter. Use `AlertDialogAction` for the primary button and `AlertDialogCancel` for the secondary button; both are pre-styled `Button` wrappers.
 
 ## Basic usage
 
@@ -87,12 +87,12 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onDismissRequest` | `() -> Unit` | — | Called when the user taps outside the dialog or presses back. |
-| `open` | `Boolean` | — | Controls whether the dialog is shown. |
+| `onDismissRequest` | `() -> Unit` | - | Called when the user taps outside the dialog or presses back. |
+| `open` | `Boolean` | - | Controls whether the dialog is shown. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the dialog's content card. |
-| `title` | `@Composable () -> Unit` | — | Header slot; conventionally wraps content in `AlertDialogTitle`. |
-| `description` | `@Composable () -> Unit` | — | Body slot; conventionally wraps content in `AlertDialogDescription`. |
-| `actions` | `@Composable () -> Unit` | — | Footer slot rendered in a right-aligned `Row`. Place `AlertDialogCancel` and `AlertDialogAction` here. |
+| `title` | `@Composable () -> Unit` | - | Header slot; conventionally wraps content in `AlertDialogTitle`. |
+| `description` | `@Composable () -> Unit` | - | Body slot; conventionally wraps content in `AlertDialogDescription`. |
+| `actions` | `@Composable () -> Unit` | - | Footer slot rendered in a right-aligned `Row`. Place `AlertDialogCancel` and `AlertDialogAction` here. |
 
 ### AlertDialogTitle
 
@@ -101,7 +101,7 @@ Thin `Column` wrapper that provides consistent spacing for the dialog title. Use
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the wrapper column. |
-| `content` | `@Composable () -> Unit` | — | Title content. |
+| `content` | `@Composable () -> Unit` | - | Title content. |
 
 ### AlertDialogDescription
 
@@ -110,7 +110,7 @@ Thin `Column` wrapper for the dialog body text. Use inside the `description` slo
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the wrapper column. |
-| `content` | `@Composable () -> Unit` | — | Description content. |
+| `content` | `@Composable () -> Unit` | - | Description content. |
 
 ### AlertDialogAction
 
@@ -118,9 +118,9 @@ Primary action button backed by `Button` with `ButtonVariant.Default`. Place ins
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `onClick` | `() -> Unit` | - | Called when the button is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the button. |
-| `content` | `@Composable () -> Unit` | — | Button label content. |
+| `content` | `@Composable () -> Unit` | - | Button label content. |
 
 ### AlertDialogCancel
 
@@ -128,7 +128,7 @@ Secondary cancel button backed by `Button` with `ButtonVariant.Outline`. Place i
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `onClick` | `() -> Unit` | - | Called when the button is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the button. |
-| `content` | `@Composable () -> Unit` | — | Button label content. |
+| `content` | `@Composable () -> Unit` | - | Button label content. |
 

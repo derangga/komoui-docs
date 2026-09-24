@@ -232,7 +232,7 @@ fun Example() {
 }
 ```
 
-See [Calendar — CalendarStyle](/docs/components/calendar) for the full token reference.
+See [Calendar: CalendarStyle](/docs/components/calendar) for the full token reference.
 
 ---
 
@@ -245,7 +245,7 @@ See [Calendar — CalendarStyle](/docs/components/calendar) for the full token r
 | `modifier` | `Modifier` | `Modifier` | Applied to the date picker container. |
 | `selectedDate` | `LocalDate?` | `null` | The currently selected date. |
 | `dateTimeFormat` | `DateFormatter?` | `null` | Format for the displayed date. Defaults to `"MMM dd, yyyy"`. |
-| `onDateSelected` | `(LocalDate) -> Unit` | — | Called when the user selects a date. |
+| `onDateSelected` | `(LocalDate) -> Unit` | - | Called when the user selects a date. |
 | `placeholder` | `String` | `"Pick a date"` | Text shown when no date is selected. |
 | `dateSelectionMode` | `DateSelectionMode` | `DateSelectionMode.All` | Controls which calendar dates are tappable. |
 | `colors` | `CalendarStyle` | `CalendarDefaults.colors()` | Color tokens forwarded to the popup calendar. |
@@ -259,7 +259,7 @@ See [Calendar — CalendarStyle](/docs/components/calendar) for the full token r
 | `modifier` | `Modifier` | `Modifier` | Applied to the date range picker container. |
 | `selectedRange` | `DateRange?` | `null` | The currently selected date range. |
 | `dateTimeFormat` | `DateFormatter?` | `null` | Format for the displayed dates. Defaults to `"MMM dd, yyyy"`. |
-| `onRangeSelected` | `(DateRange) -> Unit` | — | Called when the user completes a range selection. |
+| `onRangeSelected` | `(DateRange) -> Unit` | - | Called when the user completes a range selection. |
 | `placeholder` | `String` | `"Pick a date range"` | Text shown when no range is selected. |
 | `dateSelectionMode` | `DateSelectionMode` | `DateSelectionMode.All` | Controls which calendar dates are tappable. |
 | `colors` | `CalendarStyle` | `CalendarDefaults.colors()` | Color tokens forwarded to the popup calendar. |
@@ -287,7 +287,7 @@ Supported patterns:
 data class DateRange(val start: LocalDate, val end: LocalDate)
 ```
 
-Holds the start and end dates of a range selection. The `start` date is always less than or equal to `end` — the component swaps them automatically if the user taps end before start.
+Holds the start and end dates of a range selection. The `start` date is always less than or equal to `end`; the component swaps them automatically if the user taps end before start.
 
 ### DateSelectionMode
 

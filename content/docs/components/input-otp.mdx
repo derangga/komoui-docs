@@ -212,8 +212,8 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `value` | `String` | — | Current OTP string. |
-| `onValueChange` | `(String) -> Unit` | — | Called with the filtered and length-trimmed new value. |
+| `value` | `String` | - | Current OTP string. |
+| `onValueChange` | `(String) -> Unit` | - | Called with the filtered and length-trimmed new value. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the root `BasicTextField`. |
 | `length` | `Int` | `6` | Number of character slots to render. |
 | `enabled` | `Boolean` | `true` | When `false`, disables interaction and renders at 50 % alpha. |
@@ -229,9 +229,9 @@ fun Example() {
 
 | Member | Description |
 |---|---|
-| `SlotSize: Dp` | Default slot size — `40.dp`. |
-| `SlotGap: Dp` | Gap between adjacent slots — `0.dp` (slots are flush). |
-| `GroupGap: Dp` | Gap added on each side of a separator — `8.dp`. |
+| `SlotSize: Dp` | Default slot size: `40.dp`. |
+| `SlotGap: Dp` | Gap between adjacent slots: `0.dp` (slots are flush). |
+| `GroupGap: Dp` | Gap added on each side of a separator: `8.dp`. |
 | `colors(): InputOTPStyle` | Returns the default theme-derived colour set. |
 | `colors(overrides)` | Accepts a lambda `InputOTPStyle.() -> InputOTPStyle` for partial overrides via `copy(...)`. |
 

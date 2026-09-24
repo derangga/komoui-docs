@@ -3,7 +3,7 @@ title: Collapsible
 description: A fully controlled single-section disclosure primitive with animated expand/collapse and scoped trigger and content slots.
 ---
 
-`Collapsible` is a controlled disclosure primitive — the caller owns the `open` state and receives toggle intent via `onOpenChange`. Inside the trailing `content` lambda, `CollapsibleScope` exposes two slots: `CollapsibleTrigger` (a clickable `Row`) and `CollapsibleContent` (an `AnimatedVisibility`-wrapped `Column` with 300 ms fade + expand/shrink animation).
+`Collapsible` is a controlled disclosure primitive; the caller owns the `open` state and receives toggle intent via `onOpenChange`. Inside the trailing `content` lambda, `CollapsibleScope` exposes two slots: `CollapsibleTrigger` (a clickable `Row`) and `CollapsibleContent` (an `AnimatedVisibility`-wrapped `Column` with 300 ms fade + expand/shrink animation).
 
 ## Basic usage
 
@@ -247,11 +247,11 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `open` | `Boolean` | — | Whether the content is currently expanded. Owned by the caller. |
-| `onOpenChange` | `(Boolean) -> Unit` | — | Invoked with the requested new open state when the trigger is tapped. |
+| `open` | `Boolean` | - | Whether the content is currently expanded. Owned by the caller. |
+| `onOpenChange` | `(Boolean) -> Unit` | - | Invoked with the requested new open state when the trigger is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the root `Column`. |
 | `enabled` | `Boolean` | `true` | When `false`, the trigger does not respond to taps. |
-| `content` | `@Composable CollapsibleScope.() -> Unit` | — | Slot for `CollapsibleTrigger` and `CollapsibleContent`. |
+| `content` | `@Composable CollapsibleScope.() -> Unit` | - | Slot for `CollapsibleTrigger` and `CollapsibleContent`. |
 
 ### CollapsibleTrigger
 
@@ -262,7 +262,7 @@ Scoped to `CollapsibleScope`. A `Row` that toggles `open` on tap.
 | `modifier` | `Modifier` | `Modifier` | Applied to the trigger `Row`. |
 | `horizontalArrangement` | `Arrangement.Horizontal` | `Arrangement.Start` | Horizontal arrangement of the trigger's children. |
 | `verticalAlignment` | `Alignment.Vertical` | `Alignment.Top` | Vertical alignment of the trigger's children. |
-| `content` | `@Composable RowScope.() -> Unit` | — | Trigger content. |
+| `content` | `@Composable RowScope.() -> Unit` | - | Trigger content. |
 
 ### CollapsibleContent
 
@@ -271,5 +271,5 @@ Scoped to `CollapsibleScope`. An `AnimatedVisibility` wrapper that fades and exp
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the inner `Column`. |
-| `content` | `@Composable ColumnScope.() -> Unit` | — | Content revealed when `open` is `true`. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | Content revealed when `open` is `true`. |
 

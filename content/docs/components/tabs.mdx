@@ -1,6 +1,6 @@
 ---
 title: Tabs
-description: A set of layered sections of content—known as tab panels—that are displayed one at a time.
+description: A set of layered sections of content, known as tab panels, that are displayed one at a time.
 ---
 
 `Tabs` combines `TabsList` and a content callback in one composable. Pass a `List<String>` for labels and a `content` lambda that receives the selected tab index. The active tab animates its background and text color over 200 ms.
@@ -130,7 +130,7 @@ fun SettingsTab() {
 
 ## Standalone TabsList
 
-Use `TabsList` alone when you want to manage the content area yourself — for example when the content lives in a `LazyColumn` or a `Pager`.
+Use `TabsList` alone when you want to manage the content area yourself, for example when the content lives in a `LazyColumn` or a `Pager`.
 
 ```kotlin
 import com.komoui.components.TabsList
@@ -190,11 +190,11 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `selectedTabIndex` | `Int` | — | Index of the currently active tab. |
-| `onTabSelected` | `(Int) -> Unit` | — | Called when the user taps a tab, with the new index. |
-| `tabs` | `List<String>` | — | Ordered list of tab labels rendered in `TabsList`. |
+| `selectedTabIndex` | `Int` | - | Index of the currently active tab. |
+| `onTabSelected` | `(Int) -> Unit` | - | Called when the user taps a tab, with the new index. |
+| `tabs` | `List<String>` | - | Ordered list of tab labels rendered in `TabsList`. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the outer `Column` that wraps the list and content. |
-| `content` | `@Composable (tabIndex: Int) -> Unit` | — | Content lambda. Receives the selected tab index on each recomposition. Wrap with `TabsContent` for standard top padding. |
+| `content` | `@Composable (tabIndex: Int) -> Unit` | - | Content lambda. Receives the selected tab index on each recomposition. Wrap with `TabsContent` for standard top padding. |
 
 ### TabsList
 
@@ -202,9 +202,9 @@ The tab bar without the content area. Use when you need finer control over layou
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `selectedTabIndex` | `Int` | — | Index of the currently active tab. |
-| `onTabSelected` | `(Int) -> Unit` | — | Called when the user taps a tab. |
-| `tabs` | `List<String>` | — | Ordered list of tab labels. |
+| `selectedTabIndex` | `Int` | - | Index of the currently active tab. |
+| `onTabSelected` | `(Int) -> Unit` | - | Called when the user taps a tab. |
+| `tabs` | `List<String>` | - | Ordered list of tab labels. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the `Box` container. |
 
 ### TabsTrigger
@@ -213,17 +213,17 @@ An individual animated tab button. Use directly for non-uniform widths or fully 
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `text` | `String` | — | Label displayed in the tab. |
-| `isSelected` | `Boolean` | — | Controls the active background and text color. |
-| `onClick` | `() -> Unit` | — | Called when the tab is tapped. |
+| `text` | `String` | - | Label displayed in the tab. |
+| `isSelected` | `Boolean` | - | Controls the active background and text color. |
+| `onClick` | `() -> Unit` | - | Called when the tab is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the tab button container. |
 
 ### TabsContent
 
-A thin wrapper that applies `fillMaxWidth()` and 8 dp top padding to the content area. Optional — use it for consistent spacing between the tab bar and content.
+A thin wrapper that applies `fillMaxWidth()` and 8 dp top padding to the content area. Optional; use it for consistent spacing between the tab bar and content.
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the `Box` content container. |
-| `content` | `@Composable () -> Unit` | — | The panel content for the active tab. |
+| `content` | `@Composable () -> Unit` | - | The panel content for the active tab. |
 

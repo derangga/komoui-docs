@@ -1,11 +1,11 @@
 ---
 title: Select
-description: Displays a list of options for the user to pick from—triggered by a button.
+description: Displays a list of options for the user to pick from, triggered by a button.
 ---
 
 ## Basic Usage
 
-Pass a `List<String>` to `options` — the string overload needs no `label` converter. The dropdown width matches the trigger, and the selected item is highlighted with a checkmark.
+Pass a `List<String>` to `options`; the string overload needs no `label` converter. The dropdown width matches the trigger, and the selected item is highlighted with a checkmark.
 
 <Tabs items={["Preview","Code"]}>
 
@@ -74,23 +74,23 @@ fun Example() {
 
 | Parameter          | Type                     | Default              | Description                                                                                     |
 | ------------------ | ------------------------ | -------------------- | ----------------------------------------------------------------------------------------------- |
-| `options`          | `List<T>`                | —                    | The list of options to display in the dropdown.                                                 |
-| `selectedOption`   | `T?`                     | —                    | The currently selected item. Pass `null` when nothing is selected.                              |
-| `onOptionSelected` | `(T) -> Unit`            | —                    | Callback invoked with the chosen item when the user makes a selection.                          |
-| `label`            | `(T) -> String`          | —                    | Converts an item of type `T` to the string shown in the trigger and dropdown list.              |
+| `options`          | `List<T>`                | -                    | The list of options to display in the dropdown.                                                 |
+| `selectedOption`   | `T?`                     | -                    | The currently selected item. Pass `null` when nothing is selected.                              |
+| `onOptionSelected` | `(T) -> Unit`            | -                    | Callback invoked with the chosen item when the user makes a selection.                          |
+| `label`            | `(T) -> String`          | -                    | Converts an item of type `T` to the string shown in the trigger and dropdown list.              |
 | `modifier`         | `Modifier`               | `Modifier`           | Modifier applied to the outer `Column` container. Use `Modifier.width(...)` to size the trigger. |
 | `enabled`          | `Boolean`                | `true`               | When false, the component is non-interactive and rendered at 50% opacity.                       |
 | `placeholder`      | `String`                 | `"Select option..."` | Text shown in the trigger when `selectedOption` is `null`.                                      |
 
 ### `Select` (String overload)
 
-Convenience overload for `List<String>` — identical to the generic overload but without the `label` parameter (items are used as their own display text).
+Convenience overload for `List<String>`, identical to the generic overload but without the `label` parameter (items are used as their own display text).
 
 | Parameter          | Type                     | Default              | Description                                         |
 | ------------------ | ------------------------ | -------------------- | --------------------------------------------------- |
-| `options`          | `List<String>`           | —                    | The list of string options to display.              |
-| `selectedOption`   | `String?`                | —                    | The currently selected string, or `null`.           |
-| `onOptionSelected` | `(String) -> Unit`       | —                    | Callback invoked with the selected string.          |
+| `options`          | `List<String>`           | -                    | The list of string options to display.              |
+| `selectedOption`   | `String?`                | -                    | The currently selected string, or `null`.           |
+| `onOptionSelected` | `(String) -> Unit`       | -                    | Callback invoked with the selected string.          |
 | `modifier`         | `Modifier`               | `Modifier`           | Modifier applied to the outer container.            |
 | `enabled`          | `Boolean`                | `true`               | When false, the component is non-interactive.       |
 | `placeholder`      | `String`                 | `"Select option..."` | Placeholder text shown when no option is selected.  |

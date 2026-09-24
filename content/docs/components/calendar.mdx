@@ -3,7 +3,7 @@ title: Calendar
 description: A Jetpack Compose calendar component. Supports single date selection, date range selection, date restriction modes, month/year picker dialogs, and full color customization.
 ---
 
-`Calendar` renders a month grid with navigation arrows, clickable month/year selector chips, and a day grid. It comes in two flavors of the primary composable — a convenience overload for single-date selection and a `selectionMode`-based overload that additionally supports range selection.
+`Calendar` renders a month grid with navigation arrows, clickable month/year selector chips, and a day grid. It comes in two flavors of the primary composable: a convenience overload for single-date selection and a `selectionMode`-based overload that additionally supports range selection.
 
 ## Basic Usage
 
@@ -45,7 +45,7 @@ fun Example() {
 
 ## Single Selection Mode
 
-Use `CalendarSelectionMode.Single` with the `selectionMode` parameter for explicit single-date selection. This is the recommended approach when you need the full `selectionMode` parameter — for instance when combining it with other `CalendarSelectionMode` variants in your codebase.
+Use `CalendarSelectionMode.Single` with the `selectionMode` parameter for explicit single-date selection. This is the recommended approach when you need the full `selectionMode` parameter, for instance when combining it with other `CalendarSelectionMode` variants in your codebase.
 
 <Tabs items={["Preview","Code"]}>
 
@@ -328,7 +328,7 @@ Single-date selection overload. Internally wraps `selectedDate` + `onDateSelecte
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the calendar container. |
 | `selectedDate` | `LocalDate?` | `null` | The currently selected date. |
-| `onDateSelected` | `(LocalDate) -> Unit` | — | Called when the user taps a date. |
+| `onDateSelected` | `(LocalDate) -> Unit` | - | Called when the user taps a date. |
 | `initialMonth` | `YearMonth` | `YearMonth.now()` | The month shown on first render. |
 | `dateSelectionMode` | `DateSelectionMode` | `DateSelectionMode.All` | Controls which dates are clickable. |
 | `colors` | `CalendarStyle` | `CalendarDefaults.colors()` | Color tokens for the calendar. |
@@ -340,7 +340,7 @@ Full overload used for both single and range selection.
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the calendar container. |
-| `selectionMode` | `CalendarSelectionMode` | — | Single or range selection configuration. |
+| `selectionMode` | `CalendarSelectionMode` | - | Single or range selection configuration. |
 | `initialMonth` | `YearMonth` | `YearMonth.now()` | The month shown on first render. |
 | `dateSelectionMode` | `DateSelectionMode` | `DateSelectionMode.All` | Controls which dates are clickable. |
 | `colors` | `CalendarStyle` | `CalendarDefaults.colors()` | Color tokens for the calendar. |
@@ -364,14 +364,14 @@ Sealed interface defining the selection behavior.
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `selectedDate` | `LocalDate?` | `null` | The currently selected date. |
-| `onDateSelected` | `(LocalDate) -> Unit` | — | Called when the user taps a date. |
+| `onDateSelected` | `(LocalDate) -> Unit` | - | Called when the user taps a date. |
 
 #### `CalendarSelectionMode.Range`
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `selectedRange` | `DateRange?` | `null` | The currently selected date range. |
-| `onRangeSelected` | `(DateRange) -> Unit` | — | Called when the user completes a range selection. |
+| `onRangeSelected` | `(DateRange) -> Unit` | - | Called when the user completes a range selection. |
 
 ### DateRange
 

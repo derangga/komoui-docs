@@ -142,7 +142,7 @@ fun Example() {
 
 </Tabs>
 
-> Color overrides passed via `colors` are ignored for `AlertVariant.Destructive` — that variant always applies the theme's destructive color to `titleColor` and `descriptionColor`.
+> Color overrides passed via `colors` are ignored for `AlertVariant.Destructive`, since that variant always applies the theme's destructive color to `titleColor` and `descriptionColor`.
 
 ## API reference
 
@@ -154,8 +154,8 @@ fun Example() {
 | `variant` | `AlertVariant` | `AlertVariant.Default` | Visual style controlling text colors. |
 | `colors` | `AlertStyle` | `AlertDefaults.colors()` | Color tokens for the alert surface and text. Ignored for title/description colors when `variant` is `Destructive`. |
 | `icon` | `(@Composable () -> Unit)?` | `null` | Optional leading icon composable. |
-| `title` | `@Composable () -> Unit` | — | Header content rendered in semibold text. |
-| `description` | `@Composable () -> Unit` | — | Body content rendered in smaller muted text. |
+| `title` | `@Composable () -> Unit` | - | Header content rendered in semibold text. |
+| `description` | `@Composable () -> Unit` | - | Body content rendered in smaller muted text. |
 
 ### AlertVariant
 

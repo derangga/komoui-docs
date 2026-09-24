@@ -67,7 +67,7 @@ fun Example() {
 
 | Parameter        | Type       | Default                      | Description                                                                              |
 | ---------------- | ---------- | ---------------------------- | ---------------------------------------------------------------------------------------- |
-| `progress`       | `Float`    | —                            | Current progress as a fraction from `0.0` (empty) to `1.0` (full). Clamped automatically. |
+| `progress`       | `Float`    | -                            | Current progress as a fraction from `0.0` (empty) to `1.0` (full). Clamped automatically. |
 | `modifier`       | `Modifier` | `Modifier`                   | Modifier applied to the track container.                                                 |
 | `height`         | `Dp`       | `16.dp`                      | Height of the progress bar.                                                              |
 | `trackColor`     | `Color`    | `MaterialTheme.styles.muted` | Background color of the unfilled track.                                                  |
@@ -75,7 +75,7 @@ fun Example() {
 
 ### Behaviour notes
 
-- Progress value is clamped to `[0f, 1f]` — passing values outside this range is safe.
+- Progress value is clamped to `[0f, 1f]`; passing values outside this range is safe.
 - The indicator animates to each new value using a 500 ms tween, so updates feel smooth without any extra setup.
 - Both the track and indicator use fully rounded corners (`RoundedCornerShape(radius.full)`).
 

@@ -179,10 +179,10 @@ fun Example() {
 | `showIndicator` | `Boolean` | `false` | Whether to render the dot indicator below the pager. |
 | `indicatorStyle` | `IndicatorStyle` | `CarouselDefaults.carouselIndicator()` | Visual style of the dot indicator. |
 | `itemSpacing` | `Dp` | `8.dp` | Gap between individual pages. |
-| `itemCount` | `Int` | — | Total number of pages. |
+| `itemCount` | `Int` | - | Total number of pages. |
 | `pageSize` | `PageSize` | `PageSize.Fill` | Size strategy for each page. Use `PageSize.Fixed(dp)` for partial-page peek. |
 | `onItemChanged` | `((Int) -> Unit)?` | `null` | Callback invoked with the new page index whenever the current page changes. |
-| `content` | `@Composable PagerScope.(position: Int) -> Unit` | — | Content for each page, keyed by zero-based `position`. |
+| `content` | `@Composable PagerScope.(position: Int) -> Unit` | - | Content for each page, keyed by zero-based `position`. |
 
 ### CarouselOrientation
 

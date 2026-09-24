@@ -431,8 +431,8 @@ fun Example() {
 
 | Parameter             | Type                                        | Default                      | Description                                                                                       |
 | --------------------- | ------------------------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------- |
-| `value`               | `String`                                    | —                            | The current text value of the input field.                                                        |
-| `onValueChange`       | `(String) -> Unit`                          | —                            | Callback invoked when the text changes.                                                           |
+| `value`               | `String`                                    | -                            | The current text value of the input field.                                                        |
+| `onValueChange`       | `(String) -> Unit`                          | -                            | Callback invoked when the text changes.                                                           |
 | `modifier`            | `Modifier`                                  | `Modifier`                   | Modifier applied to the input field.                                                              |
 | `placeholder`         | `String`                                    | `""`                         | Placeholder text shown when the field is empty and not focused.                                   |
 | `enabled`             | `Boolean`                                   | `true`                       | When false, interaction is disabled and muted colors are applied.                                 |
@@ -448,7 +448,7 @@ fun Example() {
 | `minLines`            | `Int`                                       | `1`                          | Minimum number of lines the field will occupy.                                                    |
 | `keyboardOptions`     | `KeyboardOptions`                           | `KeyboardOptions.Default`    | Keyboard type, capitalization, auto-correct, and IME action.                                      |
 | `keyboardActions`     | `KeyboardActions`                           | `KeyboardActions.Default`    | Callbacks for IME actions such as `Done`, `Next`, or `Go`.                                        |
-| `variant`             | `InputVariant`                              | `InputVariant.Outlined`      | Visual style of the input field — see `InputVariant`.                                             |
+| `variant`             | `InputVariant`                              | `InputVariant.Outlined`      | Visual style of the input field; see `InputVariant`.                                             |
 | `colors`              | `InputStyle`                                | `InputDefaults.colors()`     | Color overrides for the input. Use `InputDefaults.colors { copy(...) }` to customize.            |
 
 ### `InputVariant`
@@ -469,7 +469,7 @@ Returned by `InputDefaults.colors()`. Pass to the `colors` parameter to override
 | `text`              | `Color`            | Text color when enabled.                                                |
 | `disableText`       | `Color`            | Text color when `enabled = false`.                                      |
 | `placeholder`       | `Color`            | Placeholder text color.                                                 |
-| `border`            | `InputBorderStyle` | Border colors for each state — see `InputBorderStyle`.                  |
+| `border`            | `InputBorderStyle` | Border colors for each state; see `InputBorderStyle`.                  |
 | `supportingText`    | `Color`            | Color of the `supportingText` slot content.                             |
 
 ### `InputBorderStyle`

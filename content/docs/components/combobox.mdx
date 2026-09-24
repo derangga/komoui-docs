@@ -3,7 +3,7 @@ title: Combobox
 description: A searchable dropdown that filters a string list as the user types, displayed as an anchored popup that matches the trigger's width.
 ---
 
-`ComboBox` renders a 48 dp trigger field with a chevron icon. Tapping it opens a `Popup` anchored below the trigger — same width — containing an underlined search `Input` and a lazily rendered option list. Options are filtered case-insensitively as the user types. The selected item receives an `accent` background and a check icon. Search text resets when the popup is dismissed without making a selection.
+`ComboBox` renders a 48 dp trigger field with a chevron icon. Tapping it opens a `Popup` anchored below the trigger, matching its width, containing an underlined search `Input` and a lazily rendered option list. Options are filtered case-insensitively as the user types. The selected item receives an `accent` background and a check icon. Search text resets when the popup is dismissed without making a selection.
 
 ## Basic usage
 
@@ -70,9 +70,9 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `options` | `List<String>` | — | Full list of selectable options. |
-| `selectedOption` | `String?` | — | Currently selected value. Pass `null` when nothing is selected. |
-| `onOptionSelected` | `(String) -> Unit` | — | Called with the chosen string when the user taps an option. |
+| `options` | `List<String>` | - | Full list of selectable options. |
+| `selectedOption` | `String?` | - | Currently selected value. Pass `null` when nothing is selected. |
+| `onOptionSelected` | `(String) -> Unit` | - | Called with the chosen string when the user taps an option. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the root `Column` containing the trigger and popup. |
 | `enabled` | `Boolean` | `true` | When `false`, the trigger is non-interactive and renders with the `muted` background. |
 | `placeholder` | `String` | `"Select option..."` | Text shown in the trigger when `selectedOption` is `null`. |

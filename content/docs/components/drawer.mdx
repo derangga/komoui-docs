@@ -199,13 +199,13 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `open` | `Boolean` | — | Controls whether the bottom sheet is visible. |
-| `onDismissRequest` | `() -> Unit` | — | Called when the user swipes down or taps the scrim. |
+| `open` | `Boolean` | - | Controls whether the bottom sheet is visible. |
+| `onDismissRequest` | `() -> Unit` | - | Called when the user swipes down or taps the scrim. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the inner content `Column`. |
 | `sheetState` | `SheetState` | `rememberModalBottomSheetState()` | Controls the sheet's animation state. Use with a coroutine scope to animate hide before clearing `open`. |
-| `title` | `@Composable () -> Unit` | — | Title slot. Wrap content in `DrawerTitle`. |
-| `description` | `@Composable () -> Unit` | — | Description slot. Wrap content in `DrawerDescription`. |
-| `content` | `@Composable ColumnScope.() -> Unit` | — | Main content slot between the header and footer. |
+| `title` | `@Composable () -> Unit` | - | Title slot. Wrap content in `DrawerTitle`. |
+| `description` | `@Composable () -> Unit` | - | Description slot. Wrap content in `DrawerDescription`. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | Main content slot between the header and footer. |
 | `footer` | `(@Composable RowScope.() -> Unit)?` | `null` | Optional footer slot. Rendered in a right-aligned `Row`. Typically contains `DrawerCancel` and `DrawerAction`. |
 | `showCloseButton` | `Boolean` | `false` | When `true`, renders an `×` icon button in the header row. |
 | `shouldDismissOnBackPress` | `Boolean` | `true` | When `false`, the back-press gesture will not dismiss the sheet. |
@@ -217,7 +217,7 @@ Slot wrapper rendered inside the `title` parameter. Typography (18 sp, `SemiBold
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the title container. |
-| `content` | `@Composable () -> Unit` | — | Slot content — typically a `Text`. |
+| `content` | `@Composable () -> Unit` | - | Slot content, typically a `Text`. |
 
 ### DrawerDescription
 
@@ -226,7 +226,7 @@ Slot wrapper rendered inside the `description` parameter. Typography (14 sp, `mu
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the description container. |
-| `content` | `@Composable () -> Unit` | — | Slot content — typically a `Text`. |
+| `content` | `@Composable () -> Unit` | - | Slot content, typically a `Text`. |
 
 ### DrawerAction
 
@@ -234,9 +234,9 @@ A primary action button using `ButtonVariant.Default`. Place inside the `footer`
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `onClick` | `() -> Unit` | - | Called when the button is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the button. |
-| `content` | `@Composable () -> Unit` | — | Button label — typically a `Text`. |
+| `content` | `@Composable () -> Unit` | - | Button label, typically a `Text`. |
 
 ### DrawerCancel
 
@@ -244,9 +244,9 @@ A secondary cancel button using `ButtonVariant.Outline`. Place inside the `foote
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `onClick` | `() -> Unit` | - | Called when the button is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the button. |
-| `content` | `@Composable () -> Unit` | — | Button label — typically a `Text`. |
+| `content` | `@Composable () -> Unit` | - | Button label, typically a `Text`. |
 
-> **Animating the sheet closed** — calling `showDrawer = false` directly snaps the sheet away without animation. For a smooth slide-out, use `scope.launch { sheetState.hide() }.invokeOnCompletion { if (!sheetState.isVisible) showDrawer = false }`.
+> **Animating the sheet closed**: calling `showDrawer = false` directly snaps the sheet away without animation. For a smooth slide-out, use `scope.launch { sheetState.hide() }.invokeOnCompletion { if (!sheetState.isVisible) showDrawer = false }`.
 

@@ -230,7 +230,7 @@ Both `showMessage` and `showError` share the same parameter signature:
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `message` | `String` | — | Primary message text |
+| `message` | `String` | - | Primary message text |
 | `subMessage` | `String?` | `null` | Optional secondary message displayed below the primary |
 | `action` | `SonnerAction?` | `null` | Optional action button configuration |
 | `withDismissAction` | `Boolean` | `false` | Whether to show a dismiss (close) button |
@@ -242,7 +242,7 @@ Data class representing a snackbar event dispatched through `SonnerProvider`.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `message` | `String` | — | Primary message text |
+| `message` | `String` | - | Primary message text |
 | `subMessage` | `String?` | `null` | Optional secondary message |
 | `action` | `SonnerAction?` | `null` | Optional action button |
 | `withDismissAction` | `Boolean` | `false` | Whether to show a dismiss button |
@@ -269,12 +269,12 @@ Enum controlling the visual style of the snackbar.
 
 ### Sonner
 
-The core snackbar composable. Rendered automatically by `SonnerHost` — you typically do not call this directly.
+The core snackbar composable. Rendered automatically by `SonnerHost`; you typically do not call this directly.
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the snackbar |
-| `title` | `String` | — | Primary message text |
+| `title` | `String` | - | Primary message text |
 | `subtitle` | `String?` | `null` | Optional secondary message |
 | `actionLabel` | `String?` | `null` | Label for the optional action button |
 | `onActionClick` | `(() -> Unit)?` | `null` | Callback for the action button |
@@ -287,7 +287,7 @@ A `SnackbarHost` wrapper that renders `SonnerVisualsImpl` visuals using `Sonner`
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `hostState` | `SnackbarHostState` | — | The host state controlling snackbar display |
+| `hostState` | `SnackbarHostState` | - | The host state controlling snackbar display |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the host |
 
 ### ObserveAsEvent
@@ -296,10 +296,10 @@ Lifecycle-aware composable that collects a `Flow` and invokes `onEvent` for each
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `flow` | `Flow<T>` | — | The flow of events to observe |
-| `key1` | `Any?` | `null` | Optional key — restarts the effect when its value changes |
-| `key2` | `Any?` | `null` | Optional key — restarts the effect when its value changes |
-| `onEvent` | `(T) -> Unit` | — | Callback invoked for each emitted event |
+| `flow` | `Flow<T>` | - | The flow of events to observe |
+| `key1` | `Any?` | `null` | Optional key that restarts the effect when its value changes |
+| `key2` | `Any?` | `null` | Optional key that restarts the effect when its value changes |
+| `onEvent` | `(T) -> Unit` | - | Callback invoked for each emitted event |
 
 ### SonnerVisualsImpl
 
@@ -307,10 +307,10 @@ Lifecycle-aware composable that collects a `Flow` and invokes `onEvent` for each
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
-| `message` | `String` | — | Primary message text |
+| `message` | `String` | - | Primary message text |
 | `actionLabel` | `String?` | `null` | Optional action button label |
 | `withDismissAction` | `Boolean` | `false` | Whether to show a dismiss button |
-| `duration` | `SnackbarDuration` | — | Display duration |
+| `duration` | `SnackbarDuration` | - | Display duration |
 | `subMessage` | `String?` | `null` | Optional secondary message |
 | `variant` | `SonnerVariant` | `Default` | Visual variant |
 
@@ -326,5 +326,5 @@ suspend fun SnackbarHostState.showSonner(event: SonnerEvent): SnackbarResult
 | --- | --- | --- |
 | `event` | `SonnerEvent` | The event containing message, variant, and action configuration |
 
-Returns `SnackbarResult` — `ActionPerformed` if the action button was tapped, `Dismissed` otherwise.
+Returns `SnackbarResult`: `ActionPerformed` if the action button was tapped, `Dismissed` otherwise.
 

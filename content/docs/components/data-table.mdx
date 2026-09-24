@@ -7,8 +7,8 @@ description: Low-level table primitives plus a typed DataTable with sorting, row
 
 This page documents two layers that ship from the same `Table.kt` source:
 
-- **Table primitives** — `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`. Use these when you want full control over layout, custom headers, or non-rectangular data.
-- **`DataTable<T>`** — a typed, batteries-included data table. It owns state for sorting, optional checkbox selection, and Previous/Next pagination, and lets you swap in a custom pagination UI through a slot.
+- **Table primitives**: `Table`, `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, `TableCaption`. Use these when you want full control over layout, custom headers, or non-rectangular data.
+- **`DataTable<T>`**: a typed, batteries-included data table. It owns state for sorting, optional checkbox selection, and Previous/Next pagination, and lets you swap in a custom pagination UI through a slot.
 
 Both layers share the same horizontal-scroll model: the table is **not** shrunk to viewport on mobile. Declare each column's width as a fixed `Dp` and the wrapper will scroll horizontally when needed. Header and body cells in the same column must share the same `Modifier.width(...)` so the columns line up.
 
@@ -108,7 +108,7 @@ fun BasicTableExample() {
 
 ### With footer and caption
 
-`TableFooter` paints a muted background and a top border — typically used for totals. The footer row's `showBottomBorder = false` keeps the rounded corner clean. `TableCaption` is rendered **outside** the `Table` container so it sits below the scrollable area.
+`TableFooter` paints a muted background and a top border, typically used for totals. The footer row's `showBottomBorder = false` keeps the rounded corner clean. `TableCaption` is rendered **outside** the `Table` container so it sits below the scrollable area.
 
 <Tabs items={["Preview","Code"]}>
 
@@ -180,14 +180,14 @@ fun TableWithFooterExample() {
 
 ## Data Table
 
-`DataTable<T>` accepts your full unsorted, unpaginated `items` list and a list of `DataTableColumn<T>` definitions. It handles sorting, optional selection, and Previous/Next pagination internally — pass `onSortChange` / `onSelectionChange` if you need to observe.
+`DataTable<T>` accepts your full unsorted, unpaginated `items` list and a list of `DataTableColumn<T>` definitions. It handles sorting, optional selection, and Previous/Next pagination internally; pass `onSortChange` / `onSelectionChange` if you need to observe.
 
 Each column declares:
 
-- `id` — stable identifier used as the sort key and for visibility.
-- `header` — header label (also used as the accessible label when `headerContent` is provided).
-- `width` — fixed `Dp` width applied to both header and body cells in this column.
-- `cell` — renders a single body cell from one item.
+- `id`: stable identifier used as the sort key and for visibility.
+- `header`: header label (also used as the accessible label when `headerContent` is provided).
+- `width`: fixed `Dp` width applied to both header and body cells in this column.
+- `cell`: renders a single body cell from one item.
 
 <Tabs items={["Preview","Code"]}>
 
@@ -378,7 +378,7 @@ fun SelectableDataTableExample() {
 
 ## Custom pagination
 
-The `pagination` slot defaults to `DefaultPagination` — Previous / Next outline buttons aligned to the end. To replace it, pass your own `@Composable PaginationScope.() -> Unit`. `PaginationScope` exposes `page`, `pageCount`, `canPrev`, `canNext`, `prev()`, `next()`, and `goTo(page)` so you can render numbered pages, jump-to controls, or anything else.
+The `pagination` slot defaults to `DefaultPagination`: Previous / Next outline buttons aligned to the end. To replace it, pass your own `@Composable PaginationScope.() -> Unit`. `PaginationScope` exposes `page`, `pageCount`, `canPrev`, `canNext`, `prev()`, `next()`, and `goTo(page)` so you can render numbered pages, jump-to controls, or anything else.
 
 <Tabs items={["Preview","Code"]}>
 
@@ -457,7 +457,7 @@ fun NumberedPaginationExample() {
 | ------------- | -------------------------------------- | ---------------------- | ------------------------------------------------------------------------ |
 | `modifier`    | `Modifier`                             | `Modifier`             | Modifier applied to the outer container.                                 |
 | `scrollState` | `ScrollState`                          | `rememberScrollState()` | Horizontal scroll state shared by header and body.                       |
-| `content`     | `@Composable ColumnScope.() -> Unit`   | —                      | Table sections — typically `TableHeader`, `TableBody`, and `TableFooter`. |
+| `content`     | `@Composable ColumnScope.() -> Unit`   | -                      | Table sections, typically `TableHeader`, `TableBody`, and `TableFooter`. |
 
 ### `TableRow`
 
@@ -466,12 +466,12 @@ fun NumberedPaginationExample() {
 | `modifier`          | `Modifier`                          | `Modifier` | Pass `Modifier.width(...)` to make rows span the same total width under `Table`'s horizontal scroll. |
 | `onClick`           | `(() -> Unit)?`                     | `null`  | Optional click handler. When non-null the row becomes clickable.                                     |
 | `selected`          | `Boolean`                           | `false` | When true, the row paints a muted background.                                                        |
-| `showBottomBorder`  | `Boolean`                           | `true`  | When false, the row omits its bottom border — pass `false` for the final body row.                  |
-| `content`           | `@Composable RowScope.() -> Unit`   | —       | Cells of the row — typically `TableHead` or `TableCell`.                                            |
+| `showBottomBorder`  | `Boolean`                           | `true`  | When false, the row omits its bottom border. Pass `false` for the final body row.                  |
+| `content`           | `@Composable RowScope.() -> Unit`   | -       | Cells of the row, typically `TableHead` or `TableCell`.                                            |
 
 ### `TableHead` / `TableCell`
 
-Both accept a `modifier: Modifier` and a `content: @Composable RowScope.() -> Unit`. Pass `Modifier.width(...)` to set the column's width — header and body cells in the same column should share the same width.
+Both accept a `modifier: Modifier` and a `content: @Composable RowScope.() -> Unit`. Pass `Modifier.width(...)` to set the column's width; header and body cells in the same column should share the same width.
 
 - `TableHead`: 40.dp min-height, 8.dp horizontal padding, medium-weight muted text.
 - `TableCell`: 8.dp all-around padding, foreground text color.
@@ -480,7 +480,7 @@ Both accept a `modifier: Modifier` and a `content: @Composable RowScope.() -> Un
 
 | Parameter  | Type       | Default | Description                            |
 | ---------- | ---------- | ------- | -------------------------------------- |
-| `text`     | `String`   | —       | Caption text.                          |
+| `text`     | `String`   | -       | Caption text.                          |
 | `modifier` | `Modifier` | `Modifier` | Modifier applied to the caption.   |
 
 Render `TableCaption` **outside** the `Table` container.
@@ -489,9 +489,9 @@ Render `TableCaption` **outside** the `Table` container.
 
 | Parameter               | Type                                                  | Default              | Description                                                                                                       |
 | ----------------------- | ----------------------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `items`                 | `List<T>`                                             | —                    | Full unsorted, unpaginated data set.                                                                              |
-| `columns`               | `List<DataTableColumn<T>>`                            | —                    | Column definitions.                                                                                               |
-| `rowKey`                | `(T) -> Any`                                          | —                    | Stable key for an item. Used for selection identity.                                                              |
+| `items`                 | `List<T>`                                             | -                    | Full unsorted, unpaginated data set.                                                                              |
+| `columns`               | `List<DataTableColumn<T>>`                            | -                    | Column definitions.                                                                                               |
+| `rowKey`                | `(T) -> Any`                                          | -                    | Stable key for an item. Used for selection identity.                                                              |
 | `modifier`              | `Modifier`                                            | `Modifier`           | Modifier applied to the outer container.                                                                          |
 | `enableSelection`       | `Boolean`                                             | `false`              | When true a leading checkbox column is auto-prepended.                                                            |
 | `selectionColumnWidth`  | `Dp`                                                  | `48.dp`              | Width of the auto-injected selection column.                                                                      |

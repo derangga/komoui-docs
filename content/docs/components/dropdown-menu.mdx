@@ -1,6 +1,6 @@
 ---
 title: Dropdown Menu
-description: Displays a menu to the user — such as a set of actions or functions — triggered by a button.
+description: Displays a menu of actions or functions to the user, triggered by a button.
 ---
 
 `DropdownMenu` wraps the trigger and the popover in a single composable. Pass the anchor element to the `trigger` slot and menu items as `content`. The menu floats below the trigger with a 4 dp gap by default.
@@ -161,21 +161,21 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `expanded` | `Boolean` | — | Controls whether the menu is visible. |
-| `onDismissRequest` | `() -> Unit` | — | Called when the user taps outside the menu. |
-| `trigger` | `@Composable () -> Unit` | — | The anchor element that opens the menu (e.g., a `Button`). Rendered directly above the popup. |
+| `expanded` | `Boolean` | - | Controls whether the menu is visible. |
+| `onDismissRequest` | `() -> Unit` | - | Called when the user taps outside the menu. |
+| `trigger` | `@Composable () -> Unit` | - | The anchor element that opens the menu (e.g., a `Button`). Rendered directly above the popup. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the menu container. |
 | `offset` | `DpOffset` | `DpOffset(0.dp, 4.dp)` | Pixel offset of the popup from the trigger anchor. |
-| `content` | `@Composable ColumnScope.() -> Unit` | — | Menu items slot — typically `DropdownMenuItem` and `DropdownMenuSeparator`. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | Menu items slot, typically `DropdownMenuItem` and `DropdownMenuSeparator`. |
 
 ### DropdownMenuItem
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onClick` | `() -> Unit` | — | Called when the item is tapped. |
+| `onClick` | `() -> Unit` | - | Called when the item is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the item container. |
 | `enabled` | `Boolean` | `true` | When `false`, the item is non-interactive and rendered with `mutedForeground` color. |
-| `content` | `@Composable RowScope.() -> Unit` | — | Item content. Runs in a `RowScope` — place icons and labels side by side without an extra wrapper. |
+| `content` | `@Composable RowScope.() -> Unit` | - | Item content. Runs in a `RowScope`; place icons and labels side by side without an extra wrapper. |
 
 ### DropdownMenuSeparator
 

@@ -1,11 +1,11 @@
 ---
 title: Radio Group
-description: A set of checkable buttons—known as radio buttons—where no more than one of the buttons can be checked at a time.
+description: A set of checkable buttons, known as radio buttons, where no more than one of the buttons can be checked at a time.
 ---
 
 ## Basic Usage
 
-`RadioGroup` is a layout container that arranges `RadioButtonWithLabel` items. Both components are generic — `value` and `selectedValue` can be any type `T`, including `String`, `enum`, or a data class.
+`RadioGroup` is a layout container that arranges `RadioButtonWithLabel` items. Both components are generic: `value` and `selectedValue` can be any type `T`, including `String`, `enum`, or a data class.
 
 <Tabs items={["Preview","Code"]}>
 
@@ -144,20 +144,20 @@ fun Example() {
 
 | Parameter        | Type                        | Default                       | Description                                                                      |
 | ---------------- | --------------------------- | ----------------------------- | -------------------------------------------------------------------------------- |
-| `selectedValue`  | `T`                         | —                             | The currently selected value in the group.                                       |
-| `onValueChange`  | `(T) -> Unit`               | —                             | Callback invoked when the selection changes.                                     |
+| `selectedValue`  | `T`                         | -                             | The currently selected value in the group.                                       |
+| `onValueChange`  | `(T) -> Unit`               | -                             | Callback invoked when the selection changes.                                     |
 | `modifier`       | `Modifier`                  | `Modifier`                    | Modifier applied to the layout container.                                        |
 | `orientation`    | `LayoutOrientation`         | `LayoutOrientation.Vertical`  | Arranges children vertically (`Column`) or horizontally (`Row`).                 |
-| `content`        | `@Composable () -> Unit`    | —                             | The radio button items — typically `RadioButtonWithLabel` composables.           |
+| `content`        | `@Composable () -> Unit`    | -                             | The radio button items, typically `RadioButtonWithLabel` composables.           |
 
 ### `RadioButtonWithLabel<T>`
 
 | Parameter        | Type                        | Default    | Description                                                                                     |
 | ---------------- | --------------------------- | ---------- | ----------------------------------------------------------------------------------------------- |
-| `value`          | `T`                         | —          | The value this radio button represents.                                                         |
-| `label`          | `String`                    | —          | Text label displayed next to the radio button.                                                  |
-| `selectedValue`  | `T`                         | —          | The currently selected value from the parent group. Used to derive the checked state.           |
-| `onValueChange`  | `(T) -> Unit`               | —          | Callback invoked when this radio button is selected.                                            |
+| `value`          | `T`                         | -          | The value this radio button represents.                                                         |
+| `label`          | `String`                    | -          | Text label displayed next to the radio button.                                                  |
+| `selectedValue`  | `T`                         | -          | The currently selected value from the parent group. Used to derive the checked state.           |
+| `onValueChange`  | `(T) -> Unit`               | -          | Callback invoked when this radio button is selected.                                            |
 | `modifier`       | `Modifier`                  | `Modifier` | Modifier applied to the row container.                                                          |
 | `enabled`        | `Boolean`                   | `true`     | When false, the button and label are non-interactive and rendered in muted colors.              |
 | `colors`         | `RadioButtonColors?`        | `null`     | Custom Material3 `RadioButtonColors`. When `null`, KomoUI theme tokens are used automatically. |
@@ -172,6 +172,6 @@ fun Example() {
 ### Behaviour notes
 
 - The entire row (radio button + label) is selectable via `Modifier.selectable` with `Role.RadioButton` for correct accessibility semantics.
-- `RadioButton` inside the row has `onClick = null` — the click is handled by the row's selectable modifier, preventing double-tap regions.
+- `RadioButton` inside the row has `onClick = null`; the click is handled by the row's selectable modifier, preventing double-tap regions.
 - The label text color switches to `mutedForeground` automatically when `enabled = false`.
 

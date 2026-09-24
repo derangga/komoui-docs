@@ -64,8 +64,8 @@ fun Example() {
 
 | Parameter       | Type                                      | Default     | Description                                                                                                     |
 | --------------- | ----------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------- |
-| `value`         | `Float`                                   | —           | The current value of the slider.                                                                                |
-| `onValueChange` | `(Float) -> Unit`                         | —           | Callback invoked continuously as the user drags the thumb.                                                      |
+| `value`         | `Float`                                   | -           | The current value of the slider.                                                                                |
+| `onValueChange` | `(Float) -> Unit`                         | -           | Callback invoked continuously as the user drags the thumb.                                                      |
 | `modifier`      | `Modifier`                                | `Modifier`  | Modifier applied to the slider. The component applies `fillMaxWidth()` and `height(20.dp)` internally.          |
 | `valueRange`    | `ClosedFloatingPointRange<Float>`         | `0f..1f`    | The range of selectable values.                                                                                 |
 | `steps`         | `Int`                                     | `0`         | Number of discrete stops between start and end. `0` means continuous. Must be `≥ 0`.                           |

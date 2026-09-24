@@ -3,7 +3,7 @@ title: Dialog
 description: A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.
 ---
 
-`Dialog` renders a modal overlay with three optional slots — `header`, `body`, and `footer`. The header slot automatically includes a close (`×`) button in the top-right corner. All slots are optional so you can compose only what you need.
+`Dialog` renders a modal overlay with three optional slots: `header`, `body`, and `footer`. The header slot automatically includes a close (`×`) button in the top-right corner. All slots are optional so you can compose only what you need.
 
 ## Basic Usage
 
@@ -183,8 +183,8 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `open` | `Boolean` | — | Controls whether the dialog is visible. |
-| `onDismissRequest` | `() -> Unit` | — | Called when the user taps outside the dialog or the close button. |
+| `open` | `Boolean` | - | Controls whether the dialog is visible. |
+| `onDismissRequest` | `() -> Unit` | - | Called when the user taps outside the dialog or the close button. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the dialog's content container. |
 | `header` | `(@Composable ColumnScope.() -> Unit)?` | `null` | Header slot. Rendered alongside an auto-inserted close button. Typically contains `DialogTitle` and `DialogDescription`. |
 | `body` | `(@Composable ColumnScope.() -> Unit)?` | `null` | Body slot. Placed between header and footer. Use for forms, lists, or freeform content. |
@@ -197,7 +197,7 @@ Applies `foreground` color, 18 sp, and `SemiBold` weight to its content via `Pro
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the title container. |
-| `content` | `@Composable () -> Unit` | — | Slot content — typically a `Text`. |
+| `content` | `@Composable () -> Unit` | - | Slot content, typically a `Text`. |
 
 ### DialogDescription
 
@@ -206,7 +206,7 @@ Applies `mutedForeground` color and 14 sp to its content via `ProvideTextStyle`.
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the description container. |
-| `content` | `@Composable () -> Unit` | — | Slot content — typically a `Text`. |
+| `content` | `@Composable () -> Unit` | - | Slot content, typically a `Text`. |
 
 ### DialogAction
 
@@ -214,9 +214,9 @@ A primary action button using `ButtonVariant.Default`. Place inside the `footer`
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `onClick` | `() -> Unit` | - | Called when the button is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the button. |
-| `content` | `@Composable () -> Unit` | — | Button label — typically a `Text`. |
+| `content` | `@Composable () -> Unit` | - | Button label, typically a `Text`. |
 
 ### DialogCancel
 
@@ -224,7 +224,7 @@ A secondary cancel button using `ButtonVariant.Outline`. Place inside the `foote
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `onClick` | `() -> Unit` | — | Called when the button is tapped. |
+| `onClick` | `() -> Unit` | - | Called when the button is tapped. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the button. |
-| `content` | `@Composable () -> Unit` | — | Button label — typically a `Text`. |
+| `content` | `@Composable () -> Unit` | - | Button label, typically a `Text`. |
 

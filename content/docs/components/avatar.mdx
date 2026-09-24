@@ -173,11 +173,11 @@ fun Example() {
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `model` | `Any?` | — | Coil3 image data — a URL string, `Uri`, `ImageRequest`, or `null` to always show the fallback. |
+| `model` | `Any?` | - | Coil3 image data: a URL string, `Uri`, `ImageRequest`, or `null` to always show the fallback. |
 | `modifier` | `Modifier` | `Modifier` | Applied to the outer `Box` container after size and clip. |
 | `size` | `Dp` | `40.dp` | Diameter of the circular avatar. Fallback text scales at 40 % of this value. |
 | `contentDescription` | `String?` | `null` | Accessibility description for the image. |
-| `fallbackText` | `String` | — | Text shown when `model` is `null`, the image is loading (and no `loadingContent` is set), or the image fails (and no `errorContent` is set). |
+| `fallbackText` | `String` | - | Text shown when `model` is `null`, the image is loading (and no `loadingContent` is set), or the image fails (and no `errorContent` is set). |
 | `loadingContent` | `(@Composable () -> Unit)?` | `null` | Composable shown while the image is loading. Falls back to `fallbackText` when `null`. |
 | `errorContent` | `(@Composable () -> Unit)?` | `null` | Composable shown when the image fails to load. Falls back to `fallbackText` when `null`. |
 | `contentScale` | `ContentScale` | `ContentScale.Crop` | Scaling strategy for the loaded image inside the circular bounds. |

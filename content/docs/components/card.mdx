@@ -3,7 +3,7 @@ title: Card
 description: A bordered, shadowed surface with composable slots for header, title, description, content, and footer.
 ---
 
-`Card` is a `Column`-based container with a rounded border, a drop shadow, and a `card` background from the active theme. Five slot composables — `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter` — provide consistent padding and typography without any required nesting order.
+`Card` is a `Column`-based container with a rounded border, a drop shadow, and a `card` background from the active theme. Five slot composables, `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter`, provide consistent padding and typography without any required nesting order.
 
 ## Basic usage
 
@@ -235,7 +235,7 @@ fun Example() {
 | `modifier` | `Modifier` | `Modifier` | Applied to the inner `Column` content area. |
 | `radius` | `Dp` | `MaterialTheme.radius.lg` | Corner radius for the card border and clip. |
 | `shadow` | `List<BoxShadow>` | `MaterialTheme.styles.shadow()` | Drop shadow(s) drawn behind the card. Pass `emptyList()` to remove. |
-| `content` | `@Composable ColumnScope.() -> Unit` | — | Card body; receives `ColumnScope` so standard column modifiers apply. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | Card body; receives `ColumnScope` so standard column modifiers apply. |
 
 ### CardHeader
 
@@ -243,21 +243,21 @@ fun Example() {
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied after the default full-width 16 dp padding. |
 | `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.Start` | Horizontal alignment of header children. |
-| `content` | `@Composable ColumnScope.() -> Unit` | — | Header content; typically `CardTitle` and `CardDescription`. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | Header content; typically `CardTitle` and `CardDescription`. |
 
 ### CardTitle
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the wrapper column. |
-| `content` | `@Composable () -> Unit` | — | Title content. Rendered semibold at 18 sp using `cardForeground`. |
+| `content` | `@Composable () -> Unit` | - | Title content. Rendered semibold at 18 sp using `cardForeground`. |
 
 ### CardDescription
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied to the wrapper column. |
-| `content` | `@Composable () -> Unit` | — | Description content. Rendered at 14 sp using `mutedForeground`. |
+| `content` | `@Composable () -> Unit` | - | Description content. Rendered at 14 sp using `mutedForeground`. |
 
 ### CardContent
 
@@ -265,7 +265,7 @@ fun Example() {
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied after the default horizontal 16 dp padding. |
 | `horizontalAlignment` | `Alignment.Horizontal` | `Alignment.Start` | Horizontal alignment of content children. |
-| `content` | `@Composable ColumnScope.() -> Unit` | — | Main body content. |
+| `content` | `@Composable ColumnScope.() -> Unit` | - | Main body content. |
 
 ### CardFooter
 
@@ -273,5 +273,5 @@ fun Example() {
 |---|---|---|---|
 | `modifier` | `Modifier` | `Modifier` | Applied after the default full-width 16 dp padding. |
 | `horizontalArrangement` | `Arrangement.Horizontal` | `Arrangement.Start` | Horizontal arrangement of footer children. |
-| `content` | `@Composable RowScope.() -> Unit` | — | Footer content; laid out in a `Row` aligned to center vertically. |
+| `content` | `@Composable RowScope.() -> Unit` | - | Footer content; laid out in a `Row` aligned to center vertically. |
 
