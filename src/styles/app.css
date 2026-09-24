@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@plugin "@tailwindcss/typography";
+@import "fumadocs-ui/css/shadcn.css";
+@import "fumadocs-ui/css/preset.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -192,66 +193,6 @@
   }
 }
 
-@layer utilities {
-  .\[counter-reset\:step\] {
-    counter-reset: step;
-  }
-  .\[counter-increment\:step\] {
-    counter-increment: step;
-  }
-}
-
-.steps-counter {
-  counter-reset: step;
-}
-.steps-counter h4 {
-  counter-increment: step;
-  display: flex;
-  align-items: center;
-}
-.steps-counter h4::before {
-  content: counter(step);
-}
-
-/* style configuration for inline code */
-code:not([data-rehype-pretty-code-figure] code) {
-  @apply bg-muted px-1 py-0.5 rounded font-mono text-sm text-foreground;
-}
-
-code:not([data-rehype-pretty-code-figure] code)::before,
-code:not([data-rehype-pretty-code-figure] code)::after {
-  display: none;
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6 {
-  scroll-margin-top: 100px;
-}
-
-/* rehype-pretty-code dual theme support */
-code[data-theme*=" "],
-code[data-theme*=" "] span {
-  color: var(--shiki-light);
-}
-
-.dark code[data-theme*=" "],
-.dark code[data-theme*=" "] span {
-  color: var(--shiki-dark);
-  background-color: var(--shiki-dark-bg);
-}
-
 /* Runtime Shiki highlighting (home page examples) — dual theme via CSS vars */
 .home-code .shiki {
   @apply text-sm font-mono;
@@ -267,30 +208,6 @@ code[data-theme*=" "] span {
 .dark .home-code .shiki,
 .dark .home-code .shiki span {
   color: var(--shiki-dark);
-}
-
-/* rehype-pretty-code styling */
-[data-rehype-pretty-code-figure] pre {
-  @apply p-4 rounded-lg overflow-x-auto;
-  background-color: oklch(0.975 0 0);
-}
-
-.dark [data-rehype-pretty-code-figure] pre {
-  background-color: var(--shiki-dark-bg);
-}
-
-[data-rehype-pretty-code-figure] code {
-  font-size: small;
-}
-
-[data-rehype-pretty-code-figure] [data-line] {
-  @apply px-4;
-}
-
-/* CodeWithFilename wraps the code block; the wrapper handles spacing (my-6),
-   so drop the typography plugin's default figure margins inside it. */
-.code-block-wrapper [data-rehype-pretty-code-figure] {
-  margin: 0;
 }
 
 .maven-badge {

@@ -1,0 +1,181 @@
+---
+title: Alert
+description: Displays a short, important message with an optional icon, supporting default and destructive visual variants with full color customization.
+---
+
+`Alert` renders a full-width callout banner with a rounded border. It accepts an optional leading `icon` slot, a `title`, and a `description`. The `Default` variant uses theme foreground colors; the `Destructive` variant automatically switches title and description to the theme's destructive color regardless of the `colors` override.
+
+## Basic usage
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="alert" variant="default" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import com.komoui.components.Alert
+
+@Composable
+fun Example() {
+    Alert(
+        title = { Text("Heads up!") },
+        description = { Text("You can add components to your app using the CLI.") },
+    )
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Destructive variant
+
+Use `AlertVariant.Destructive` to signal an error or a dangerous action. Title and description text automatically use the theme's destructive color.
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="alert" variant="destructive" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import com.komoui.components.Alert
+import com.komoui.components.AlertVariant
+
+@Composable
+fun Example() {
+    Alert(
+        variant = AlertVariant.Destructive,
+        title = { Text("Error") },
+        description = { Text("Your session has expired. Please log in again.") },
+    )
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## With icon
+
+Pass any composable to `icon` to prepend a leading indicator. The icon inherits the resolved title color via `ProvideTextStyle`.
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="alert" variant="with-icon" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.runtime.Composable
+import com.komoui.components.Alert
+
+@Composable
+fun Example() {
+    Alert(
+        icon = { Icon(Icons.Outlined.Info, contentDescription = null) },
+        title = { Text("Tip") },
+        description = { Text("This is a helpful tip for using the application effectively.") },
+    )
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Custom colors
+
+Override any color token by calling `AlertDefaults.colors().copy(...)`. Use this for branded or contextual callouts beyond the two built-in variants.
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="alert" variant="custom-color" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import com.komoui.components.Alert
+import com.komoui.components.AlertDefaults
+
+@Composable
+fun Example() {
+    Alert(
+        icon = { Icon(Icons.Outlined.Info, contentDescription = null) },
+        title = { Text("Information") },
+        description = { Text("This is helpful information you need to know.") },
+        colors = AlertDefaults.colors().copy(
+            backgroundColor = Color(0xFF1E3A5F),
+            borderColors = Color(0xFF2D5A8E),
+            titleColor = Color.White,
+            descriptionColor = Color.White.copy(alpha = 0.8f),
+        ),
+    )
+}
+```
+
+</Tab>
+
+</Tabs>
+
+> Color overrides passed via `colors` are ignored for `AlertVariant.Destructive` — that variant always applies the theme's destructive color to `titleColor` and `descriptionColor`.
+
+## API reference
+
+### Alert
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the root `Row` container. |
+| `variant` | `AlertVariant` | `AlertVariant.Default` | Visual style controlling text colors. |
+| `colors` | `AlertStyle` | `AlertDefaults.colors()` | Color tokens for the alert surface and text. Ignored for title/description colors when `variant` is `Destructive`. |
+| `icon` | `(@Composable () -> Unit)?` | `null` | Optional leading icon composable. |
+| `title` | `@Composable () -> Unit` | — | Header content rendered in semibold text. |
+| `description` | `@Composable () -> Unit` | — | Body content rendered in smaller muted text. |
+
+### AlertVariant
+
+| Value | Description |
+|---|---|
+| `Default` | Uses theme foreground and muted foreground for title and description. |
+| `Destructive` | Applies the theme's destructive color to both title and description text. |
+
+### AlertStyle
+
+| Field | Type | Description |
+|---|---|---|
+| `borderColors` | `Color` | Border color of the alert container. |
+| `backgroundColor` | `Color` | Background fill of the alert container. |
+| `titleColor` | `Color` | Text color for the title. Overridden by `Destructive` variant. |
+| `descriptionColor` | `Color` | Text color for the description. Overridden by `Destructive` variant. |
+
+### AlertDefaults
+
+| Member | Description |
+|---|---|
+| `colors()` | Returns the default `AlertStyle` using `border`, `background`, `foreground`, and `mutedForeground` from the active theme. |
+

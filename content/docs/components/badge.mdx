@@ -1,0 +1,232 @@
+---
+title: Badge
+description: A small label component with four theme variants, an optional dot mode, and support for custom background color and corner radius.
+---
+
+`Badge` renders a small pill-shaped label with 11sp semibold text. When `content` is omitted, it renders as a minimal 6 dp filled dot — useful as a notification indicator. The `roundedSize` parameter controls corner radius, and `backgroundColor` overrides the variant's default fill color.
+
+## Basic usage
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="badge" variant="default" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import com.komoui.components.Badge
+
+@Composable
+fun Example() {
+    Badge {
+        Text("Default")
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Variants
+
+### Secondary
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="badge" variant="secondary" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import com.komoui.components.Badge
+import com.komoui.components.BadgeVariant
+
+@Composable
+fun Example() {
+    Badge(variant = BadgeVariant.Secondary) {
+        Text("Secondary")
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Destructive
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="badge" variant="destructive" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import com.komoui.components.Badge
+import com.komoui.components.BadgeVariant
+
+@Composable
+fun Example() {
+    Badge(variant = BadgeVariant.Destructive) {
+        Text("Destructive")
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+### Outline
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="badge" variant="outline" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import com.komoui.components.Badge
+import com.komoui.components.BadgeVariant
+
+@Composable
+fun Example() {
+    Badge(variant = BadgeVariant.Outline) {
+        Text("Outline")
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Notification badge
+
+Omit `content` to render a 6 dp dot. Pair it with Material3's `BadgedBox` to overlay it on another component.
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="badge" variant="notification-badge" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.runtime.Composable
+import com.komoui.components.Badge
+import com.komoui.components.BadgeVariant
+import com.komoui.components.Button
+import com.komoui.components.ButtonSize
+
+@Composable
+fun Example() {
+    BadgedBox(
+        badge = {
+            Badge(variant = BadgeVariant.Destructive) {
+                Text("8")
+            }
+        }
+    ) {
+        Button(size = ButtonSize.Icon, onClick = {}) {
+            Icon(Icons.Outlined.Notifications, contentDescription = "Notifications")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Custom background and shape
+
+Override the fill color with `backgroundColor` and adjust corner rounding with `roundedSize`. Both work independently of the `variant`.
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="badge" variant="custom" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.komoui.components.Badge
+
+@Composable
+fun Example() {
+    Badge(
+        backgroundColor = Color(0xFF16A34A),
+        roundedSize = 8.dp,
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            Icon(Icons.Outlined.CheckCircle, contentDescription = null, tint = Color.White)
+            Text("Verified")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## API reference
+
+### Badge
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `modifier` | `Modifier` | `Modifier` | Applied to the badge container. |
+| `variant` | `BadgeVariant` | `BadgeVariant.Default` | Determines background, text, and border colors when `backgroundColor` is not set. |
+| `backgroundColor` | `Color?` | `null` | Explicit fill color. Overrides the variant's default background when non-null. |
+| `roundedSize` | `Dp` | `MaterialTheme.radius.full` | Corner radius of the badge shape. |
+| `contentDescription` | `String?` | `null` | Accessibility label for screen readers. Set this for notification counts or the content-less dot badge, which otherwise carry no meaning to TalkBack/VoiceOver. |
+| `content` | `(@Composable () -> Unit)?` | `null` | Badge label. When `null`, renders as a 6 dp filled dot with no padding. |
+
+### BadgeVariant
+
+| Value | Description |
+|---|---|
+| `Default` | Primary background with primary-foreground text. |
+| `Secondary` | Secondary background with secondary-foreground text. |
+| `Destructive` | Destructive background with destructive-foreground text. |
+| `Outline` | Transparent background with a 1 dp border and foreground text. |
+

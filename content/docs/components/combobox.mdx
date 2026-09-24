@@ -1,0 +1,80 @@
+---
+title: Combobox
+description: A searchable dropdown that filters a string list as the user types, displayed as an anchored popup that matches the trigger's width.
+---
+
+`ComboBox` renders a 48 dp trigger field with a chevron icon. Tapping it opens a `Popup` anchored below the trigger — same width — containing an underlined search `Input` and a lazily rendered option list. Options are filtered case-insensitively as the user types. The selected item receives an `accent` background and a check icon. Search text resets when the popup is dismissed without making a selection.
+
+## Basic usage
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="combobox" variant="default" assetExtension=".gif" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.komoui.components.ComboBox
+import com.komoui.themes.styles
+
+@Composable
+fun Example() {
+    val languages = remember {
+        listOf(
+            "JavaScript", "Python", "Java", "C#", "C++",
+            "Ruby", "Swift", "Go", "Kotlin", "TypeScript", "Rust",
+        )
+    }
+    var selected by remember { mutableStateOf<String?>(null) }
+
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+        ComboBox(
+            options = languages,
+            selectedOption = selected,
+            onOptionSelected = { selected = it },
+            modifier = Modifier.width(280.dp),
+            placeholder = "Select a language...",
+        )
+
+        Text(
+            text = "Selected: ${selected ?: "None"}",
+            color = MaterialTheme.styles.mutedForeground,
+        )
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+> When the search query matches no options, the dropdown shows a "No results found." message instead of an empty list.
+
+## API reference
+
+### ComboBox
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `options` | `List<String>` | — | Full list of selectable options. |
+| `selectedOption` | `String?` | — | Currently selected value. Pass `null` when nothing is selected. |
+| `onOptionSelected` | `(String) -> Unit` | — | Called with the chosen string when the user taps an option. |
+| `modifier` | `Modifier` | `Modifier` | Applied to the root `Column` containing the trigger and popup. |
+| `enabled` | `Boolean` | `true` | When `false`, the trigger is non-interactive and renders with the `muted` background. |
+| `placeholder` | `String` | `"Select option..."` | Text shown in the trigger when `selectedOption` is `null`. |
+| `dropdownMaxHeight` | `Dp` | `200.dp` | Maximum height of the scrollable option list inside the popup. |
+

@@ -1,0 +1,101 @@
+---
+title: Installation
+icon: Package
+description: Get started with our KomoUI component library by following these simple installation steps.
+---
+
+## Prerequisites
+
+Before you begin, make sure your project using Kotlin 2.2.0
+
+## Installation Steps
+
+<Steps>
+
+<Step>
+
+#### Update gradle dependency
+
+Update your `build.gradle` by adding KomoUI <a href="https://mvnrepository.com/artifact/io.github.derangga/komoui"><img className="maven-badge" src="https://badges.mvnrepository.com/badge/io.github.derangga/komoui/badge.svg?label=Maven" alt="Maven" /></a>
+
+<Tabs items={["Groovy","Kotlin"]}>
+<Tab value="Groovy">
+
+```groovy
+dependencies {
+    implementation 'io.github.derangga:komoui:komoui_version'
+}
+```
+
+</Tab>
+
+<Tab value="Kotlin">
+
+```kts
+dependencies {
+    implementation("io.github.derangga:komoui:komoui_version")
+}
+```
+
+</Tab>
+</Tabs>
+
+</Step>
+
+<Step>
+
+#### Replace existing theme with KomoTheme
+
+```kotlin
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            KomoTheme {
+                // rest of your screen navigation or components
+            }
+        }
+    }
+}
+```
+
+</Step>
+
+<Step>
+
+#### Add components
+
+```kotlin
+import com.komoui.components.Button
+import com.komoui.components.Input
+
+@Composable
+fun ExampleInput() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(innerPadding)
+    ) {
+        var nameTxt by remember { mutableStateOf("John Doe") }
+        Text(
+            text = "Name",
+            fontWeight = FontWeight.SemiBold,
+            color = MaterialTheme.styles.foreground
+        )
+        Input(
+            value = nameTxt,
+            onValueChange = { nameTxt = it },
+            placeholder = "Enter your name",
+            singleLine = true
+        )
+        Button(onClick = {}) {
+            Text("Save")
+        }
+    }
+}
+```
+
+</Step>
+
+</Steps>
+

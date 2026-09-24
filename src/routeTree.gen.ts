@@ -9,48 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as DocsRouteRouteImport } from './routes/docs/route'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as LlmsFullDottxtRouteImport } from './routes/llms-full[.]txt'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DocsThemingRouteImport } from './routes/docs/theming'
-import { Route as DocsTailwindToKotlinRouteImport } from './routes/docs/tailwind-to-kotlin'
-import { Route as DocsIntroductionRouteImport } from './routes/docs/introduction'
-import { Route as DocsInstallationRouteImport } from './routes/docs/installation'
-import { Route as DocsComponentsIndexRouteImport } from './routes/docs/components.index'
-import { Route as DocsComponentsTabsRouteImport } from './routes/docs/components/tabs'
-import { Route as DocsComponentsSwitchRouteImport } from './routes/docs/components/switch'
-import { Route as DocsComponentsSpinnerRouteImport } from './routes/docs/components/spinner'
-import { Route as DocsComponentsSonnerRouteImport } from './routes/docs/components/sonner'
-import { Route as DocsComponentsSliderRouteImport } from './routes/docs/components/slider'
-import { Route as DocsComponentsSkeletonRouteImport } from './routes/docs/components/skeleton'
-import { Route as DocsComponentsSidebarRouteImport } from './routes/docs/components/sidebar'
-import { Route as DocsComponentsSelectRouteImport } from './routes/docs/components/select'
-import { Route as DocsComponentsRadioGroupRouteImport } from './routes/docs/components/radio-group'
-import { Route as DocsComponentsProgressRouteImport } from './routes/docs/components/progress'
-import { Route as DocsComponentsPopoverRouteImport } from './routes/docs/components/popover'
-import { Route as DocsComponentsInputOtpRouteImport } from './routes/docs/components/input-otp'
-import { Route as DocsComponentsInputRouteImport } from './routes/docs/components/input'
-import { Route as DocsComponentsDropdownMenuRouteImport } from './routes/docs/components/dropdown-menu'
-import { Route as DocsComponentsDrawerRouteImport } from './routes/docs/components/drawer'
-import { Route as DocsComponentsDialogRouteImport } from './routes/docs/components/dialog'
-import { Route as DocsComponentsDatePickerRouteImport } from './routes/docs/components/date-picker'
-import { Route as DocsComponentsDataTableRouteImport } from './routes/docs/components/data-table'
-import { Route as DocsComponentsComboboxRouteImport } from './routes/docs/components/combobox'
-import { Route as DocsComponentsCollapsibleRouteImport } from './routes/docs/components/collapsible'
-import { Route as DocsComponentsCheckboxRouteImport } from './routes/docs/components/checkbox'
-import { Route as DocsComponentsChartRouteImport } from './routes/docs/components/chart'
-import { Route as DocsComponentsCarouselRouteImport } from './routes/docs/components/carousel'
-import { Route as DocsComponentsCardRouteImport } from './routes/docs/components/card'
-import { Route as DocsComponentsCalendarRouteImport } from './routes/docs/components/calendar'
-import { Route as DocsComponentsButtonRouteImport } from './routes/docs/components/button'
-import { Route as DocsComponentsBadgeRouteImport } from './routes/docs/components/badge'
-import { Route as DocsComponentsAvatarRouteImport } from './routes/docs/components/avatar'
-import { Route as DocsComponentsAlertDialogRouteImport } from './routes/docs/components/alert-dialog'
-import { Route as DocsComponentsAlertRouteImport } from './routes/docs/components/alert'
-import { Route as DocsComponentsAccordionRouteImport } from './routes/docs/components/accordion'
+import { Route as DocsSplatRouteImport } from './routes/docs/$'
+import { Route as ApiSearchDotjsonRouteImport } from './routes/api/search[.]json'
 
-const DocsRouteRoute = DocsRouteRouteImport.update({
-  id: '/docs',
-  path: '/docs',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsFullDottxtRoute = LlmsFullDottxtRouteImport.update({
+  id: '/llms-full.txt',
+  path: '/llms-full.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -58,448 +36,99 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DocsThemingRoute = DocsThemingRouteImport.update({
-  id: '/theming',
-  path: '/theming',
-  getParentRoute: () => DocsRouteRoute,
+const DocsSplatRoute = DocsSplatRouteImport.update({
+  id: '/docs/$',
+  path: '/docs/$',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const DocsTailwindToKotlinRoute = DocsTailwindToKotlinRouteImport.update({
-  id: '/tailwind-to-kotlin',
-  path: '/tailwind-to-kotlin',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsIntroductionRoute = DocsIntroductionRouteImport.update({
-  id: '/introduction',
-  path: '/introduction',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsInstallationRoute = DocsInstallationRouteImport.update({
-  id: '/installation',
-  path: '/installation',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsIndexRoute = DocsComponentsIndexRouteImport.update({
-  id: '/components/',
-  path: '/components/',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsTabsRoute = DocsComponentsTabsRouteImport.update({
-  id: '/components/tabs',
-  path: '/components/tabs',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsSwitchRoute = DocsComponentsSwitchRouteImport.update({
-  id: '/components/switch',
-  path: '/components/switch',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsSpinnerRoute = DocsComponentsSpinnerRouteImport.update({
-  id: '/components/spinner',
-  path: '/components/spinner',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsSonnerRoute = DocsComponentsSonnerRouteImport.update({
-  id: '/components/sonner',
-  path: '/components/sonner',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsSliderRoute = DocsComponentsSliderRouteImport.update({
-  id: '/components/slider',
-  path: '/components/slider',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsSkeletonRoute = DocsComponentsSkeletonRouteImport.update({
-  id: '/components/skeleton',
-  path: '/components/skeleton',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsSidebarRoute = DocsComponentsSidebarRouteImport.update({
-  id: '/components/sidebar',
-  path: '/components/sidebar',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsSelectRoute = DocsComponentsSelectRouteImport.update({
-  id: '/components/select',
-  path: '/components/select',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsRadioGroupRoute =
-  DocsComponentsRadioGroupRouteImport.update({
-    id: '/components/radio-group',
-    path: '/components/radio-group',
-    getParentRoute: () => DocsRouteRoute,
-  } as any)
-const DocsComponentsProgressRoute = DocsComponentsProgressRouteImport.update({
-  id: '/components/progress',
-  path: '/components/progress',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsPopoverRoute = DocsComponentsPopoverRouteImport.update({
-  id: '/components/popover',
-  path: '/components/popover',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsInputOtpRoute = DocsComponentsInputOtpRouteImport.update({
-  id: '/components/input-otp',
-  path: '/components/input-otp',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsInputRoute = DocsComponentsInputRouteImport.update({
-  id: '/components/input',
-  path: '/components/input',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsDropdownMenuRoute =
-  DocsComponentsDropdownMenuRouteImport.update({
-    id: '/components/dropdown-menu',
-    path: '/components/dropdown-menu',
-    getParentRoute: () => DocsRouteRoute,
-  } as any)
-const DocsComponentsDrawerRoute = DocsComponentsDrawerRouteImport.update({
-  id: '/components/drawer',
-  path: '/components/drawer',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsDialogRoute = DocsComponentsDialogRouteImport.update({
-  id: '/components/dialog',
-  path: '/components/dialog',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsDatePickerRoute =
-  DocsComponentsDatePickerRouteImport.update({
-    id: '/components/date-picker',
-    path: '/components/date-picker',
-    getParentRoute: () => DocsRouteRoute,
-  } as any)
-const DocsComponentsDataTableRoute = DocsComponentsDataTableRouteImport.update({
-  id: '/components/data-table',
-  path: '/components/data-table',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsComboboxRoute = DocsComponentsComboboxRouteImport.update({
-  id: '/components/combobox',
-  path: '/components/combobox',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsCollapsibleRoute =
-  DocsComponentsCollapsibleRouteImport.update({
-    id: '/components/collapsible',
-    path: '/components/collapsible',
-    getParentRoute: () => DocsRouteRoute,
-  } as any)
-const DocsComponentsCheckboxRoute = DocsComponentsCheckboxRouteImport.update({
-  id: '/components/checkbox',
-  path: '/components/checkbox',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsChartRoute = DocsComponentsChartRouteImport.update({
-  id: '/components/chart',
-  path: '/components/chart',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsCarouselRoute = DocsComponentsCarouselRouteImport.update({
-  id: '/components/carousel',
-  path: '/components/carousel',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsCardRoute = DocsComponentsCardRouteImport.update({
-  id: '/components/card',
-  path: '/components/card',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsCalendarRoute = DocsComponentsCalendarRouteImport.update({
-  id: '/components/calendar',
-  path: '/components/calendar',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsButtonRoute = DocsComponentsButtonRouteImport.update({
-  id: '/components/button',
-  path: '/components/button',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsBadgeRoute = DocsComponentsBadgeRouteImport.update({
-  id: '/components/badge',
-  path: '/components/badge',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsAvatarRoute = DocsComponentsAvatarRouteImport.update({
-  id: '/components/avatar',
-  path: '/components/avatar',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsAlertDialogRoute =
-  DocsComponentsAlertDialogRouteImport.update({
-    id: '/components/alert-dialog',
-    path: '/components/alert-dialog',
-    getParentRoute: () => DocsRouteRoute,
-  } as any)
-const DocsComponentsAlertRoute = DocsComponentsAlertRouteImport.update({
-  id: '/components/alert',
-  path: '/components/alert',
-  getParentRoute: () => DocsRouteRoute,
-} as any)
-const DocsComponentsAccordionRoute = DocsComponentsAccordionRouteImport.update({
-  id: '/components/accordion',
-  path: '/components/accordion',
-  getParentRoute: () => DocsRouteRoute,
+const ApiSearchDotjsonRoute = ApiSearchDotjsonRouteImport.update({
+  id: '/api/search.json',
+  path: '/api/search.json',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/docs': typeof DocsRouteRouteWithChildren
-  '/docs/installation': typeof DocsInstallationRoute
-  '/docs/introduction': typeof DocsIntroductionRoute
-  '/docs/tailwind-to-kotlin': typeof DocsTailwindToKotlinRoute
-  '/docs/theming': typeof DocsThemingRoute
-  '/docs/components/accordion': typeof DocsComponentsAccordionRoute
-  '/docs/components/alert': typeof DocsComponentsAlertRoute
-  '/docs/components/alert-dialog': typeof DocsComponentsAlertDialogRoute
-  '/docs/components/avatar': typeof DocsComponentsAvatarRoute
-  '/docs/components/badge': typeof DocsComponentsBadgeRoute
-  '/docs/components/button': typeof DocsComponentsButtonRoute
-  '/docs/components/calendar': typeof DocsComponentsCalendarRoute
-  '/docs/components/card': typeof DocsComponentsCardRoute
-  '/docs/components/carousel': typeof DocsComponentsCarouselRoute
-  '/docs/components/chart': typeof DocsComponentsChartRoute
-  '/docs/components/checkbox': typeof DocsComponentsCheckboxRoute
-  '/docs/components/collapsible': typeof DocsComponentsCollapsibleRoute
-  '/docs/components/combobox': typeof DocsComponentsComboboxRoute
-  '/docs/components/data-table': typeof DocsComponentsDataTableRoute
-  '/docs/components/date-picker': typeof DocsComponentsDatePickerRoute
-  '/docs/components/dialog': typeof DocsComponentsDialogRoute
-  '/docs/components/drawer': typeof DocsComponentsDrawerRoute
-  '/docs/components/dropdown-menu': typeof DocsComponentsDropdownMenuRoute
-  '/docs/components/input': typeof DocsComponentsInputRoute
-  '/docs/components/input-otp': typeof DocsComponentsInputOtpRoute
-  '/docs/components/popover': typeof DocsComponentsPopoverRoute
-  '/docs/components/progress': typeof DocsComponentsProgressRoute
-  '/docs/components/radio-group': typeof DocsComponentsRadioGroupRoute
-  '/docs/components/select': typeof DocsComponentsSelectRoute
-  '/docs/components/sidebar': typeof DocsComponentsSidebarRoute
-  '/docs/components/skeleton': typeof DocsComponentsSkeletonRoute
-  '/docs/components/slider': typeof DocsComponentsSliderRoute
-  '/docs/components/sonner': typeof DocsComponentsSonnerRoute
-  '/docs/components/spinner': typeof DocsComponentsSpinnerRoute
-  '/docs/components/switch': typeof DocsComponentsSwitchRoute
-  '/docs/components/tabs': typeof DocsComponentsTabsRoute
-  '/docs/components/': typeof DocsComponentsIndexRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/search.json': typeof ApiSearchDotjsonRoute
+  '/docs/$': typeof DocsSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/docs': typeof DocsRouteRouteWithChildren
-  '/docs/installation': typeof DocsInstallationRoute
-  '/docs/introduction': typeof DocsIntroductionRoute
-  '/docs/tailwind-to-kotlin': typeof DocsTailwindToKotlinRoute
-  '/docs/theming': typeof DocsThemingRoute
-  '/docs/components/accordion': typeof DocsComponentsAccordionRoute
-  '/docs/components/alert': typeof DocsComponentsAlertRoute
-  '/docs/components/alert-dialog': typeof DocsComponentsAlertDialogRoute
-  '/docs/components/avatar': typeof DocsComponentsAvatarRoute
-  '/docs/components/badge': typeof DocsComponentsBadgeRoute
-  '/docs/components/button': typeof DocsComponentsButtonRoute
-  '/docs/components/calendar': typeof DocsComponentsCalendarRoute
-  '/docs/components/card': typeof DocsComponentsCardRoute
-  '/docs/components/carousel': typeof DocsComponentsCarouselRoute
-  '/docs/components/chart': typeof DocsComponentsChartRoute
-  '/docs/components/checkbox': typeof DocsComponentsCheckboxRoute
-  '/docs/components/collapsible': typeof DocsComponentsCollapsibleRoute
-  '/docs/components/combobox': typeof DocsComponentsComboboxRoute
-  '/docs/components/data-table': typeof DocsComponentsDataTableRoute
-  '/docs/components/date-picker': typeof DocsComponentsDatePickerRoute
-  '/docs/components/dialog': typeof DocsComponentsDialogRoute
-  '/docs/components/drawer': typeof DocsComponentsDrawerRoute
-  '/docs/components/dropdown-menu': typeof DocsComponentsDropdownMenuRoute
-  '/docs/components/input': typeof DocsComponentsInputRoute
-  '/docs/components/input-otp': typeof DocsComponentsInputOtpRoute
-  '/docs/components/popover': typeof DocsComponentsPopoverRoute
-  '/docs/components/progress': typeof DocsComponentsProgressRoute
-  '/docs/components/radio-group': typeof DocsComponentsRadioGroupRoute
-  '/docs/components/select': typeof DocsComponentsSelectRoute
-  '/docs/components/sidebar': typeof DocsComponentsSidebarRoute
-  '/docs/components/skeleton': typeof DocsComponentsSkeletonRoute
-  '/docs/components/slider': typeof DocsComponentsSliderRoute
-  '/docs/components/sonner': typeof DocsComponentsSonnerRoute
-  '/docs/components/spinner': typeof DocsComponentsSpinnerRoute
-  '/docs/components/switch': typeof DocsComponentsSwitchRoute
-  '/docs/components/tabs': typeof DocsComponentsTabsRoute
-  '/docs/components': typeof DocsComponentsIndexRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/search.json': typeof ApiSearchDotjsonRoute
+  '/docs/$': typeof DocsSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/docs': typeof DocsRouteRouteWithChildren
-  '/docs/installation': typeof DocsInstallationRoute
-  '/docs/introduction': typeof DocsIntroductionRoute
-  '/docs/tailwind-to-kotlin': typeof DocsTailwindToKotlinRoute
-  '/docs/theming': typeof DocsThemingRoute
-  '/docs/components/accordion': typeof DocsComponentsAccordionRoute
-  '/docs/components/alert': typeof DocsComponentsAlertRoute
-  '/docs/components/alert-dialog': typeof DocsComponentsAlertDialogRoute
-  '/docs/components/avatar': typeof DocsComponentsAvatarRoute
-  '/docs/components/badge': typeof DocsComponentsBadgeRoute
-  '/docs/components/button': typeof DocsComponentsButtonRoute
-  '/docs/components/calendar': typeof DocsComponentsCalendarRoute
-  '/docs/components/card': typeof DocsComponentsCardRoute
-  '/docs/components/carousel': typeof DocsComponentsCarouselRoute
-  '/docs/components/chart': typeof DocsComponentsChartRoute
-  '/docs/components/checkbox': typeof DocsComponentsCheckboxRoute
-  '/docs/components/collapsible': typeof DocsComponentsCollapsibleRoute
-  '/docs/components/combobox': typeof DocsComponentsComboboxRoute
-  '/docs/components/data-table': typeof DocsComponentsDataTableRoute
-  '/docs/components/date-picker': typeof DocsComponentsDatePickerRoute
-  '/docs/components/dialog': typeof DocsComponentsDialogRoute
-  '/docs/components/drawer': typeof DocsComponentsDrawerRoute
-  '/docs/components/dropdown-menu': typeof DocsComponentsDropdownMenuRoute
-  '/docs/components/input': typeof DocsComponentsInputRoute
-  '/docs/components/input-otp': typeof DocsComponentsInputOtpRoute
-  '/docs/components/popover': typeof DocsComponentsPopoverRoute
-  '/docs/components/progress': typeof DocsComponentsProgressRoute
-  '/docs/components/radio-group': typeof DocsComponentsRadioGroupRoute
-  '/docs/components/select': typeof DocsComponentsSelectRoute
-  '/docs/components/sidebar': typeof DocsComponentsSidebarRoute
-  '/docs/components/skeleton': typeof DocsComponentsSkeletonRoute
-  '/docs/components/slider': typeof DocsComponentsSliderRoute
-  '/docs/components/sonner': typeof DocsComponentsSonnerRoute
-  '/docs/components/spinner': typeof DocsComponentsSpinnerRoute
-  '/docs/components/switch': typeof DocsComponentsSwitchRoute
-  '/docs/components/tabs': typeof DocsComponentsTabsRoute
-  '/docs/components/': typeof DocsComponentsIndexRoute
+  '/llms-full.txt': typeof LlmsFullDottxtRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/api/search.json': typeof ApiSearchDotjsonRoute
+  '/docs/$': typeof DocsSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/docs'
-    | '/docs/installation'
-    | '/docs/introduction'
-    | '/docs/tailwind-to-kotlin'
-    | '/docs/theming'
-    | '/docs/components/accordion'
-    | '/docs/components/alert'
-    | '/docs/components/alert-dialog'
-    | '/docs/components/avatar'
-    | '/docs/components/badge'
-    | '/docs/components/button'
-    | '/docs/components/calendar'
-    | '/docs/components/card'
-    | '/docs/components/carousel'
-    | '/docs/components/chart'
-    | '/docs/components/checkbox'
-    | '/docs/components/collapsible'
-    | '/docs/components/combobox'
-    | '/docs/components/data-table'
-    | '/docs/components/date-picker'
-    | '/docs/components/dialog'
-    | '/docs/components/drawer'
-    | '/docs/components/dropdown-menu'
-    | '/docs/components/input'
-    | '/docs/components/input-otp'
-    | '/docs/components/popover'
-    | '/docs/components/progress'
-    | '/docs/components/radio-group'
-    | '/docs/components/select'
-    | '/docs/components/sidebar'
-    | '/docs/components/skeleton'
-    | '/docs/components/slider'
-    | '/docs/components/sonner'
-    | '/docs/components/spinner'
-    | '/docs/components/switch'
-    | '/docs/components/tabs'
-    | '/docs/components/'
+    | '/llms-full.txt'
+    | '/llms.txt'
+    | '/sitemap.xml'
+    | '/api/search.json'
+    | '/docs/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/docs'
-    | '/docs/installation'
-    | '/docs/introduction'
-    | '/docs/tailwind-to-kotlin'
-    | '/docs/theming'
-    | '/docs/components/accordion'
-    | '/docs/components/alert'
-    | '/docs/components/alert-dialog'
-    | '/docs/components/avatar'
-    | '/docs/components/badge'
-    | '/docs/components/button'
-    | '/docs/components/calendar'
-    | '/docs/components/card'
-    | '/docs/components/carousel'
-    | '/docs/components/chart'
-    | '/docs/components/checkbox'
-    | '/docs/components/collapsible'
-    | '/docs/components/combobox'
-    | '/docs/components/data-table'
-    | '/docs/components/date-picker'
-    | '/docs/components/dialog'
-    | '/docs/components/drawer'
-    | '/docs/components/dropdown-menu'
-    | '/docs/components/input'
-    | '/docs/components/input-otp'
-    | '/docs/components/popover'
-    | '/docs/components/progress'
-    | '/docs/components/radio-group'
-    | '/docs/components/select'
-    | '/docs/components/sidebar'
-    | '/docs/components/skeleton'
-    | '/docs/components/slider'
-    | '/docs/components/sonner'
-    | '/docs/components/spinner'
-    | '/docs/components/switch'
-    | '/docs/components/tabs'
-    | '/docs/components'
+    | '/llms-full.txt'
+    | '/llms.txt'
+    | '/sitemap.xml'
+    | '/api/search.json'
+    | '/docs/$'
   id:
     | '__root__'
     | '/'
-    | '/docs'
-    | '/docs/installation'
-    | '/docs/introduction'
-    | '/docs/tailwind-to-kotlin'
-    | '/docs/theming'
-    | '/docs/components/accordion'
-    | '/docs/components/alert'
-    | '/docs/components/alert-dialog'
-    | '/docs/components/avatar'
-    | '/docs/components/badge'
-    | '/docs/components/button'
-    | '/docs/components/calendar'
-    | '/docs/components/card'
-    | '/docs/components/carousel'
-    | '/docs/components/chart'
-    | '/docs/components/checkbox'
-    | '/docs/components/collapsible'
-    | '/docs/components/combobox'
-    | '/docs/components/data-table'
-    | '/docs/components/date-picker'
-    | '/docs/components/dialog'
-    | '/docs/components/drawer'
-    | '/docs/components/dropdown-menu'
-    | '/docs/components/input'
-    | '/docs/components/input-otp'
-    | '/docs/components/popover'
-    | '/docs/components/progress'
-    | '/docs/components/radio-group'
-    | '/docs/components/select'
-    | '/docs/components/sidebar'
-    | '/docs/components/skeleton'
-    | '/docs/components/slider'
-    | '/docs/components/sonner'
-    | '/docs/components/spinner'
-    | '/docs/components/switch'
-    | '/docs/components/tabs'
-    | '/docs/components/'
+    | '/llms-full.txt'
+    | '/llms.txt'
+    | '/sitemap.xml'
+    | '/api/search.json'
+    | '/docs/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DocsRouteRoute: typeof DocsRouteRouteWithChildren
+  LlmsFullDottxtRoute: typeof LlmsFullDottxtRoute
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiSearchDotjsonRoute: typeof ApiSearchDotjsonRoute
+  DocsSplatRoute: typeof DocsSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/docs': {
-      id: '/docs'
-      path: '/docs'
-      fullPath: '/docs'
-      preLoaderRoute: typeof DocsRouteRouteImport
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms-full.txt': {
+      id: '/llms-full.txt'
+      path: '/llms-full.txt'
+      fullPath: '/llms-full.txt'
+      preLoaderRoute: typeof LlmsFullDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -509,346 +138,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/docs/theming': {
-      id: '/docs/theming'
-      path: '/theming'
-      fullPath: '/docs/theming'
-      preLoaderRoute: typeof DocsThemingRouteImport
-      parentRoute: typeof DocsRouteRoute
+    '/docs/$': {
+      id: '/docs/$'
+      path: '/docs/$'
+      fullPath: '/docs/$'
+      preLoaderRoute: typeof DocsSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/docs/tailwind-to-kotlin': {
-      id: '/docs/tailwind-to-kotlin'
-      path: '/tailwind-to-kotlin'
-      fullPath: '/docs/tailwind-to-kotlin'
-      preLoaderRoute: typeof DocsTailwindToKotlinRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/introduction': {
-      id: '/docs/introduction'
-      path: '/introduction'
-      fullPath: '/docs/introduction'
-      preLoaderRoute: typeof DocsIntroductionRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/installation': {
-      id: '/docs/installation'
-      path: '/installation'
-      fullPath: '/docs/installation'
-      preLoaderRoute: typeof DocsInstallationRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/': {
-      id: '/docs/components/'
-      path: '/components'
-      fullPath: '/docs/components/'
-      preLoaderRoute: typeof DocsComponentsIndexRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/tabs': {
-      id: '/docs/components/tabs'
-      path: '/components/tabs'
-      fullPath: '/docs/components/tabs'
-      preLoaderRoute: typeof DocsComponentsTabsRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/switch': {
-      id: '/docs/components/switch'
-      path: '/components/switch'
-      fullPath: '/docs/components/switch'
-      preLoaderRoute: typeof DocsComponentsSwitchRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/spinner': {
-      id: '/docs/components/spinner'
-      path: '/components/spinner'
-      fullPath: '/docs/components/spinner'
-      preLoaderRoute: typeof DocsComponentsSpinnerRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/sonner': {
-      id: '/docs/components/sonner'
-      path: '/components/sonner'
-      fullPath: '/docs/components/sonner'
-      preLoaderRoute: typeof DocsComponentsSonnerRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/slider': {
-      id: '/docs/components/slider'
-      path: '/components/slider'
-      fullPath: '/docs/components/slider'
-      preLoaderRoute: typeof DocsComponentsSliderRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/skeleton': {
-      id: '/docs/components/skeleton'
-      path: '/components/skeleton'
-      fullPath: '/docs/components/skeleton'
-      preLoaderRoute: typeof DocsComponentsSkeletonRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/sidebar': {
-      id: '/docs/components/sidebar'
-      path: '/components/sidebar'
-      fullPath: '/docs/components/sidebar'
-      preLoaderRoute: typeof DocsComponentsSidebarRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/select': {
-      id: '/docs/components/select'
-      path: '/components/select'
-      fullPath: '/docs/components/select'
-      preLoaderRoute: typeof DocsComponentsSelectRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/radio-group': {
-      id: '/docs/components/radio-group'
-      path: '/components/radio-group'
-      fullPath: '/docs/components/radio-group'
-      preLoaderRoute: typeof DocsComponentsRadioGroupRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/progress': {
-      id: '/docs/components/progress'
-      path: '/components/progress'
-      fullPath: '/docs/components/progress'
-      preLoaderRoute: typeof DocsComponentsProgressRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/popover': {
-      id: '/docs/components/popover'
-      path: '/components/popover'
-      fullPath: '/docs/components/popover'
-      preLoaderRoute: typeof DocsComponentsPopoverRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/input-otp': {
-      id: '/docs/components/input-otp'
-      path: '/components/input-otp'
-      fullPath: '/docs/components/input-otp'
-      preLoaderRoute: typeof DocsComponentsInputOtpRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/input': {
-      id: '/docs/components/input'
-      path: '/components/input'
-      fullPath: '/docs/components/input'
-      preLoaderRoute: typeof DocsComponentsInputRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/dropdown-menu': {
-      id: '/docs/components/dropdown-menu'
-      path: '/components/dropdown-menu'
-      fullPath: '/docs/components/dropdown-menu'
-      preLoaderRoute: typeof DocsComponentsDropdownMenuRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/drawer': {
-      id: '/docs/components/drawer'
-      path: '/components/drawer'
-      fullPath: '/docs/components/drawer'
-      preLoaderRoute: typeof DocsComponentsDrawerRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/dialog': {
-      id: '/docs/components/dialog'
-      path: '/components/dialog'
-      fullPath: '/docs/components/dialog'
-      preLoaderRoute: typeof DocsComponentsDialogRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/date-picker': {
-      id: '/docs/components/date-picker'
-      path: '/components/date-picker'
-      fullPath: '/docs/components/date-picker'
-      preLoaderRoute: typeof DocsComponentsDatePickerRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/data-table': {
-      id: '/docs/components/data-table'
-      path: '/components/data-table'
-      fullPath: '/docs/components/data-table'
-      preLoaderRoute: typeof DocsComponentsDataTableRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/combobox': {
-      id: '/docs/components/combobox'
-      path: '/components/combobox'
-      fullPath: '/docs/components/combobox'
-      preLoaderRoute: typeof DocsComponentsComboboxRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/collapsible': {
-      id: '/docs/components/collapsible'
-      path: '/components/collapsible'
-      fullPath: '/docs/components/collapsible'
-      preLoaderRoute: typeof DocsComponentsCollapsibleRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/checkbox': {
-      id: '/docs/components/checkbox'
-      path: '/components/checkbox'
-      fullPath: '/docs/components/checkbox'
-      preLoaderRoute: typeof DocsComponentsCheckboxRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/chart': {
-      id: '/docs/components/chart'
-      path: '/components/chart'
-      fullPath: '/docs/components/chart'
-      preLoaderRoute: typeof DocsComponentsChartRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/carousel': {
-      id: '/docs/components/carousel'
-      path: '/components/carousel'
-      fullPath: '/docs/components/carousel'
-      preLoaderRoute: typeof DocsComponentsCarouselRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/card': {
-      id: '/docs/components/card'
-      path: '/components/card'
-      fullPath: '/docs/components/card'
-      preLoaderRoute: typeof DocsComponentsCardRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/calendar': {
-      id: '/docs/components/calendar'
-      path: '/components/calendar'
-      fullPath: '/docs/components/calendar'
-      preLoaderRoute: typeof DocsComponentsCalendarRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/button': {
-      id: '/docs/components/button'
-      path: '/components/button'
-      fullPath: '/docs/components/button'
-      preLoaderRoute: typeof DocsComponentsButtonRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/badge': {
-      id: '/docs/components/badge'
-      path: '/components/badge'
-      fullPath: '/docs/components/badge'
-      preLoaderRoute: typeof DocsComponentsBadgeRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/avatar': {
-      id: '/docs/components/avatar'
-      path: '/components/avatar'
-      fullPath: '/docs/components/avatar'
-      preLoaderRoute: typeof DocsComponentsAvatarRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/alert-dialog': {
-      id: '/docs/components/alert-dialog'
-      path: '/components/alert-dialog'
-      fullPath: '/docs/components/alert-dialog'
-      preLoaderRoute: typeof DocsComponentsAlertDialogRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/alert': {
-      id: '/docs/components/alert'
-      path: '/components/alert'
-      fullPath: '/docs/components/alert'
-      preLoaderRoute: typeof DocsComponentsAlertRouteImport
-      parentRoute: typeof DocsRouteRoute
-    }
-    '/docs/components/accordion': {
-      id: '/docs/components/accordion'
-      path: '/components/accordion'
-      fullPath: '/docs/components/accordion'
-      preLoaderRoute: typeof DocsComponentsAccordionRouteImport
-      parentRoute: typeof DocsRouteRoute
+    '/api/search.json': {
+      id: '/api/search.json'
+      path: '/api/search.json'
+      fullPath: '/api/search.json'
+      preLoaderRoute: typeof ApiSearchDotjsonRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface DocsRouteRouteChildren {
-  DocsInstallationRoute: typeof DocsInstallationRoute
-  DocsIntroductionRoute: typeof DocsIntroductionRoute
-  DocsTailwindToKotlinRoute: typeof DocsTailwindToKotlinRoute
-  DocsThemingRoute: typeof DocsThemingRoute
-  DocsComponentsAccordionRoute: typeof DocsComponentsAccordionRoute
-  DocsComponentsAlertRoute: typeof DocsComponentsAlertRoute
-  DocsComponentsAlertDialogRoute: typeof DocsComponentsAlertDialogRoute
-  DocsComponentsAvatarRoute: typeof DocsComponentsAvatarRoute
-  DocsComponentsBadgeRoute: typeof DocsComponentsBadgeRoute
-  DocsComponentsButtonRoute: typeof DocsComponentsButtonRoute
-  DocsComponentsCalendarRoute: typeof DocsComponentsCalendarRoute
-  DocsComponentsCardRoute: typeof DocsComponentsCardRoute
-  DocsComponentsCarouselRoute: typeof DocsComponentsCarouselRoute
-  DocsComponentsChartRoute: typeof DocsComponentsChartRoute
-  DocsComponentsCheckboxRoute: typeof DocsComponentsCheckboxRoute
-  DocsComponentsCollapsibleRoute: typeof DocsComponentsCollapsibleRoute
-  DocsComponentsComboboxRoute: typeof DocsComponentsComboboxRoute
-  DocsComponentsDataTableRoute: typeof DocsComponentsDataTableRoute
-  DocsComponentsDatePickerRoute: typeof DocsComponentsDatePickerRoute
-  DocsComponentsDialogRoute: typeof DocsComponentsDialogRoute
-  DocsComponentsDrawerRoute: typeof DocsComponentsDrawerRoute
-  DocsComponentsDropdownMenuRoute: typeof DocsComponentsDropdownMenuRoute
-  DocsComponentsInputRoute: typeof DocsComponentsInputRoute
-  DocsComponentsInputOtpRoute: typeof DocsComponentsInputOtpRoute
-  DocsComponentsPopoverRoute: typeof DocsComponentsPopoverRoute
-  DocsComponentsProgressRoute: typeof DocsComponentsProgressRoute
-  DocsComponentsRadioGroupRoute: typeof DocsComponentsRadioGroupRoute
-  DocsComponentsSelectRoute: typeof DocsComponentsSelectRoute
-  DocsComponentsSidebarRoute: typeof DocsComponentsSidebarRoute
-  DocsComponentsSkeletonRoute: typeof DocsComponentsSkeletonRoute
-  DocsComponentsSliderRoute: typeof DocsComponentsSliderRoute
-  DocsComponentsSonnerRoute: typeof DocsComponentsSonnerRoute
-  DocsComponentsSpinnerRoute: typeof DocsComponentsSpinnerRoute
-  DocsComponentsSwitchRoute: typeof DocsComponentsSwitchRoute
-  DocsComponentsTabsRoute: typeof DocsComponentsTabsRoute
-  DocsComponentsIndexRoute: typeof DocsComponentsIndexRoute
-}
-
-const DocsRouteRouteChildren: DocsRouteRouteChildren = {
-  DocsInstallationRoute: DocsInstallationRoute,
-  DocsIntroductionRoute: DocsIntroductionRoute,
-  DocsTailwindToKotlinRoute: DocsTailwindToKotlinRoute,
-  DocsThemingRoute: DocsThemingRoute,
-  DocsComponentsAccordionRoute: DocsComponentsAccordionRoute,
-  DocsComponentsAlertRoute: DocsComponentsAlertRoute,
-  DocsComponentsAlertDialogRoute: DocsComponentsAlertDialogRoute,
-  DocsComponentsAvatarRoute: DocsComponentsAvatarRoute,
-  DocsComponentsBadgeRoute: DocsComponentsBadgeRoute,
-  DocsComponentsButtonRoute: DocsComponentsButtonRoute,
-  DocsComponentsCalendarRoute: DocsComponentsCalendarRoute,
-  DocsComponentsCardRoute: DocsComponentsCardRoute,
-  DocsComponentsCarouselRoute: DocsComponentsCarouselRoute,
-  DocsComponentsChartRoute: DocsComponentsChartRoute,
-  DocsComponentsCheckboxRoute: DocsComponentsCheckboxRoute,
-  DocsComponentsCollapsibleRoute: DocsComponentsCollapsibleRoute,
-  DocsComponentsComboboxRoute: DocsComponentsComboboxRoute,
-  DocsComponentsDataTableRoute: DocsComponentsDataTableRoute,
-  DocsComponentsDatePickerRoute: DocsComponentsDatePickerRoute,
-  DocsComponentsDialogRoute: DocsComponentsDialogRoute,
-  DocsComponentsDrawerRoute: DocsComponentsDrawerRoute,
-  DocsComponentsDropdownMenuRoute: DocsComponentsDropdownMenuRoute,
-  DocsComponentsInputRoute: DocsComponentsInputRoute,
-  DocsComponentsInputOtpRoute: DocsComponentsInputOtpRoute,
-  DocsComponentsPopoverRoute: DocsComponentsPopoverRoute,
-  DocsComponentsProgressRoute: DocsComponentsProgressRoute,
-  DocsComponentsRadioGroupRoute: DocsComponentsRadioGroupRoute,
-  DocsComponentsSelectRoute: DocsComponentsSelectRoute,
-  DocsComponentsSidebarRoute: DocsComponentsSidebarRoute,
-  DocsComponentsSkeletonRoute: DocsComponentsSkeletonRoute,
-  DocsComponentsSliderRoute: DocsComponentsSliderRoute,
-  DocsComponentsSonnerRoute: DocsComponentsSonnerRoute,
-  DocsComponentsSpinnerRoute: DocsComponentsSpinnerRoute,
-  DocsComponentsSwitchRoute: DocsComponentsSwitchRoute,
-  DocsComponentsTabsRoute: DocsComponentsTabsRoute,
-  DocsComponentsIndexRoute: DocsComponentsIndexRoute,
-}
-
-const DocsRouteRouteWithChildren = DocsRouteRoute._addFileChildren(
-  DocsRouteRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DocsRouteRoute: DocsRouteRouteWithChildren,
+  LlmsFullDottxtRoute: LlmsFullDottxtRoute,
+  LlmsDottxtRoute: LlmsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiSearchDotjsonRoute: ApiSearchDotjsonRoute,
+  DocsSplatRoute: DocsSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

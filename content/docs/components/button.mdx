@@ -1,0 +1,366 @@
+---
+title: Button
+description: Displays a button or a component that looks like a button.
+---
+
+Button is a pressable component that supports six visual variants (`Default`, `Destructive`, `Outline`, `Secondary`, `Ghost`, `Link`) and six size presets. It has built-in loading and disabled states, an optional full-width layout, and a dedicated `IconButton` composable for icon-only use cases.
+
+## Default
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+
+<Preview name="button" variant="default" />
+
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import com.komoui.components.Button
+
+@Composable
+fun Example() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(
+            onClick = {
+                // TODO: click action
+            }
+        ) {
+            Text("Normal")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Destructive
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="button" variant="destructive" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import com.komoui.components.Button
+import com.komoui.components.ButtonVariant
+
+@Composable
+fun Example() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(
+            onClick = {
+                // TODO: click action
+            },
+            variant = ButtonVariant.Destructive
+        ) {
+            Text("Destructive")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Secondary
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="button" variant="secondary" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import com.komoui.components.Button
+import com.komoui.components.ButtonVariant
+
+@Composable
+fun Example() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(
+            onClick = {
+                // TODO: click action
+            },
+            variant = ButtonVariant.Secondary
+        ) {
+            Text("Secondary")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Link
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="button" variant="link" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import com.komoui.components.Button
+import com.komoui.components.ButtonVariant
+
+@Composable
+fun Example() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(
+            onClick = {
+                // TODO: click action
+            },
+            variant = ButtonVariant.Link,
+        ) {
+            Text("Link")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Ghost
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="button" variant="ghost" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import com.komoui.components.Button
+import com.komoui.components.ButtonVariant
+
+@Composable
+fun Example() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(
+            onClick = {
+                // TODO: click action
+            },
+            variant = ButtonVariant.Ghost,
+        ) {
+            Text("Ghost")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Outline
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="button" variant="outline" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import com.komoui.components.Button
+import com.komoui.components.ButtonVariant
+
+@Composable
+fun Example() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(
+            onClick = {
+                // TODO: click action
+            },
+            variant = ButtonVariant.Outline,
+        ) {
+            Text("Outline")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## Icon
+
+Use `IconButton` for icon-only buttons. It defaults to `ButtonVariant.Ghost` and `ButtonSize.Icon`.
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="button" variant="icon" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import com.komoui.components.IconButton
+
+@Composable
+fun Example() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        IconButton(
+            onClick = {
+                // TODO: click action
+            }
+        ) {
+            Icon(Icons.Default.AccountCircle, contentDescription = "Icon")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## With Icon
+
+<Tabs items={["Preview","Code"]}>
+
+<Tab value="Preview">
+<Preview name="button" variant="with-icon" />
+</Tab>
+
+<Tab value="Code">
+
+```kotlin
+import com.komoui.components.Button
+
+@Composable
+fun Example() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp, vertical = 32.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(
+            onClick = {
+                // TODO: click action
+            }
+        ) {
+            Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Icon")
+            Spacer(Modifier.width(8.dp))
+            Text("Account")
+        }
+    }
+}
+```
+
+</Tab>
+
+</Tabs>
+
+## API Reference
+
+### Button
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onClick` | `() -> Unit` | — | Called when the button is pressed |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the button |
+| `variant` | `ButtonVariant` | `ButtonVariant.Default` | Visual style of the button |
+| `size` | `ButtonSize` | `ButtonSize.Default` | Size preset controlling padding and minimum height |
+| `enabled` | `Boolean` | `true` | When false, the button is non-interactive and visually dimmed |
+| `loading` | `Boolean` | `false` | When true, shows a spinner and disables interaction |
+| `fullWidth` | `Boolean` | `false` | When true, the button fills the available width |
+| `shape` | `Shape` | `RoundedCornerShape(radius.md)` | Shape of the button container |
+| `contentPadding` | `PaddingValues?` | `null` | Overrides size-derived content padding when non-null |
+| `color` | `ButtonColors?` | `null` | Overrides variant-derived colors when non-null |
+| `content` | `@Composable RowScope.() -> Unit` | — | Content displayed inside the button |
+
+### IconButton
+
+A convenience composable for icon-only buttons. Thin wrapper around `Button` with `variant = ButtonVariant.Ghost` and `size = ButtonSize.Icon` as defaults.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `onClick` | `() -> Unit` | — | Called when the button is pressed |
+| `modifier` | `Modifier` | `Modifier` | Modifier applied to the button |
+| `variant` | `ButtonVariant` | `ButtonVariant.Ghost` | Visual style of the button |
+| `size` | `ButtonSize` | `ButtonSize.Icon` | Size preset |
+| `enabled` | `Boolean` | `true` | When false, the button is non-interactive and visually dimmed |
+| `shape` | `Shape` | `RoundedCornerShape(radius.md)` | Shape of the button container |
+| `color` | `ButtonColors?` | `null` | Overrides variant-derived colors when non-null |
+| `content` | `@Composable RowScope.() -> Unit` | — | Icon content displayed inside the button |
+
+### ButtonVariant
+
+| Value | Description |
+|---|---|
+| `Default` | Filled with the primary color |
+| `Destructive` | Filled with the destructive/danger color |
+| `Outline` | Transparent fill with a border |
+| `Secondary` | Filled with the secondary color |
+| `Ghost` | No fill or border; accent background appears on press |
+| `Link` | No fill or border; text is underlined |
+
+### ButtonSize
+
+| Value | Min size | Description |
+|---|---|---|
+| `Default` | 40 dp height | Standard size |
+| `Sm` | 36 dp height | Small |
+| `Xs` | 32 dp height | Extra small |
+| `Lg` | 44 dp height | Large |
+| `Icon` | 36 × 36 dp | Square; for icon-only buttons |
+| `IconSm` | 28 × 28 dp | Small square; for compact icon-only buttons |
+

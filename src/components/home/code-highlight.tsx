@@ -11,7 +11,7 @@ interface CodeHighlightProps {
 
 /**
  * Runtime syntax highlighting for code shown outside the MDX pipeline.
- * MDX docs are highlighted at build time by rehype-pretty-code; standalone
+ * MDX docs are highlighted at build time by Fumadocs' rehype-code; standalone
  * components like the home page examples need Shiki applied on the client.
  * Uses the same github-light/github-dark dual theme as the MDX config.
  */

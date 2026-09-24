@@ -49,7 +49,10 @@ export function docsMeta(
         "@type": "ListItem",
         position: index + 2,
         name: formatSegment(segment),
-        item: `https://komoui.site/${segments.slice(0, index + 1).join("/")}`,
+        // /docs itself 301s to /docs/introduction
+        item: index === 0 && segment === "docs"
+          ? "https://komoui.site/docs/introduction"
+          : `https://komoui.site/${segments.slice(0, index + 1).join("/")}`,
       })),
     ],
   };
@@ -133,7 +136,9 @@ export function homeMeta() {
   };
 }
 
-export function componentsIndexMeta() {
+export function componentsIndexMeta(
+  components: { name: string; url: string }[]
+) {
   const collectionPageSchema = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
@@ -141,40 +146,11 @@ export function componentsIndexMeta() {
     description:
       "Browse all KomoUI components for Jetpack Compose. Buttons, inputs, dialogs, navigation, and more.",
     url: "https://komoui.site/docs/components",
-    hasPart: [
-      { "@type": "WebPage", name: "Button", url: "https://komoui.site/docs/components/button" },
-      { "@type": "WebPage", name: "Input", url: "https://komoui.site/docs/components/input" },
-      { "@type": "WebPage", name: "Select", url: "https://komoui.site/docs/components/select" },
-      { "@type": "WebPage", name: "Dialog", url: "https://komoui.site/docs/components/dialog" },
-      { "@type": "WebPage", name: "Card", url: "https://komoui.site/docs/components/card" },
-      { "@type": "WebPage", name: "Tabs", url: "https://komoui.site/docs/components/tabs" },
-      { "@type": "WebPage", name: "Avatar", url: "https://komoui.site/docs/components/avatar" },
-      { "@type": "WebPage", name: "Badge", url: "https://komoui.site/docs/components/badge" },
-      { "@type": "WebPage", name: "Alert", url: "https://komoui.site/docs/components/alert" },
-      { "@type": "WebPage", name: "Checkbox", url: "https://komoui.site/docs/components/checkbox" },
-      { "@type": "WebPage", name: "Radio Group", url: "https://komoui.site/docs/components/radio-group" },
-      { "@type": "WebPage", name: "Switch", url: "https://komoui.site/docs/components/switch" },
-      { "@type": "WebPage", name: "Slider", url: "https://komoui.site/docs/components/slider" },
-      { "@type": "WebPage", name: "Progress", url: "https://komoui.site/docs/components/progress" },
-      { "@type": "WebPage", name: "Skeleton", url: "https://komoui.site/docs/components/skeleton" },
-      { "@type": "WebPage", name: "Spinner", url: "https://komoui.site/docs/components/spinner" },
-      { "@type": "WebPage", name: "Tooltip", url: "https://komoui.site/docs/components/tooltip" },
-      { "@type": "WebPage", name: "Popover", url: "https://komoui.site/docs/components/popover" },
-      { "@type": "WebPage", name: "Dropdown Menu", url: "https://komoui.site/docs/components/dropdown-menu" },
-      { "@type": "WebPage", name: "Combobox", url: "https://komoui.site/docs/components/combobox" },
-      { "@type": "WebPage", name: "Date Picker", url: "https://komoui.site/docs/components/date-picker" },
-      { "@type": "WebPage", name: "Calendar", url: "https://komoui.site/docs/components/calendar" },
-      { "@type": "WebPage", name: "Input OTP", url: "https://komoui.site/docs/components/input-otp" },
-      { "@type": "WebPage", name: "Drawer", url: "https://komoui.site/docs/components/drawer" },
-      { "@type": "WebPage", name: "Sidebar", url: "https://komoui.site/docs/components/sidebar" },
-      { "@type": "WebPage", name: "Accordion", url: "https://komoui.site/docs/components/accordion" },
-      { "@type": "WebPage", name: "Collapsible", url: "https://komoui.site/docs/components/collapsible" },
-      { "@type": "WebPage", name: "Carousel", url: "https://komoui.site/docs/components/carousel" },
-      { "@type": "WebPage", name: "Chart", url: "https://komoui.site/docs/components/chart" },
-      { "@type": "WebPage", name: "Data Table", url: "https://komoui.site/docs/components/data-table" },
-      { "@type": "WebPage", name: "Sonner", url: "https://komoui.site/docs/components/sonner" },
-      { "@type": "WebPage", name: "Alert Dialog", url: "https://komoui.site/docs/components/alert-dialog" },
-    ],
+    hasPart: components.map(({ name, url }) => ({
+      "@type": "WebPage",
+      name,
+      url: `https://komoui.site${url}`,
+    })),
     publisher: {
       "@type": "Organization",
       name: "KomoUI",
@@ -187,7 +163,7 @@ export function componentsIndexMeta() {
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://komoui.site/" },
-      { "@type": "ListItem", position: 2, name: "Documentation", item: "https://komoui.site/docs" },
+      { "@type": "ListItem", position: 2, name: "Documentation", item: "https://komoui.site/docs/introduction" },
       { "@type": "ListItem", position: 3, name: "Components", item: "https://komoui.site/docs/components" },
     ],
   };

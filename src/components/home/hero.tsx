@@ -29,10 +29,10 @@ export function Hero({ onScrollTo }: HeroProps) {
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Button asChild size="lg">
-            <Link to="/docs/installation">Get Started</Link>
+            <Link to="/docs/$" params={{ _splat: "installation" }}>Get Started</Link>
           </Button>
           <Button variant="ghost" size="lg" asChild>
-            <Link to="/docs/components">View Components</Link>
+            <Link to="/docs/$" params={{ _splat: "components" }}>View Components</Link>
           </Button>
         </div>
       </div>

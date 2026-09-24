@@ -24,9 +24,9 @@ User: "write comprehensive docs for Button based on https://github.com/derangga/
 gh api repos/derangga/komoui/contents/<path-to-file>.kt --jq '.content' | base64 -d
 ```
 
-Read the existing component MDX at `src/content/components/<Component>.mdx`.
+Read the existing component MDX at `content/docs/components/<component-slug>.mdx` (kebab-case, e.g. `date-picker.mdx`). The filename is the URL slug.
 
-Read one comprehensive reference doc for section/table patterns — `src/content/components/DataTable.mdx` or `src/content/components/Sidebar.mdx`.
+Read one comprehensive reference doc for section/table patterns — `content/docs/components/data-table.mdx` or `content/docs/components/sidebar.mdx`.
 
 ### 2. Analyse the source
 
@@ -39,6 +39,8 @@ Extract from the Kotlin file:
 ### 3. Write the MDX
 
 See [REFERENCE.md](REFERENCE.md) for the full MDX template and rules.
+
+For a **new** component, also add its slug to `content/docs/components/meta.json` (alphabetical by title) and a `<Card>` to `content/docs/components.mdx`. Nothing else: the `/docs/$` route, sidebar, search index and llms.txt all come from the content folder.
 
 ### 4. Verify
 
