@@ -8,19 +8,10 @@ title: ComponentName
 description: One sentence describing what the component does and its main capabilities.
 ---
 
-import { DocsPage } from "@/components/mdx/docs-page"
-import { TabPreview } from "@/components/mdx/tab-preview"
-import { Preview } from "@/components/mdx/preview"
-import { Steps } from "@/components/mdx/steps"
-import { CodeWithFilename } from "@/components/mdx/code-with-filename"
-import { CodeConverter } from "@/components/docs/code-converter"
-
-<DocsPage title={frontmatter.title} description={frontmatter.description} path="content/components/ComponentName.mdx">
-
 [sections...]
-
-</DocsPage>
 ```
+
+No imports and no wrapper: the page title and description come from frontmatter. `Tabs`, `Tab`, `Steps`, `Step`, `Cards`, `Card`, `Callout` and `Preview` are registered globally in `src/components/mdx/mdx-components.tsx`.
 
 ## Section order
 
@@ -29,25 +20,27 @@ import { CodeConverter } from "@/components/docs/code-converter"
 3. **Feature sections** — one `## Section` per distinct feature/variant. Use `### Sub-section` when grouping related variants (e.g. "Date Restriction Modes" with "### Past or Today" and "### Future or Today").
 4. **API Reference** — always last. One `### ComponentName` subsection per composable/class/enum.
 
-## TabPreview pattern (use for every code example)
+## Preview/Code tabs (use for every code example)
 
 ```mdx
-<TabPreview>
+<Tabs items={["Preview","Code"]}>
 
-<TabPreview.Panel name="Preview">
+<Tab value="Preview">
 <Preview name="component-name" variant="variant-name" />
-</TabPreview.Panel>
+</Tab>
 
-<TabPreview.Panel name="Code">
+<Tab value="Code">
 
 ```kotlin
 // code here
 ```
 
-</TabPreview.Panel>
+</Tab>
 
-</TabPreview>
+</Tabs>
 ```
+
+Every `Tab value` must appear in `items`. Leave blank lines around the code fence, or MDX won't parse it as markdown.
 
 `variant` matches the preview registration key. If no dedicated variant exists for a new section, reuse `"default"`.
 
@@ -93,6 +86,10 @@ import { CodeConverter } from "@/components/docs/code-converter"
 |---|---|
 | `method()` | What it returns / does. |
 ```
+
+## Steps and file names
+
+Wrap each step in `<Step>` inside `<Steps>`; start each step with a `####` heading. Label a code block with a file name through the fence meta: ```` ```kotlin title="AppSidebar.kt" ````.
 
 ## Callouts
 

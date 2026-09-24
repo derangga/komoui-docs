@@ -2,7 +2,7 @@
   "$schema": "https://context7.com/schema/context7.json",
   "projectTitle": "KomoUI",
   "description": "Kotlin Multiplatform UI component library for Jetpack Compose Multiplatform (Android/iOS), Material 3 based, shadcn/ui-inspired components.",
-  "folders": ["src/content"],
+  "folders": ["content/docs"],
   "excludeFolders": [".agents", ".serena", ".claude", ".tanstack", ".wrangler", "node_modules", "dist", "temp", "file"],
   "excludeFiles": ["CLAUDE.md", "AGENTS.md", "skills-lock.json"],
   "rules": [

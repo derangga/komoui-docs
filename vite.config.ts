@@ -3,17 +3,20 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import viteReact from "@vitejs/plugin-react";
-import mdx from "@mdx-js/rollup";
-import remarkGfm from "remark-gfm";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkMdxFrontmatter from "remark-mdx-frontmatter";
-import rehypePrettyCode from "rehype-pretty-code";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import { fumadocsMdx } from "fumadocs-mdx/vite";
 import { light as shikiLight, dark as shikiDark } from "./src/lib/shiki-theme";
 
 export default defineConfig({
   plugins: [
+    fumadocsMdx({
+      globalOptions: {
+        mdxOptions: {
+          rehypeCodeOptions: {
+            themes: { light: shikiLight, dark: shikiDark },
+          },
+        },
+      },
+    }),
     cloudflare({ viteEnvironment: { name: "ssr" } }),
     tailwindcss(),
     tanstackStart({
@@ -25,39 +28,17 @@ export default defineConfig({
         // used in our sitemap and rel=canonical tags) the 200 canonical, instead
         // of 307-redirecting it to a trailing-slash variant.
         autoSubfolderIndex: false,
-        // The /docs/components index route is crawlable as both /docs/components
-        // and /docs/components/. Keep the trailing-slash variant out of the
-        // sitemap so only the canonical (non-trailing) URL is submitted to Google.
-        onSuccess: ({ page }) => {
-          if (page.path !== "/" && page.path.endsWith("/")) {
-            return { ...page, sitemap: { ...page.sitemap, exclude: true } };
-          }
-        },
       },
-      sitemap: {
-        enabled: true,
-        host: "https://komoui.site",
-      },
+      // Not reachable by link crawling. The sitemap is our own route
+      // (src/routes/sitemap[.]xml.ts); TanStack's generated one is disabled.
+      pages: [
+        { path: "/api/search.json" },
+        { path: "/llms.txt" },
+        { path: "/llms-full.txt" },
+        { path: "/sitemap.xml" },
+      ],
+      sitemap: { enabled: false },
     }),
-    {
-      enforce: "pre",
-      ...mdx({
-        remarkPlugins: [remarkGfm, remarkFrontmatter, remarkMdxFrontmatter],
-        rehypePlugins: [
-          rehypeSlug,
-          [
-            rehypePrettyCode,
-            {
-              theme: {
-                dark: shikiDark,
-                light: shikiLight,
-              },
-            },
-          ],
-          [rehypeAutolinkHeadings, { behavior: "wrap" }],
-        ],
-      }),
-    },
     viteReact(),
   ],
   resolve: {
@@ -71,6 +52,8 @@ export default defineConfig({
         "react-dom/server",
         "react/jsx-runtime",
         "react/jsx-dev-runtime",
+        // Found late otherwise; the re-optimize reload breaks the first SSR request.
+        "fumadocs-mdx/runtime/macro",
       ],
     },
   },

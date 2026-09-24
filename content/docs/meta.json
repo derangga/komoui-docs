@@ -1,0 +1,14 @@
+{
+  "title": "KomoUI",
+  "root": true,
+  "pages": [
+    "---Get Started---",
+    "introduction",
+    "installation",
+    "theming",
+    "tailwind-to-kotlin",
+    "[Cuboid][Components](/docs/components)",
+    "---Components---",
+    "...components"
+  ]
+}

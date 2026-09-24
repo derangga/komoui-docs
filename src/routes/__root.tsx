@@ -4,7 +4,8 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { RootProvider } from "fumadocs-ui/provider/tanstack";
+import StaticSearchDialog from "@/components/search";
 import appCss from "../styles/app.css?url";
 
 export const Route = createRootRoute({
@@ -88,14 +89,14 @@ export const Route = createRootRoute({
 
 function RootLayout() {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
-      <body>
-        <TooltipProvider>
+      <body className="flex flex-col min-h-screen">
+        <RootProvider search={{ SearchDialog: StaticSearchDialog }}>
           <Outlet />
-        </TooltipProvider>
+        </RootProvider>
         <Scripts />
       </body>
     </html>
