@@ -17,7 +17,7 @@ export function Hero({ onScrollTo }: HeroProps) {
           <span className="text-foreground">Build beautiful</span>
           <br />
           <span className="bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-            components faster
+            Compose components faster
           </span>
         </h1>
 

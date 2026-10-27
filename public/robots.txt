@@ -14,4 +14,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://komoui.site/sitemap.xml
-LLMs: https://komoui.site/llms.txt

@@ -4,6 +4,7 @@ import { HomeLayout } from "fumadocs-ui/layouts/home";
 import { baseOptions } from "@/lib/layout.shared";
 import { Hero } from "@/components/home/hero";
 import { Examples } from "@/components/home/examples";
+import { Explore } from "@/components/home/explore";
 import { homeMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/")({
@@ -29,6 +30,7 @@ function HomePage() {
       <main className="container mx-auto overflow-hidden">
         <Hero onScrollTo={scrollToExamples} />
         <Examples ref={examplesRef} />
+        <Explore />
       </main>
     </HomeLayout>
   );

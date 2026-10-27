@@ -3,3 +3,6 @@
 # /docs has no page of its own
 /docs  /docs/introduction  301
 /docs/  /docs/introduction  301
+# Old image assets that were replaced by real 1200x630 / 48px+ PNGs
+/og-image.webp  /og-image.png  301
+/android-fav.webp  /icon-192.png  301

@@ -25,7 +25,7 @@ export const Route = createFileRoute("/docs/$")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) return {};
-    const { url, title, description } = loaderData;
+    const { url, title, description, lastModified } = loaderData;
     if (url === "/docs/components") {
       return componentsIndexMeta(
         source
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/docs/$")({
     const section = url.startsWith("/docs/components/")
       ? "Components"
       : "Getting Started";
-    return docsMeta(title, description ?? "", url, section);
+    return docsMeta(title, description ?? "", url, section, lastModified);
   },
 });
 
@@ -52,6 +52,7 @@ const serverLoader = createServerFn({ method: "GET" })
       url: page.url,
       title: page.data.title,
       description: page.data.description,
+      lastModified: (await page.data.load()).lastModified?.toISOString(),
       pageTree: await source.serializePageTree(source.getPageTree()),
     };
   });

@@ -16,21 +16,30 @@ function url(loc: string, lastModified?: Date) {
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
-      GET: async () =>
-        new Response(
+      GET: async () => {
+        const pages = await Promise.all(
+          source.getPages().map(async (page) => ({
+            loc: page.url,
+            lastModified: (await page.data.load()).lastModified,
+          }))
+        );
+        // The homepage has no content file, so it takes the newest page date.
+        const newest = pages.reduce<Date | undefined>(
+          (max, { lastModified }) =>
+            lastModified && (!max || lastModified > max) ? lastModified : max,
+          undefined
+        );
+        return new Response(
           [
             '<?xml version="1.0" encoding="UTF-8"?>',
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-            url("/"),
-            ...(await Promise.all(
-              source
-                .getPages()
-                .map(async (page) => url(page.url, (await page.data.load()).lastModified))
-            )),
+            url("/", newest),
+            ...pages.map(({ loc, lastModified }) => url(loc, lastModified)),
             "</urlset>",
           ].join("\n") + "\n",
           { headers: { "Content-Type": "application/xml" } }
-        ),
+        );
+      },
     },
   },
 });

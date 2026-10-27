@@ -40,7 +40,7 @@ export const Route = createRootRoute({
       },
       {
         property: "og:image",
-        content: "https://komoui.site/og-image.webp",
+        content: "https://komoui.site/og-image.png",
       },
       {
         property: "og:locale",
@@ -54,6 +54,9 @@ export const Route = createRootRoute({
         property: "og:site_name",
         content: "KomoUI",
       },
+      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
       {
         name: "twitter:card",
         content: "summary_large_image",
@@ -69,7 +72,7 @@ export const Route = createRootRoute({
       },
       {
         name: "twitter:image",
-        content: "https://komoui.site/og-image.webp",
+        content: "https://komoui.site/og-image.png",
       },
     ],
     links: [
@@ -77,12 +80,9 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: appCss,
       },
-      {
-        rel: "icon",
-        type: "image/png",
-        sizes: "32x32",
-        href: "/android-fav.webp",
-      },
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
+      { rel: "icon", type: "image/png", sizes: "192x192", href: "/icon-192.png" },
+      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
 });
